@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <!-- initial-scaleは0.6くらいにしておくとスマホで見やすい？ -->
+    <meta name="viewport" content="width=device-width, initial-scale=0.6">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/water.css">
+    <style>
+        /* ページ内のすべての画像に、わずかな影と角丸をつける */
+        img {
+            /* ぼかしの効いた、薄く自然なシャドウ */
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            /* ほんの少し角を丸めると、シャドウと馴染んでさらにモダンになります（不要なら削除OK） */
+            border-radius: 6px; 
+            /* レスポンシブ対応（画面幅からはみ出さないようにする） */
+            max-width: 100%;
+            height: auto;
+        }
+    </style>
+
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script type="text/javascript">
+        <!--
+        // 1. ?以降のクエリ文字列を取得
+        let queryString = window.location.search.substring(1);
+        if (queryString === '') { queryString = 'index'; }
+        // 2. ファイルを読み込み、HTMLに変換
+        async function loadMarkdown(queryString) {
+            const contentArea = document.getElementById('content');
+            try {
+                // 3. fetchでindex.mdを取得
+                const filePath = 'md/' + queryString + '.md';
+                const response = await fetch(filePath);
+                // ファイルが存在しない、またはエラーの場合のハンドリング
+                if (!response.ok) {
+                    throw new Error(`HTTPエラー! ステータス: ${response.status}`);
+                }
+                // 4. レスポンスをテキスト（文字列）として抽出
+                const markdownText = await response.text();
+                // 5. marked.parse() でMarkdownをHTMLに変換
+                const htmlContent = marked.parse(markdownText);
+                // 6. 画面に表示
+                contentArea.innerHTML = htmlContent;
+            } catch (error) {
+                console.error('読み込みエラー:', error);
+                contentArea.innerHTML = `<p class="error">Markdownファイル（${filePath}）の読み込みに失敗しました。</p>`;
+            }
+        }
+        //-->
+    </script>
+    <title>Oberinの月の下で</title>
+</head>
+
+<body onload="loadMarkdown(queryString)">
+    <header>
+        <h1>Oberinの月の下で</h1>
+    </header>
+
+    <nav>
+        <a href="index.html">トップページ</a>
+    </nav>
+
+    <section id="content">
+    </section>
+
+    <nav>
+        <a href="index.html">トップページ</a>
+    </nav>
+
+    <footer>
+        <address>
+            Oberinの月の下で<br>
+            Author: Geld<br>
+            Last update: 2026/07/09
+        </address>
+    </footer>
+
+    <script type="text/javascript">
+        <!--
+        // -->
+    </script>
+
+</body>
+
+</html>
