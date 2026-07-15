@@ -15,8 +15,12 @@
 - [Oberinのキャラクター作成](?characreate)
 - [Oberinの最初のログイン](?tutorial)
 
+---
+
 - [Lerilinの解説](?lerilin)
 - Mirithの解説
+
+---
 
 - [神殿と蘇生](?temple)
 
@@ -29,6 +33,9 @@
 
 - クエスト
 
+- ホットキーとキーバインド
+
+---
 
 - [Oberinの利用規約](?tos)
 - [キャラクターの命名ルール](?namingrule)
