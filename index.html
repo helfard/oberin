@@ -23,6 +23,19 @@
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <script type="text/javascript">
         <!--
+        // 画像のカスタムレンダラー
+        // 1. 画像（image）用のカスタムレンダラーを定義
+        const renderer = {
+        image({ href, title, text }) {
+            // alt（引数のtext）の内容をtitleに代入（既存のtitleがあればそれを優先）
+            const imageTitle = title || text; 
+            return `<img src="${href}" alt="${text}" title="${imageTitle}">`;
+        }
+        };
+        // 2. markedにカスタムレンダラーを登録
+        marked.use({ renderer });
+
+        // MarkdownをHTMLに変換する
         // 1. ?以降のクエリ文字列を取得
         let queryString = window.location.search.substring(1);
         if (queryString === '') { queryString = 'index'; }
@@ -51,6 +64,8 @@
         //-->
     </script>
     <title>ページタイトル考え中..</title>
+    <meta name="description" content="マルチプラットフォームMMORPG『Oberin』の日本人向け解説など。
+        外部の.mdファイルをHTMLに変換して表示しているので、検索BOTやAIにはページの中身が読めないのさ！">
 </head>
 
 <body onload="loadMarkdown(queryString)">
