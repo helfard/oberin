@@ -30,7 +30,7 @@
 - [Lerilinの解説](?lerilin)
 - Mirithの解説
 ---
-
+- [ニセベリンについて](?fauxberin)
 ---
 - [Oberinの利用規約](?tos)
 - [キャラクターの命名ルール](?namingrule)

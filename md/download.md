@@ -14,9 +14,9 @@ Oberinのダウロードとインストール
 
 1. **[公式サイト](https://www.oberin.be)に行く。**
     
-    　2026年7月現在の公式サイトは [oberin.be](https://www.oberin.be) もしくは [oberin.com](https://www.oberin.com) です。昔は oberin.com のみが公式サイトだったけど、現在は oberin.com にアクセスすると oberin.be のミラーが表示されるようになっている。
+    　2026年7月現在の公式サイトは [oberin.be](https://www.oberin.be) もしくは [oberin.com](https://www.oberin.com) です。昔は oberin.com のみが公式サイトだったけど、現在はどちらにアクセスしても同じサイトが表示されるようになっている。
     
-    　Googleとかで『Oberin』で検索すると oberin.net とか oberin.io とか oberin.org とかも出てくるけど、これらは全て盗まれたソースコードで作られた、いわゆる海賊版のサイトらしいので要注意。海賊版でログインしても本物のサーバには接続できないよ。
+    　Googleとかで『Oberin』で検索すると oberin.net とか oberin.io とか oberin.org とかも出てくるけど、これらは全て盗まれたソースコードで作られた、いわゆるパチモンのサイトらしいので要注意。パチモン版でログインしても本物のサーバには接続できないよ。
     
     ![Googleで『Oberin』を検索した結果](img/google.png)
     
