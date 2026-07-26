@@ -11,7 +11,7 @@
 
 * 採った木材はWoodcrafting（木工）スキルなどで様々なアイテムに加工できる。
 
-* 伐採用のHand Axe（手斧）や木工用のSet of Woodworking Tools（木工用道具一式）は材料があればBlacksmithing（鍛冶）スキルで自作できるけど、工房とか雑貨屋でも買った方が早いぞ多分！
+* 伐採用のHand Axe（手斧）や木工用のSet of Woodworking Tools（木工用道具一式）は材料があればBlacksmithing（鍛冶）スキルで自作できるけど、工房とか雑貨屋で買った方が早いぞ多分！
 
 ### 長いまとめ
 
