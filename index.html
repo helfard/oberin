@@ -39,30 +39,29 @@
         let queryString = 'index';
         // 1. 先頭の '?' を除いたクエリ文字列を取得して '&' で分割
         const urlParams = window.location.search.substring(1).split('&');
+        // 2. 表示するコンテンツのクエリを所得
         for (const param of urlParams) {
-            console.log('params: ' + param);
             if(param && !param.includes('=')) {
                 queryString = param;
                 break;
             }
         }
-        console.log('query: ' + queryString);
-        // 2. ファイルを読み込み、HTMLに変換
+        // 3. MDファイルを読み込み、HTMLに変換
         async function loadMarkdown(queryString) {
             const contentArea = document.getElementById('content');
             const filePath = 'md/' + queryString + '.md';
             try {
-                // 3. fetchでindex.mdを取得
+                // 4. fetchでindex.mdを取得
                 const response = await fetch(filePath);
                 // ファイルが存在しない、またはエラーの場合のハンドリング
                 if (!response.ok) {
                     throw new Error(`HTTPエラー! ステータス: ${response.status}`);
                 }
-                // 4. レスポンスをテキスト（文字列）として抽出
+                // 5. レスポンスをテキスト（文字列）として抽出
                 const markdownText = await response.text();
-                // 5. marked.parse() でMarkdownをHTMLに変換
+                // 6. marked.parse() でMarkdownをHTMLに変換
                 const htmlContent = marked.parse(markdownText);
-                // 6. 画面に表示
+                // 7. 画面に表示
                 contentArea.innerHTML = htmlContent;
             } catch (error) {
                 console.error('読み込みエラー:', error);
