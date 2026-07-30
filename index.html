@@ -36,9 +36,17 @@
         marked.use({ renderer });
 
         // MarkdownをHTMLに変換する
-        // 1. ?以降のクエリ文字列を取得
-        let queryString = window.location.search.substring(1);
-        if (queryString === '') { queryString = 'index'; }
+        let queryString = 'index';
+        // 1. 先頭の '?' を除いたクエリ文字列を取得して '&' で分割
+        const urlParams = window.location.search.substring(1).split('&');
+        for (const param of urlParams) {
+            console.log('params: ' + param);
+            if(param && !param.includes('=')) {
+                queryString = param;
+                break;
+            }
+        }
+        console.log('query: ' + queryString);
         // 2. ファイルを読み込み、HTMLに変換
         async function loadMarkdown(queryString) {
             const contentArea = document.getElementById('content');
