@@ -22,7 +22,7 @@
         }
         button { margin: 5px; }
         #status { margin: 5px; }
-        #logContainer { background: #f4f4f4; padding: 10px; border: 1px solid #ccc; height: 400px; overflow-y: scroll; white-space: pre-wrap; font-family: monospace; }
+        #logContainer { border: 1px solid #ccc; height: 400px; overflow-y: scroll; white-space: pre-wrap; font-family: monospace; }
         #btnClearLog { float: right;}
         #worldMap {
             display: block;
@@ -152,7 +152,9 @@
                 <input type="checkbox" id="systemLog" checked><span id="systemLogLabel">システムログ</span>
             </label>
         </div>
-        <div id="logContainer"></div>
+        <div>
+            <textarea id="logContainer"></textarea>
+        </div>
         <div>
             <button id="btnCopyExample" onclick="copyExample()">AIへの指示の例をコピー</button>
             <button id="btnClearLog" onclick="clearLog()">ログを消去</button>
