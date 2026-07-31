@@ -36,8 +36,8 @@ const MESSAGES = Object.freeze({
         'en': 'Previous folder found:'
     },
     restoreGuide: { 
-        'ja': '<br><span style="color: blue;">画面のどこでも良いので1回クリックすると、アクセス許可ポップアップが表示され監視を再開します。</span>', 
-        'en': '<br><span style="color: blue;">Click anywhere on the screen once to show the permission popup and resume monitoring.</span>' 
+        'ja': '<br><strong>画面のどこでも良いので1回クリックすると、アクセス許可ポップアップが表示され監視を再開します。</strong>', 
+        'en': '<br><strong>Click anywhere on the screen once to show the permission popup and resume monitoring.</strong>' 
     },
     // ログファイル監視中
     statusMonitoring: { 'ja': '監視中： ', 'en': 'Monitoring: ' },
@@ -45,8 +45,8 @@ const MESSAGES = Object.freeze({
     statusFileChanged: { 'ja': 'ファイル変更を検知: ', 'en': 'File change detected: ' },
     // AIへの指示
     aiInstruction: {
-        'ja': '画面の <div id="logContainer"> にある文字列を取得し、その文字列を日本語に翻訳して表示してください。以降は『。』のような意味のない入力をするたびに同様にして文字列を再取得して翻訳してください。意味のある文章を入力した場合はその入力を英語に翻訳し、また『終了』と入力されたらこの処理を終了してください。',
-        'en': 'Get the text strings in the `<div id="logContainer">` on the page, and translate those strings into English to display them. From now on, whenever an meaningless input like "." is entered, retrieve the text strings again in the same way and translate them. If a meaningful input is entered, translate this input into Romaji Japanese, and if "Exit" is entered, end this process.'
+        'ja': '画面の <textarea id="logContainer"> にある文字列を取得し、その文字列を日本語に翻訳して表示してください。以降は『。』のような意味のない入力をするたびに同様にして文字列を再取得して翻訳してください。意味のある文章を入力した場合はその入力を英語に翻訳し、また『終了』と入力されたらこの処理を終了してください。',
+        'en': 'Get the text strings in the `<textarea id="logContainer">` on the page, and translate those strings into English to display them. From now on, whenever an meaningless input like "." is entered, retrieve the text strings again in the same way and translate them. If a meaningful input is entered, translate this input into Romaji Japanese, and if "Exit" is entered, end this process.'
     },
     copied: {
         'ja': 'コピーしました！',
