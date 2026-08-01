@@ -306,9 +306,9 @@ function displayLogs() {
 
 // 表示設定のロード
 function loadDisplaySettings() {
-    const timeStampIsChecked = loadStorage('TimeStamp', true);
-    const chatLogIsChecked = loadStorage('ChatLog', true);
-    const systemLogIsChecked = loadStorage('SystemLog', true);
+    const timeStampIsChecked = loadStorage('ShowTimeStamp', true);
+    const chatLogIsChecked = loadStorage('ShowChatLog', true);
+    const systemLogIsChecked = loadStorage('ShowSystemLog', true);
     document.getElementById('timeStamp').checked = timeStampIsChecked;
     document.getElementById('chatLog').checked = chatLogIsChecked;
     document.getElementById('systemLog').checked = systemLogIsChecked;
@@ -322,9 +322,9 @@ function changeDisplaySettings() {
     const chatLogIsChecked = document.getElementById('chatLog')?.checked;
     const systemLogIsChecked = document.getElementById('systemLog')?.checked;
     // 表示設定を保存する
-    saveStorage('TimeStamp', timeStampIsChecked);
-    saveStorage('ChatLog', chatLogIsChecked);
-    saveStorage('SystemLog', systemLogIsChecked);
+    saveStorage('ShowTimeStamp', timeStampIsChecked);
+    saveStorage('ShowChatLog', chatLogIsChecked);
+    saveStorage('ShowSystemLog', systemLogIsChecked);
     // ログを再表示
     displayLogs();
 }
