@@ -63,7 +63,7 @@ const storageVersionCheck = (() => {
     // コンフリクト対策に実際のキーは先頭にアプリごとのコードが追加される
     const appVersion = 'AppVersion';
     // このアプリで使用されているキー全てのリスト
-    const storageKeys = ['Lang', '', appVersion];
+    const storageKeys = ['Lang', 'ShowTimeStamp', 'ShowChatLog', 'ShowSystemLog', appVersion];
     // 現行のバージョン
     const currentVersion = STORAGE.version;
     // 保存されていたバージョン
@@ -71,7 +71,7 @@ const storageVersionCheck = (() => {
     // バージョンが違ったら全てのデータを消去
     if (savedVersion && savedVersion !== currentVersion) {
         storageKeys.forEach (key => localStorage.removeItem(storageCode + key));
-        // localStorage.clear();は使うべきではない（他のアプリ用のデータが巻き込まれる）
+        // localStorage.clear();は使うべきではない（他のアプリ用のデータが巻き込まれる）が、これだとキーが変更された時に対応できないな…。
         log('StorageVersionCheck: ローカルストレージのデータを消去');
     }
     saveStorage(appVersion, currentVersion); // 改めて現行バージョンを保存
