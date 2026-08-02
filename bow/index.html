@@ -23,10 +23,12 @@
         button { margin: 5px; }
         #status { margin: 5px; }
         #logContainer { border: 1px solid #ccc; height: 400px; overflow-y: scroll; white-space: pre-wrap; font-family: monospace; }
-        #btnClearLog { float: right;}
+        #resetMap, #btnClearLog { float: right;}
         #worldMap {
             display: block;
             cursor: crosshair; /* カーソルを十字にして座標を測りやすくする */
+            /* 初期状態では非表示 */
+            visibility: hidden;
         }
         #imageContainer {
             position: relative;   /* 重ねる位置の基準点になります */
@@ -130,12 +132,15 @@
     <section>
         <h2 id="sextantAndOrb">SextantとOrb of Seeing</h2>
         <div id="imageContainer">
-            <img src="map.png" width="500" height="500" alt="World Map" id="worldMap">
+            <div id="maskedImage">
+                <img src="map.png" width="500" height="500" alt="World Map" id="worldMap">
+            </div>
             <div id="pinBoard"></div>
             <div id="coordsDisplay"></div>
         </div>
         <div>
             <button id="clearPins" onclick="clearPins()">古いピンを削除</button>
+            <button id="resetMap" onclick="resetMap()">地図を初期化</button>
         </div>
     </section>
 
@@ -169,7 +174,7 @@
         <address>
             HAIKAI Turbo Ver. 0.1<br>
             Created by Geld<br>
-            Last update: 2026/07/09
+            Last update: 2026/08/03
         </address>
     </footer>
 

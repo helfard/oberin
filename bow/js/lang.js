@@ -17,6 +17,8 @@ const MESSAGES = Object.freeze({
     coordN: { 'ja': 'N: ', 'en': 'N: ' },
     coordE: { 'ja': ', E: ', 'en': ', E: ' },
     clearPins: { 'ja': '古いピンを削除', 'en': 'Clear old pins' },
+    resetMap: { 'ja': 'マップを初期化', 'en': 'Reset the map' },
+    confirmResetMap: { 'ja': '本当に地図を初期化してもよろしいですか？', 'en': 'Are you sure you want to reset the map?' },
     textLogs: { 'ja': 'Text Logs', 'en': 'Text Logs' },
     timeStampLabel: { 'ja': 'タイムスタンプ', 'en': 'Timestamp' },
     chatLogLabel: { 'ja': '会話ログ', 'en': 'Chat Log' },

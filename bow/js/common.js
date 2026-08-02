@@ -63,7 +63,7 @@ const storageVersionCheck = (() => {
     // コンフリクト対策に実際のキーは先頭にアプリごとのコードが追加される
     const appVersion = 'AppVersion';
     // このアプリで使用されているキー全てのリスト
-    const storageKeys = ['Lang', 'ShowTimeStamp', 'ShowChatLog', 'ShowSystemLog', appVersion];
+    const storageKeys = ['Lang', 'ShowTimeStamp', 'ShowChatLog', 'ShowSystemLog', 'maskHoles', appVersion];
     // 現行のバージョン
     const currentVersion = STORAGE.version;
     // 保存されていたバージョン

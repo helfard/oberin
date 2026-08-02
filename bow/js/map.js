@@ -59,10 +59,14 @@ let pinCount = 0;
 let currentCoordinates = [null, null];
 // 座標ごとに生成されたピンと登録済みの名前を管理する Map
 const existingPins = new Map();
+// 地図を開示するエリアの基準となる座標（{ x: 0, y: 0 }の配列）
+let maskHoles = loadStorage('maskHoles', []);
+// 地図を開示するエリアの半径（％）
+const holeRadius = 15;
+// 開示座標の最大保持数
+const MAX_HOLES = (100 / holeRadius) ** 2;
 
-/**
- * NE座標から、地図画像上での純粋なピクセル座標(XY)のみを算出する関数
- */
+// NE座標から、地図画像上での純粋なピクセル座標(XY)のみを算出
 function getCoordinateData(coordN, coordE, imgWidth, imgHeight) {
     const halfW = imgWidth / 2;
     const halfH = imgHeight / 2;
@@ -79,9 +83,7 @@ function getCoordinateData(coordN, coordE, imgWidth, imgHeight) {
     return { x: coordX, y: coordY };
 }
 
-/**
- * 六分儀（Sextant）の処理
- */
+// Sextantの処理
 function sextantCoordinates(n, e, name = 'You') {
     const board = document.getElementById('pinBoard');
     const targetImage = document.getElementById('worldMap');
@@ -147,11 +149,14 @@ function sextantCoordinates(n, e, name = 'You') {
         element: pin,
         names: [name]
     });
+
+    // Sextantの場合は地図の開示座標を追加
+    if (name === 'You') {
+        maskHoles.push({ x: coordX.x, y: coordX.y });
+    }
 }
 
-/**
- * Orb of Seeingの処理（自分からの相対座標を計算）
- */
+// Orb of Seeingの処理（直前のSextantからの相対座標を計算）
 function orbCoordinates(name, dist1, dir1, dist2, dir2) {
     const myN = currentCoordinates[0];
     const myE = currentCoordinates[1];
@@ -171,9 +176,100 @@ function orbCoordinates(name, dist1, dir1, dist2, dir2) {
     sextantCoordinates(calculatedN, calculatedE, name);
 }
 
-/**
- * 全てのピンを削除
- */
+// 地図のマスクを解除
+function removeMask() {
+    const img = document.getElementById('worldMap');
+    const mapWidth = img.width;
+    const mapHeight = img.height;
+    const closeRange = Math.floor(mapWidth * holeRadius / 100 / 2);
+
+    // 極点の座標データを取得
+    const nPole = getCoordinateData(nMax, eMax, mapWidth, mapHeight);
+    const sPole = getCoordinateData(nMin, eMin, mapWidth, mapHeight);
+
+    // 採用する有効な穴の座標を保存するリスト
+    const activeHoles = [];
+
+    for (const hole of maskHoles) {
+        // 1. 四隅の場合は無条件で採用対象
+        const isCorner = 
+            (hole.x === nPole.x || hole.x === sPole.x) && 
+            (hole.y === sPole.y || hole.y === nPole.y);
+
+        if (isCorner) {
+            activeHoles.push(hole);
+            continue;
+        }
+
+        // 2. すでに採用済みの穴の中に、近すぎるものがあるかチェック
+        const conflictingHoleIndex = activeHoles.findIndex(active => {
+            const distanceSquared = (hole.x - active.x) ** 2 + (hole.y - active.y) ** 2;
+            return distanceSquared < closeRange ** 2;
+        });
+
+        if (conflictingHoleIndex !== -1) {
+            // 近すぎる既存の穴が見つかった場合：
+            // 「古い方を消して新しい方に切り替える」場合は置き換え、
+            // 「新しい方に切り替える」＝ 新しい穴（hole）を優先して採用する
+            activeHoles[conflictingHoleIndex] = hole; 
+        } else {
+            // 近すぎる穴がなければ、そのまま新しく追加する
+            activeHoles.push(hole);
+        }
+    }
+
+    // 最大穴数を超えた場合は古い方から一括削除
+    if (activeHoles.length > MAX_HOLES) {
+        const removeCount = activeHoles.length - MAX_HOLES;
+        activeHoles.splice(0, removeCount); // 古い方から一括削除
+    }
+
+    // 最終的に残った（切り替えられた）有効な穴たちからグラデーションを生成
+    const gradients = activeHoles.map(hole => {
+        const percentX = (hole.x / mapWidth) * 100;
+        const percentY = (hole.y / mapHeight) * 100;
+        const pxRadius = (holeRadius * mapWidth) / 100;
+
+        return `radial-gradient(circle ${pxRadius}px at ${percentX}% ${percentY}%, black 40%, transparent 100%)`;
+    });
+
+    const maskValue = gradients.join(', ');
+    img.style.maskImage = maskValue;
+    img.style.webkitMaskImage = maskValue;
+    img.style.visibility = 'visible';
+
+    // 開示エリアを更新
+    maskHoles = activeHoles;
+    // ローカルストレージに保存
+    saveStorage('maskHoles', maskHoles);
+}
+
+// 地図のマスクを初期化して穴を塞ぐ
+function resetMap() {
+    // 確認ダイアログを表示
+    const isConfirmed = window.confirm(MESSAGES.confirmResetMap[currentLang]);
+    
+    // キャンセルされた場合は何もしない
+    if (!isConfirmed) {
+        return;
+    }
+
+    // 穴のデータを管理している配列を空にする
+    maskHoles = [];
+
+    const img = document.getElementById('worldMap');
+    if (img) {
+        // マスクを初期状態に戻す
+        img.style.maskImage = 'none';
+        img.style.webkitMaskImage = 'none';
+        img.style.visibility = 'hidden';
+    }
+
+    // ローカルストレージに保存
+    saveStorage('maskHoles', maskHoles);
+}
+
+// 全てのピンを削除
 function clearPins() {
     const board = document.getElementById('pinBoard');
     if (board) {

@@ -302,6 +302,8 @@ function displayLogs() {
     // 配列を連結して表示
     container.textContent = processedLines.join('\n');
     container.scrollTop = container.scrollHeight;
+    // 地図を開示
+    removeMask();
 }
 
 // 表示設定のロード
