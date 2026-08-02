@@ -208,10 +208,8 @@ function removeMask() {
         });
 
         if (conflictingHoleIndex !== -1) {
-            // 近すぎる既存の穴が見つかった場合：
-            // 「古い方を消して新しい方に切り替える」場合は置き換え、
-            // 「新しい方に切り替える」＝ 新しい穴（hole）を優先して採用する
-            activeHoles[conflictingHoleIndex] = hole; 
+            // 近すぎる既存の穴が見つかった場合はスキップ
+            continue; 
         } else {
             // 近すぎる穴がなければ、そのまま新しく追加する
             activeHoles.push(hole);
