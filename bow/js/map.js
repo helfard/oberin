@@ -231,10 +231,13 @@ function removeMask() {
         return `radial-gradient(circle ${pxRadius}px at ${percentX}% ${percentY}%, black 40%, transparent 100%)`;
     });
 
-    const maskValue = gradients.join(', ');
-    img.style.maskImage = maskValue;
-    img.style.webkitMaskImage = maskValue;
-    img.style.visibility = 'visible';
+    // 地図のマスクを解除
+    if (activeHoles.length) {
+        const maskValue = gradients.join(', ');
+        img.style.maskImage = maskValue;
+        img.style.webkitMaskImage = maskValue;
+        img.style.visibility = 'visible';
+    }
 
     // 開示エリアを更新
     maskHoles = activeHoles;
