@@ -87,7 +87,7 @@ function getCoordinateData(coordN, coordE, imgWidth, imgHeight) {
 function sextantCoordinates(n, e, name = 'You') {
     const board = document.getElementById('pinBoard');
     const targetImage = document.getElementById('worldMap');
-    
+
     if (!board || !targetImage || n < nMin || n > nMax || e < eMin || e > eMax) {
         return;
     }
@@ -95,7 +95,10 @@ function sextantCoordinates(n, e, name = 'You') {
     const n_val = parseInt(n, 10);
     const e_val = parseInt(e, 10);
     
-    currentCoordinates = [n_val, e_val];
+    // 現在の自分の座標を更新
+    if (name === 'You') {
+        currentCoordinates = [n_val, e_val];
+    }
     const coordKey = `${n_val}_${e_val}`;
 
     // すでに同じ座標にピンが存在する場合
