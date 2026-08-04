@@ -23,7 +23,7 @@
         button { margin: 5px; }
         #status { margin: 5px; }
         #logContainer { border: 1px solid #ccc; height: 400px; overflow-y: scroll; white-space: pre-wrap; font-family: monospace; }
-        #resetMap, #btnClearLog { float: right;}
+        #clearPins, #btnClearLog { float: right;}
         #worldMap {
             display: block;
             cursor: crosshair; /* カーソルを十字にして座標を測りやすくする */
@@ -139,8 +139,8 @@
             <div id="coordsDisplay"></div>
         </div>
         <div>
-            <button id="clearPins" onclick="clearPins()">古いピンを削除</button>
             <button id="resetMap" onclick="resetMap()">地図を初期化</button>
+            <button id="clearPins" onclick="clearPins()">古いピンを削除</button>
         </div>
     </section>
 
