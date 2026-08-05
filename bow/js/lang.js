@@ -47,8 +47,31 @@ const MESSAGES = Object.freeze({
     statusFileChanged: { 'ja': 'ファイル変更を検知: ', 'en': 'File change detected: ' },
     // AIへの指示
     aiInstruction: {
-        'ja': '画面の <textarea id="logContainer"> にある文字列を取得し、その文字列を日本語に翻訳して表示してください。以降は『。』のような意味のない入力をするたびに同様にして文字列を再取得して翻訳してください。意味のある文章を入力した場合はその入力を英語に翻訳し、また『終了』と入力されたらこの処理を終了してください。',
-        'en': 'Get the text strings in the `<textarea id="logContainer">` on the page, and translate those strings into English to display them. From now on, whenever an meaningless input like "." is entered, retrieve the text strings again in the same way and translate them. If a meaningful input is entered, translate this input into Romaji Japanese, and if "Exit" is entered, end this process.'
+        'ja': `ユーザーの入力内容に応じて、以下の条件に従って処理を実行してください。
+以降の処理は過去の会話履歴や前回の処理結果は一切引き継がず、毎回完全に独立した処理として行ってください。
+
+1. **『終了』と入力された場合**
+   - この指示の処理を終了する。
+
+2. **『。』などの意味のない入力の場合**
+   - 画面の '<textarea id="logContainer">' の値のログを取得し、それを『日本語』に翻訳する。
+   - ログのフォーマットはなるべく変更しないで下さい。
+
+3. **意味のある文章の入力の場合**
+   - その入力された文章を『英語』に翻訳する。
+`,
+        'en': `Execute processing according to the following conditions based on the user's input.
+From now on, do not carry over any past conversation history or previous processing results; execute each process as completely independent every time.
+
+1. **When 'End' is input**
+   - Terminate the processing of this instruction.
+
+2. **For meaningless inputs such as '.'**
+   - Retrieve the string value from the screen '<textarea id="logContainer">', and translate the retrieved string from romanized Japanese into English.
+   - Please do not change the format of the log as much as possible.
+
+3. **For meaningful text inputs**
+   - Translate the input text into romanized Japanese (Romaji).`
     },
     copied: {
         'ja': 'コピーしました！',
