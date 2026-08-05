@@ -300,7 +300,7 @@ function displayLogs() {
         processedLines.push(formattedLine + (item.count > 1 ? ` *${item.count}` : ''));
     }
     // 配列を連結して表示
-    container.textContent = processedLines.join('\n');
+    container.value = processedLines.join('\n');
     container.scrollTop = container.scrollHeight;
     // 地図を開示
     removeMask();
