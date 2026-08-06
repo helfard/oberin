@@ -1,13 +1,20 @@
-// common.js
-// 　汎用ルーチン
+/**
+ * common.js
+ * 汎用ルーチン
+ */
 
-// ローカルストレージ情報
+/**
+ * ローカルストレージ設定の定数
+ */
 const STORAGE = {
     code: 'bow',
     version: '1',
-}
+};
 
-// デバッグ用のメッセージの表示
+/**
+ * デバッグ用のメッセージをコンソールに出力する
+ * @param {...*} msgs - 出力するメッセージやデータ
+ */
 const log = (...msgs) => {
     msgs.forEach(msg => {
         try {
@@ -20,11 +27,16 @@ const log = (...msgs) => {
     });
 };
 
-// ローカルストレージにデータを保存
+/**
+ * ローカルストレージにデータを保存する
+ * @param {string} key - ストレージのキー名
+ * @param {*} data - 保存するデータ
+ * @returns {boolean} 保存成功時はtrue、失敗時はfalse
+ */
 const saveStorage = (key, data) => {
     // 外部変数 STORAGE が存在しない場合の安全弁
     const storageCode = typeof STORAGE !== 'undefined' ? STORAGE.code : '';
-    // ローカルストレージにデータを保存
+    
     try {
         const jsonString = JSON.stringify(data);
         localStorage.setItem(storageCode + key, jsonString);
@@ -35,16 +47,25 @@ const saveStorage = (key, data) => {
         return false; // 保存失敗のサイン
     }
 };
-// ローカルストレージからデータを所得
+
+/**
+ * ローカルストレージからデータを取得する
+ * @param {string} key - ストレージのキー名
+ * @param {*} [defaultValue=null] - データが存在しない場合や解析エラー時のデフォルト値
+ * @returns {*} 取得したデータ、またはデフォルト値
+ */
 const loadStorage = (key, defaultValue = null) => {
-    // 外部変数が無い場合の安全弁（無ければ空文字にするなど）
+    // 外部変数が無い場合の安全弁
     const storageCode = typeof STORAGE !== 'undefined' ? STORAGE.code : '';
-    // ローカルストレージから生データを所得
+    
+    // ローカルストレージから生データを取得
     const rawData = localStorage.getItem(storageCode + key);
+    
     // データが存在しない場合は、指定された初期値を返す
     if (rawData === null) {
         return defaultValue;
     }
+
     // データの解析
     try {
         return JSON.parse(rawData);
@@ -54,30 +75,37 @@ const loadStorage = (key, defaultValue = null) => {
         return defaultValue;
     }
 };
-// ローカルストレージのデータのバージョンをチェック
-// バージョンが違ったら不具合対策として一旦消去する
+
+/**
+ * ローカルストレージのデータのバージョンをチェックし、
+ * バージョンが異なる場合は不具合対策として関連データを消去する（即時実行関数）
+ */
 const storageVersionCheck = (() => {
-    // ローカルストレージのキーの頭に付ける符号
     const storageCode = STORAGE.code;
-    // ローカルストレージのバージョンデータのキー
-    // コンフリクト対策に実際のキーは先頭にアプリごとのコードが追加される
     const appVersion = 'AppVersion';
     // このアプリで使用されているキー全てのリスト
     const storageKeys = ['Lang', 'ShowTimeStamp', 'ShowChatLog', 'ShowSystemLog', 'maskHoles', appVersion];
-    // 現行のバージョン
     const currentVersion = STORAGE.version;
-    // 保存されていたバージョン
+    
+    // 保存されていたバージョンを取得
     const savedVersion = loadStorage(appVersion);
-    // バージョンが違ったら全てのデータを消去
+
+    // バージョンが違ったら全ての関連データを消去
     if (savedVersion && savedVersion !== currentVersion) {
-        storageKeys.forEach (key => localStorage.removeItem(storageCode + key));
-        // localStorage.clear();は使うべきではない（他のアプリ用のデータが巻き込まれる）が、これだとキーが変更された時に対応できないな…。
-        log('StorageVersionCheck: ローカルストレージのデータを消去');
+        storageKeys.forEach(key => localStorage.removeItem(storageCode + key));
+        // ※localStorage.clear()は他アプリのデータを巻き込むため不使用
+        log('StorageVersionCheck: ローカルストレージのデータを消去しました');
     }
-    saveStorage(appVersion, currentVersion); // 改めて現行バージョンを保存
+    
+    // 改めて現行バージョンを保存
+    saveStorage(appVersion, currentVersion);
 })();
 
-// クリップボードへコピー
+/**
+ * 指定された文字列をクリップボードにコピーする
+ * @param {string} string - コピーする文字列
+ * @returns {Promise<boolean>} コピー成功時はtrue、失敗時はfalse
+ */
 const execCopy = async (string) => {
     try {
         await navigator.clipboard.writeText(string);
