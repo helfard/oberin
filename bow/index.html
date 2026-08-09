@@ -126,7 +126,9 @@
     <section>
         <h2 id="logsFolder">Logsフォルダ</h2>
         <div id="status"></div>
-        <button id="btnSelectFolder" onclick="selectFolder()">フォルダを選択</button>
+        <div>
+            <button id="btnSelectFolder" onclick="selectFolder()">フォルダを選択</button>
+        </div>
     </section>
 
     <section>
@@ -146,14 +148,14 @@
 
     <section>
         <h2 id="textLogs">Text Logs</h2>
-        <div>
-            <label onclick="changeDisplaySettings()">
+        <div onclick="changeDisplaySettings()">
+            <label>
                 <input type="checkbox" id="timeStamp" checked><span id="timeStampLabel">タイムスタンプ</span>
             </label>
-            <label onclick="changeDisplaySettings()">
+            <label>
                 <input type="checkbox" id="chatLog" checked><span id="chatLogLabel">会話ログ</span>
             </label>
-            <label onclick="changeDisplaySettings()">
+            <label>
                 <input type="checkbox" id="systemLog" checked><span id="systemLogLabel">システムログ</span>
             </label>
         </div>
@@ -161,7 +163,7 @@
             <textarea id="logContainer"></textarea>
         </div>
         <div>
-            <button id="btnCopyExample" onclick="copyExample()">AIへの指示の例をコピー</button>
+            <button id="btnCopyInstruction" onclick="copyInstruction()">AIへの指示の例をコピー</button>
             <button id="btnClearLog" onclick="clearLog()">ログを消去</button>
         </div>
     </section>

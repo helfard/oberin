@@ -146,8 +146,8 @@ function sextantCoordinates(n, e, name = 'You') {
     pin.className = 'map-pin';
 
     // 色相（Hue）の基本ステップ
-    const hueStep = 37; 
-    const hue = (pinCount * hueStep) % 160 + 240; 
+    const hueStep = 23; 
+    const hue = (pinCount * hueStep) % 180 + 240; 
     const pinColor = `hsl(${hue % 360}, 100%, 45%)`;
     pin.style.setProperty('--pin-color', pinColor);
     pinCount++;

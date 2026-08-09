@@ -71,22 +71,6 @@ async function saveFolderHandle(handle) {
 }
 
 /**
- * フォルダのハンドルをIndexedDBに保存する
- * @param {FileSystemDirectoryHandle} handle - 保存するフォルダハンドル
- * @returns {Promise<void>}
- */
-async function saveFolderHandle(handle) {
-    const db = await openDB();
-    const tx = db.transaction(STORE_NAME, 'readwrite');
-    tx.objectStore(STORE_NAME).put(handle, KEY_NAME);
-    
-    return new Promise((resolve, reject) => {
-        tx.oncomplete = () => resolve();
-        tx.onerror = ({ target }) => reject(target.error);
-    });
-}
-
-/**
  * フォルダハンドルをIndexedDBから読み込む
  * @returns {Promise<FileSystemDirectoryHandle|undefined>} 取得したハンドル（存在しない場合はundefined）
  */
@@ -143,8 +127,8 @@ async function restoreFolder() {
         };
 
         // 画面クリックのイベントをセット（安全のため一度外してから登録）
-        window.removeEventListener('click', requestFolderPermission);
-        window.addEventListener('click', requestFolderPermission);
+        window.removeEventListener('click', requestFolderPermission); // ※初回は意味がないが残しても無害
+        window.addEventListener('click', requestFolderPermission, { once: true });
 
     } catch (err) {
         // IndexedDBの読み込み自体に失敗した場合
@@ -484,7 +468,7 @@ function clearLog() {
 /**
  * 現在の言語に応じたAIへの指示の例をクリップボードにコピーし、完了アラートを表示する
  */
-function copyExample() {
+function copyInstruction() {
     const text = MESSAGES.aiInstruction[currentLang];
     execCopy(text);
     alert(MESSAGES.copied[currentLang]);

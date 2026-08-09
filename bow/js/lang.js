@@ -29,8 +29,8 @@ const MESSAGES = Object.freeze({
     chatLogLabel: { 'ja': '会話ログ', 'en': 'Chat Log' },
     systemLogLabel: { 'ja': 'システムログ', 'en': 'System Log' },
     duplicateLog: { 'ja': '重複行をまとめる', 'en': 'Deduplicate logs' },
+    btnCopyInstruction: { 'ja': 'AIへの指示の例をコピー', 'en': 'Copy AI instruction example' },
     btnClearLog: { 'ja': 'ログを消去', 'en': 'Clear Log' },
-    btnCopyExample: { 'ja': 'AIへの指示の例をコピー', 'en': 'Copy AI instruction example' },
 
     // フォルダ監視・復元用動的メッセージ
     statusNotSupported: { 'ja': 'お使いのブラウザは対応していません。', 'en': 'Your browser is not supported.' },
