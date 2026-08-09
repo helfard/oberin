@@ -181,7 +181,7 @@ Oberinのキャラクター作成
 
 - **Stealth（ステルス）**
 
-    　姿を消したまま移動するスキル。
+    　姿を消したまま移動する。
 
 - **Tailoring（裁縫）**
 
@@ -213,13 +213,13 @@ Oberinのキャラクター作成
 
 #### I agree to the Terms of Services
 
-　日本語に訳すと『私は利用規約（Terms of Services: ToS）に同意します』ってこと。利用規約に同意しないとゲームを遊べないのでチェックする。
+　日本語に訳すと『`私は利用規約（Terms of Services: ToS）に同意します`』ってこと。利用規約に同意しないとゲームを遊べないのでチェックする。
 
 　[ちなみに私がToSを適当に日本語訳したものはここにあるよ](?tos)。
 
 #### Create Character
 
-　入力情報に抜けがなく、ちゃんとスキルポイントを使い切っていて、『ToSに同意する』にチェックしてあれば、キャラ作成ボタンが押せるようになる。
+　入力情報に抜けがなく、ちゃんとスキルポイントを使い切っていて、『`I agree to the Terms of Services`』にチェックしてあれば、キャラ作成ボタンが押せるようになる。
 
 　キャラクターができたらさっそくログインしてみよう！
 
@@ -261,27 +261,27 @@ A. そんなの知らんがなー。
 
 - **Fighter**
 
-    　Prime Skillはどれも普通に戦っていれば勝手に上がっていくので、最初に取るべきスキルとしてはあまり重視されないようだ。装備の消耗が激しいので武具を自作できるようにMiningとBlacksmithing、余裕があればLumberjackingに振っておくと良いらしい。また、Anatomyが高いとクリティカル率が上がり、特に上位の硬いモンスターとの戦いが楽になる（このゲームのクリティカルヒットは相手の防御力を無視するので、高位のモンスターが相手の時ほどメリットが大きい）。Resisting Magicがあると魔法を使ってくるモンスターとの戦いが楽になるが、戦っていれば自然に上限に到達するので最初に振る必要はないという意見もある。個人的にはそれでもResisting Magic 1はヤバいと思うんだが。
+    　Prime Skillはどれも普通に戦っていれば勝手に上がっていくので、最初に取るべきスキルとしてはあまり重視されないようだ。装備の消耗が激しいので武具を自作できるように`Mining`と`Blacksmithing`、余裕があれば`Lumberjacking`に振っておくと良いらしい。また、`Anatomy`が高いとクリティカル率が上がり、特に上位の硬いモンスターとの戦いが楽になる（このゲームのクリティカルヒットは相手の防御力を無視するので、高位のモンスターが相手の時ほどメリットが大きい）。`Resisting Magic`があると魔法を使ってくるモンスターとの戦いが楽になるが、戦っていれば自然に上限に到達するので最初に振る必要はないという意見もある。個人的にはそれでも`Resisting Magic` 1はヤバいと思うんだが。
 
 - **Ranger**
 
-    　Prime SkillではTrackingを2以上にしておくことが強く推奨されている（スキルの仕様上1から2に上げるのが大変らしい）。また、Special/Ranger 4で覚えるEscape Moveが非常に強力でオススメらしい。他には、Woodcraftingが5になると弓と矢を自作できるようになるので財布に優しく、それを見越して4にしておくことが提案されていた。残りのポイントはLumberjackingかResisting Magicに振るのが無難だろうか？
+    　Prime Skillでは`Tracking`を2以上にしておくことが強く推奨されている（スキルの仕様上1から2に上げるのが大変らしい）。また、`Special/Ranger` 4で覚えるEscape Moveが非常に強力でオススメらしい。他には、`Woodcrafting`が5になると弓と矢を自作できるようになるので財布に優しく、それを見越して4にしておくことが提案されていた。残りのポイントは`Lumberjacking`か`Resisting Magic`に振るのが無難だろうか？
 
 - **Rogue**
 
-    　Prime Skillではレベル上げが大変なStealthにポイントを振ることを推奨されている。他にはLockpickingとRemoving Traps（これらもレベル上げがかなり大変）。あと、Blacksmithingが2あるとGM Dagger（高品質な短剣）を自作できるので良いらしい。残りは例によってResisting Magicで。
+    　Prime Skillではレベル上げが大変な`Stealth`にポイントを振ることを推奨されている（というが、バージョン48.04で大幅に緩和されたっぽいので今後どうなのかは良く分からん）。他には`Lockpicking`と`Removing Traps`（これらもレベル上げがかなり大変）。あと、`Blacksmithing`が2あるとGM Dagger（高品質な短剣）を自作できるので良いらしい。残りは例によって`Resisting Magic`で。
 
 - **Wizard**
 
-    　Prime SkillではMagery/Wizardを4にしておくことが推奨されている（レベル4でExplosionやParalyzeといったそこそこ便利な魔法が使えるのと、Wizardのメイン火力とされるレベル5のLightning Boltを少しでも早く覚えるため）。また、HPが低いのでResisting Magicはなるべく高い方が良い。Enchantingで金策をする際にMiningとLumberjackingが高いと素材の収集効率が良いらしいが、Enchanting自体はレベル上げが簡単なので最初は低くても良いみたいだ。
+    　Prime Skillでは`Magery/Wizard`を4にしておくことが推奨されている（レベル4でExplosionやParalyzeといったそこそこ便利な魔法が使えるのと、Wizardのメイン火力とされるレベル5のLightning Boltを少しでも早く覚えるため）。また、HPが低いので`Resisting Magic`はなるべく高い方が良い。`Enchanting`で金策をする際に`Mining`と`Lumberjacking`が高いと素材の収集効率が良いらしいが、`Enchanting`自体はレベル上げが簡単なので最初は低くても良いみたいだ。
 
 - **Cleric**
 
-    　Prime SkillではMagery/ClericとMeditationが高いと回復魔法の効率が良くなる（と書かれてはいるのだが、現行のバージョン48のMeditationはMPが減っていれば自動的に発動するパッシブスキルで特に意識しなくても勝手にレベルが上がっていくものなので、最初にポイントを振る価値があるかは個人的には疑わしい）。あとAlchemy/Clericが高いと序盤から金策がしやすいらしい。HPが低いのでResisting Magicもなるべく高い方が良い。また、Tailoringに多少振っておくと革製の防具を自作できるようになって多少は命の危険が減るらしい？（個人的にはそんなのわざわざ自作するまでもなく、その辺の親切な先輩冒険者がポンと一式くれそうな気がするんだが）
+    　Prime Skillでは`Magery/Cleric`と`Meditation`が高いと回復魔法の効率が良くなる（と書かれてはいるのだが、現行のバージョン48の`Meditation`はMPが減っていれば自動的に発動するパッシブスキルで特に意識しなくても勝手にレベルが上がっていくものなので、最初にポイントを振る価値があるかは個人的には疑わしい）。あと`Alchemy/Cleric`が高いと序盤から金策がしやすいらしい。HPが低いので`Resisting Magic`もなるべく高い方が良い。また、`Tailoring`に多少振っておくと革製の防具を自作できるようになって多少は命の危険が減るらしい？（個人的にはそんなのわざわざ自作するまでもなく、その辺の親切な先輩冒険者がポンと一式くれそうな気がするんだが）
 
 - **Druid**
 
-    　特に決まったセオリーはないようだけど、Prime SkillではTamingが4あるとHarpie（使役にできる下級モンスターの中では満場一致の最強＆最高）をテイムできるようになって、序盤からかなり無理ができるようになる。他には、Magery/Druid（もしくはAlchemy/Druid）が3以上あるとInvisibliltyが使える（もしくはInvisiblity Potionが作れる）ようになって緊急事態での生存率がぐっと上がる。残りはやはりResisting Magicだろうか。
+    　特に決まったセオリーはないようだけど、Prime Skillでは`Taming`が4あるとHarpie（使役にできる下級モンスターの中では満場一致の最強＆最高）をテイムできるようになって、序盤からかなり無理ができるようになる。他には、`Magery/Druid`（もしくは`Alchemy/Druid`）が3以上あるとInvisibliltyが使える（もしくはInvisiblity Potionが作れる）ようになって緊急事態での生存率がぐっと上がる。残りはやはり`Resisting Magic`だろうか。
 
 ### 余談
 
