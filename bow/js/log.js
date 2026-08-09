@@ -25,7 +25,7 @@ let logArray = [];
 let timerId = null;
 
 // IndexedDBに関する定数
-const DB_NAME = 'FolderMonitorDB';
+const DB_NAME = 'FolderMonitorDB(BoW)';
 const STORE_NAME = 'handles';
 const KEY_NAME = 'latestFolder';
 

@@ -14,7 +14,8 @@ const MESSAGES = Object.freeze({
     // 固定UI用
     pageTitle: { 'ja': '放浪者の書', 'en': 'The Book of Wanderer' },
     headerTitle: { 'ja': '放浪者の書', 'en': 'The Book of Wanderer' },
-    toIndex: { 'ja': 'トップページ', 'en': 'Top Page' },
+    toIndexTop: { 'ja': 'トップページ', 'en': 'Top Page' },
+    toIndexBottom: { 'ja': 'トップページ', 'en': 'Top Page' },
     logsFolder: { 'ja': 'Logsフォルダ', 'en': 'Logs Folder' },
     btnSelectFolder: { 'ja': 'フォルダを選択', 'en': 'Select the Folder' },
     sextantAndOrb: { 'ja': 'SextantとOrb of Seeing', 'en': 'Sextant and Orb of Seeing' },
