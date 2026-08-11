@@ -31,6 +31,8 @@
 
     ![ちなみにこれは鍛冶屋の炉で魚を焼いています](img/cooking.png)
 
+    　Blacksmithingスキルが何レベルになると何が作れて材料に何が必要なんて話は[FandamのWiki](https://oberin.fandom.com/wiki/Blacksmithing)でも見て欲しい。
+
     　Blaksmihctingスキルは鍛冶屋のForge（炉）の前でないと使用できない。また、Blacksmith Hammer（鍛冶用金槌）が必要だ。持ってさえいればBlacksmithingスキルを押した時に自動的に装備する。例によってカンカンしていると割とあっさり壊れてしまうので、何セットか予備を持っておこう。Blacksmith HammerはBlacksmithingスキルで自作できるけど、当然ながらBlacksmith Hammerがないと作れないので、うっかりBlacksmithing Hammerを切らすと服を買いに行くための服がない状態になる。というかそもそも素材のコスパが悪いので店で買う方が早い。今居る鍛冶屋に売っていなければ工房か雑貨屋を探そう。
 
 1. **レッツ修理ング！**

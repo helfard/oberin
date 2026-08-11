@@ -37,6 +37,8 @@
 
     ![まあ1レベルだとそもそも選択の余地なんてないんですけどね](img/woodcrafting.png)
 
+    　Woodcraftingスキルが何レベルになると何が作れて材料に何が必要なんて話は[FandamのWiki](https://oberin.fandom.com/wiki/Woodcrafting)でも見て欲しい。
+
     　Woodcraftingスキルは場所を問わず使用できるが、Set of Woodworking Tools（木工用道具一式）が必要だ。持ってさえいればWoodcraftingスキルを押した時に自動的に装備する。例によってギコギコしていると割とあっさり壊れてしまうので、何セットか予備を持っておこう。Set of Woodworking ToolsはTinkering（工作）スキルで自作できるけど、素材のコスパが悪いので店で買う方がむしろ安い。工房とか雑貨屋に売っているはずだ。
 
     　Woodcraftingスキルレベルが1なら作れるのはBoard（板）とBundle of Kindling（薪の束）くらいしかないが、2レベルになるとFishing Pole（釣竿）、5レベル以上でShort Bow（短弓）やArrow（矢）、8レベルになると水の上を自由に移動可能になるステキアイテムRaft（いかだ）を自作できるようになる。特に消耗品である矢を自作できるようになるのは大きいので、当面は5レベルを目標にしておきたい。
