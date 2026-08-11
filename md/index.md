@@ -11,6 +11,7 @@
 
 - [Oberinとは？](?about)
 - [Oberinの歴史](?history)
+---
 - [Oberinのダウンロードとインストール](?download)
 - [Oberinのキャラクター作成](?characreate)
 - [Oberinの最初のログイン](?tutorial)
@@ -18,12 +19,13 @@
 ---
 - [神殿と蘇生](?temple)
 - [釣りと料理](?fishandcook)
-- [伐採と木工](?ljandwc)
-- 採掘と鍛冶
+- [伐採と木工](?lumberjackandwoodcraft)
+- [採掘と鍛冶](?mineandblacksmith)
 - テイムとペット
 - 錬金術とエンチャント
-- 修理
-- 戦闘と魔法
+- 戦闘と包帯
+- 魔法と瞑想
+- DiscordとOberinite
 
 - クエストとリアルタイムクエスト
 ---
