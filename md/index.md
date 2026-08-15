@@ -17,6 +17,8 @@
 - [Oberinの最初のログイン](?tutorial)
 - ホットキーとキーバインド
 ---
+- [DiscordとOberinite](?discord)
+---
 - [神殿と蘇生](?temple)
 - [釣りと料理](?fishandcook)
 - [伐採と木工](?lumberjackandwoodcraft)
@@ -25,7 +27,6 @@
 - 錬金術とエンチャント
 - 戦闘と包帯
 - 魔法と瞑想
-- DiscordとOberinite
 
 - クエストとリアルタイムクエスト
 ---
