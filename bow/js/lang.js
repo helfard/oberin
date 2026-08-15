@@ -28,7 +28,6 @@ const MESSAGES = Object.freeze({
     timeStampLabel: { 'ja': 'タイムスタンプ', 'en': 'Timestamp' },
     chatLogLabel: { 'ja': '会話ログ', 'en': 'Chat Log' },
     systemLogLabel: { 'ja': 'システムログ', 'en': 'System Log' },
-    duplicateLog: { 'ja': '重複行をまとめる', 'en': 'Deduplicate logs' },
     btnCopyInstruction: { 'ja': 'AIへの指示の例をコピー', 'en': 'Copy AI instruction example' },
     btnClearLog: { 'ja': 'ログを消去', 'en': 'Clear Log' },
 
@@ -87,6 +86,36 @@ From now on, do not carry over any past conversation history or previous process
         'ja': 'コピーしました！',
         'en': 'Copied!',
     },
+
+    // 自動翻訳機・手動翻訳機
+    autoTranslator: {
+        'ja': '自動翻訳機',
+        'en': 'Auto Translator',
+    },
+    autoTranslateLabel: {
+        'ja': 'テキストログを自動翻訳',
+        'en': 'Translate text log automatically',
+    },
+    manualTranslator: {
+        'ja': '手動翻訳機',
+        'en': 'Manual Translator',
+    },
+    btnTranslate: {
+        'ja': '翻訳',
+        'en': 'Translate',
+    },
+    btnCopyTranslate: {
+        'ja': 'コピー',
+        'en': 'Copy',
+    },
+    statusInitializing: {
+        'ja': '翻訳モデルを準備中（初回はダウンロードに時間がかかります）',
+        'en': 'Initializing translation model (initial download may take a while)',
+    },
+    statusError: { 'ja': 'エラー', 'en': 'Error' },
+    statusReady: { 'ja': '準備完了', 'en': 'Ready' },
+    translateNotSupported: { 'ja': 'お使いのブラウザはTranslator APIに対応していません。', 'en': 'Your browser does not support the Translator API.' },
+    downloadingProgress: { 'ja': 'モデルをダウンロード中... ({percent}%)', 'en': 'Downloading model... ({percent}%)' },
 });
 
 /**
@@ -94,10 +123,8 @@ From now on, do not carry over any past conversation history or previous process
  * @param {string} lang - 言語コード ('ja' または 'en')
  */
 const setLanguage = (lang) => {
-    // グローバル変数を更新
     currentLang = lang;
 
-    // 該当するIDを持つUI要素のテキストを辞書の内容に書き換える
     for (const id in MESSAGES) {
         const element = document.getElementById(id);
         if (element) {
@@ -105,7 +132,6 @@ const setLanguage = (lang) => {
         }
     }
 
-    // ローカルストレージに現在の言語設定を保存
     saveStorage('Lang', currentLang);
 };
 
@@ -113,13 +139,8 @@ const setLanguage = (lang) => {
  * ローカルストレージから言語設定を取得し、初期言語として適用する
  */
 const getLanguage = () => {
-    // ローカルストレージから言語設定を取得（保存されていなければ 'ja'）
     const savedLang = loadStorage('Lang') ?? 'ja';
-    // 判別した言語で画面を切り替え
     setLanguage(savedLang);
 };
 
-/**
- * ページ読み込み完了時に言語設定をロードする
- */
 window.addEventListener('DOMContentLoaded', getLanguage);

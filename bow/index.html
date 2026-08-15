@@ -8,57 +8,49 @@
     <style>
         body { font-family: sans-serif; margin: 20px; }
         h2 { margin-top: 0px; }
-        /* セクションごとにわずかな影と角丸をつける */
         section {
             margin: 20px;
             padding: 5px 10px;
-            /* ぼかしの効いた、薄く自然なシャドウ */
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.8);
-            /* ほんの少し角を丸めると、シャドウと馴染んでさらにモダンになります（不要なら削除OK） */
             border-radius: 6px; 
-            /* レスポンシブ対応（画面幅からはみ出さないようにする） */
             max-width: 100%;
             height: auto;
         }
         button { margin: 5px; }
         #status { margin: 5px; }
-        #logContainer { border: 1px solid #ccc; height: 400px; overflow-y: scroll; white-space: pre-wrap; font-family: monospace; }
-        #clearPins, #btnClearLog { float: right;}
+        #logContainer, #translatedLogContainer { border: 1px solid #ccc; height: 400px; overflow-y: scroll; white-space: pre-wrap; font-family: monospace; }
+        #clearPins, #btnClearLog, #btnTranslate, #btnCopyTranslate { float: right;}
         #worldMap {
             display: block;
-            cursor: crosshair; /* カーソルを十字にして座標を測りやすくする */
-            /* 初期状態では非表示 */
+            cursor: crosshair;
             visibility: hidden;
         }
         #imageContainer {
-            position: relative;   /* 重ねる位置の基準点になります */
-            display: inline-block; /* 画像のサイズに合わせます */
+            position: relative;
+            display: inline-block;
         }
         #coordsDisplay {
-            position: absolute;   /* 絶対配置にします */
-            right: 15px;         /* 右からの余白を調整 */
-            bottom: 15px;        /* 下からの余白を調整 */
-            padding: 5px 10px;    /* 文字の周りの余白 */
+            position: absolute;
+            right: 15px;
+            bottom: 15px;
+            padding: 5px 10px;
             font-size: 16px;
             font-weight: bold;
         }
-        /* ピン全体のコンテナ（位置合わせの基準点） */
+
         .map-pin {
             position: absolute;
-            width: 14px;  /* 中心ドットの大きさに合わせる */
+            width: 14px;
             height: 14px;
-            margin-left: -7px; /* 幅の半分を引いて正確に中心を座標に合わせる */
-            margin-top: -7px;  /* 高さの半分を引いて正確に中心を座標に合わせる */
+            margin-left: -7px;
+            margin-top: -7px;
             z-index: 10;
-            pointer-events: auto; /* マウスオーバーを有効化 */
+            pointer-events: auto;
             cursor: pointer;
             transition: transform 0.1s ease;
-            
-            /* JavaScriptから受け取る色（未設定時のデフォルトは赤） */
             --pin-color: #ff0000; 
         }
 
-        /* 中心にある「光るドット」本体 */
         .map-pin::before {
             content: '';
             display: block;
@@ -71,7 +63,6 @@
             box-sizing: border-box;
         }
 
-        /* 外側に広がる「波紋（パルス）」エフェクト */
         .map-pin::after {
             content: '';
             position: absolute;
@@ -82,29 +73,32 @@
             border: 2px solid var(--pin-color);
             border-radius: 50%;
             box-sizing: border-box;
-            /* 1.5秒かけて無限にアニメーションを繰り返す */
             animation: pinPulse 1.5s infinite ease-out;
             pointer-events: none;
         }
 
-        /* 波紋がフワッと広がって消えるアニメーションの定義 */
         @keyframes pinPulse {
             0% {
                 transform: scale(1);
                 opacity: 1;
             }
             100% {
-                transform: scale(3.5); /* ドットの3.5倍まで広がる */
+                transform: scale(3.5);
                 opacity: 0;
             }
         }
 
-        /* マウスオーバー時に少し大きくする演出 */
         .map-pin:hover {
             transform: scale(1.3);
-            z-index: 11; /* 重なりを一番上にする */
+            z-index: 11;
         }
 
+        #translator {
+            visibility: hidden;
+        }
+        .textInput {
+            width: 60%;
+        }
     </style>
     <title id="pageTitle">放浪者の書</title>
 </head>
@@ -142,7 +136,7 @@
         </div>
         <div>
             <button id="resetMap" onclick="resetMap()">地図を初期化</button>
-            <button id="clearPins" onclick="clearPins()">古いピンを削除</button>
+            <button id="clearPins" onclick="clearPins()">古いピンを削除</button>
         </div>
     </section>
 
@@ -168,25 +162,40 @@
         </div>
     </section>
 
+    <section id="translator">
+        <h2 id="autoTranslator">自動翻訳機</h2>
+        <div>
+            <label onclick="changeTranslatorSettings()">
+                <input type="checkbox" id="autoTranslate"><span id="autoTranslateLabel">テキストログを自動翻訳</span>
+            </label>
+        </div>
+        <div>
+            <textarea id="translatedLogContainer"></textarea>
+        </div>
+        <h2 id="manualTranslator">手動翻訳機</h2>
+        <div>
+            <button id="btnTranslate" onclick="manualTranslate()">翻訳</button>
+            <input class="textInput" type="text" id="manualTranslateInput">
+            <input class="textInput" type="text" id="manualTranslateOutput">
+        </div>
+    </section>
 
     <nav>
         <a href="../index.html" id="toIndexBottom">トップページ</a>
     </nav>
+
     <footer>
         <address>
-            HAIKAI Turbo Ver. 0.1.20260806<br>
+            HAIKAI Turbo Ver. 0.1.20260815<br>
             Created by Geld<br>
-            Last update: 2026/08/03
+            Last update: 2026/08/15
         </address>
     </footer>
 
     <script src="js/common.js"></script>
     <script src="js/lang.js"></script>
+    <script src="js/translator.js"></script>
     <script src="js/log.js"></script>
     <script src="js/map.js"></script>
-
-    <script type="text/javascript">
-    </script>
-
 </body>
 </html>
