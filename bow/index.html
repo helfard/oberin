@@ -50,7 +50,6 @@
             transition: transform 0.1s ease;
             --pin-color: #ff0000; 
         }
-
         .map-pin::before {
             content: '';
             display: block;
@@ -62,7 +61,6 @@
             box-shadow: 0 0 10px var(--pin-color), 0 2px 4px rgba(0,0,0,0.3);
             box-sizing: border-box;
         }
-
         .map-pin::after {
             content: '';
             position: absolute;
@@ -76,7 +74,10 @@
             animation: pinPulse 1.5s infinite ease-out;
             pointer-events: none;
         }
-
+        .map-pin:hover {
+            transform: scale(1.3);
+            z-index: 11;
+        }
         @keyframes pinPulse {
             0% {
                 transform: scale(1);
@@ -88,16 +89,11 @@
             }
         }
 
-        .map-pin:hover {
-            transform: scale(1.3);
-            z-index: 11;
-        }
-
         #translator {
-            visibility: hidden;
+            display: none;
         }
         .textInput {
-            width: 60%;
+            width: 70%;
         }
     </style>
     <title id="pageTitle">放浪者の書</title>
@@ -142,15 +138,15 @@
 
     <section>
         <h2 id="textLogs">Text Logs</h2>
-        <div onclick="changeDisplaySettings()">
+        <div>
             <label>
-                <input type="checkbox" id="timeStamp" checked><span id="timeStampLabel">タイムスタンプ</span>
+                <input type="checkbox" id="timeStamp" checked onclick="changeDisplaySettings()"><span id="timeStampLabel">タイムスタンプ</span>
             </label>
             <label>
-                <input type="checkbox" id="chatLog" checked><span id="chatLogLabel">会話ログ</span>
+                <input type="checkbox" id="chatLog" checked onclick="changeDisplaySettings()"><span id="chatLogLabel">会話ログ</span>
             </label>
             <label>
-                <input type="checkbox" id="systemLog" checked><span id="systemLogLabel">システムログ</span>
+                <input type="checkbox" id="systemLog" checked onclick="changeDisplaySettings()"><span id="systemLogLabel">システムログ</span>
             </label>
         </div>
         <div>

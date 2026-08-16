@@ -133,6 +133,9 @@ const setLanguage = (lang) => {
     }
 
     saveStorage('Lang', currentLang);
+
+    // 自動翻訳機を表示（あるいは非表示）
+    showTranslator();
 };
 
 /**

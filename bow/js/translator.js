@@ -3,14 +3,7 @@
  * 内部AIによる翻訳処理
  */
 
-// APIがサポートされていたらセクションを表示
 const TRANSLATOR_API_SUPPORTED = 'Translator' in self;
-if (TRANSLATOR_API_SUPPORTED) {
-    const translatorElem = document.getElementById('translator');
-    if (translatorElem) {
-        translatorElem.style.visibility = 'visible';
-    }
-}
 
 /**
  * ストレージから表示設定（自動翻訳の有無）をロードし、チェックボックスに反映させる
@@ -37,6 +30,23 @@ function changeTranslatorSettings() {
     autoTranslation();
 }
 
+/**
+ * 日本語翻訳機を表示する
+ */
+function showTranslator() {
+    const translatorElem = document.getElementById('translator');
+    if (translatorElem) {
+        // 現状では自動翻訳機は日本語 → 英語のみ
+        if (TRANSLATOR_API_SUPPORTED && currentLang === 'ja') {
+            translatorElem.style.display = 'block';
+        } else {
+                translatorElem.style.display = 'none';
+        }
+    }
+}
+
+window.addEventListener('DOMContentLoaded', showTranslator);
+
 // 翻訳機インスタンス
 let translator1 = null;
 let translator2 = null;
@@ -45,6 +55,7 @@ let translator2 = null;
  * 自動翻訳
  * テキストログを自動的に翻訳
  * 初回は翻訳モデルのダウンロードを行う
+ * ローマ字 → 日本語 → 英語に翻訳というのはまともに動かないため、現状は英語 → 日本語にしか対応していない
  */
 async function autoTranslation() {
     const inputText = document.getElementById('logContainer');
@@ -97,8 +108,9 @@ async function autoTranslation() {
         if (inputLines.length === 0 || !translator1) {
             return;
         }
-        
+
         try {
+            const logPattern = /^(?:\[(.*?)\]: )?(?:\((.*?)\): )?(.*)$/;
             const translatedLines = [];
             
             for (const line of inputLines) {
@@ -107,7 +119,23 @@ async function autoTranslation() {
                     continue;
                 }
 
-                const translatedText = await translator1.translate(line);
+                let match = line.match(logPattern);
+                let [timeStamp, name, body] = ['', '', ''];
+                if (match) {
+                    [timeStamp, name, body] = [match[1], match[2], match[3]];
+                    if (timeStamp) {
+                        timeStamp = `[${timeStamp}] `;
+                    } else {
+                        timeStamp = '';
+                    }
+                    if (name) {
+                        name = `(${name}): `;
+                    } else {
+                        name = '';
+                    }
+                }
+
+                const translatedText = `${timeStamp}${name}${await translator1.translate(body)}`;
                 translatedLines.push(translatedText);
             }
 
@@ -130,7 +158,6 @@ async function autoTranslation() {
 async function manualTranslate() {
     const inputText = document.getElementById('manualTranslateInput');
     const outputText = document.getElementById('manualTranslateOutput');
-    const translatedLogContainer = document.getElementById('translatedLogContainer');
 
     if (!inputText || !outputText) return;
 
@@ -141,8 +168,8 @@ async function manualTranslate() {
 
     if (!translator2) {
         try {
-            if (translatedLogContainer) {
-                translatedLogContainer.value = MESSAGES.statusInitializing[currentLang];
+            if (outputText) {
+                outputText.value = MESSAGES.statusInitializing[currentLang];
             }
 
             // 2. 翻訳インスタンスの作成
@@ -153,21 +180,21 @@ async function manualTranslate() {
                     monitor.addEventListener('downloadprogress', (e) => {
                         const percent = Math.round((e.loaded / e.total) * 100);
                         const template = MESSAGES.downloadingProgress ? MESSAGES.downloadingProgress[currentLang] : 'Downloading... ({percent}%)';
-                        if (translatedLogContainer) {
-                            translatedLogContainer.value = template.replace('{percent}', percent);
+                        if (outputText) {
+                            outputText.value = template.replace('{percent}', percent);
                         }
                     });
                 }
             });
 
-            if (translatedLogContainer) {
-                translatedLogContainer.value = MESSAGES.statusReady[currentLang];
+            if (outputText) {
+                outputText.value = MESSAGES.statusReady[currentLang];
             }
 
         } catch (error) {
             const errPrefix = MESSAGES.statusError ? MESSAGES.statusError[currentLang] : 'Error';
-            if (translatedLogContainer) {
-                translatedLogContainer.value = errPrefix + ': ' + error.message;
+            if (outputText) {
+                outputText.value = errPrefix + ': ' + error.message;
             }
             console.error(error);
         }
@@ -188,5 +215,14 @@ async function manualTranslate() {
         }
     }
     
-    runTranslation();
+    await runTranslation();
 }
+
+// Enterでも手動翻訳するようにしておく
+const manualTranslateInput = document.getElementById('manualTranslateInput');
+manualTranslateInput.addEventListener('keydown', (event) => {
+    // Enterキーが押されたか、かつIME変換確定中ではないか
+    if (event.key === 'Enter' && !event.isComposing) {
+        manualTranslate();
+    }
+});
