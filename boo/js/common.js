@@ -7,7 +7,7 @@
  * ローカルストレージ設定の定数
  */
 const STORAGE = Object.freeze({
-    code: 'bow',
+    code: 'boo',
     version: '1',
 });
 
@@ -68,23 +68,23 @@ const loadStorage = (key, defaultValue = null) => {
 
 /**
  * ローカルストレージのデータのバージョンをチェックし、
- * バージョンが異なる場合は関連データを消去する（即時実行関数）
+ * バージョンが異なる場合は不具合対策として関連データを消去する（即時実行関数）
  */
 const storageVersionCheck = (() => {
     const storageCode = STORAGE.code;
-    const appVersionKey = 'AppVersion';
+    const appVersion = 'AppVersion';
     // このアプリで使用されているキー全てのリスト
-    const storageKeys = ['Lang', 'ShowTimeStamp', 'ShowChatLog', 'ShowSystemLog', 'MaskHoles', 'AutoTranslate', appVersionKey];
+    const storageKeys = ['Lang', 'DateFrom', 'DateTo', appVersion];
     const currentVersion = STORAGE.version;
     
-    const savedVersion = loadStorage(appVersionKey);
+    const savedVersion = loadStorage(appVersion);
 
     if (savedVersion && savedVersion !== currentVersion) {
         storageKeys.forEach(key => localStorage.removeItem(storageCode + key));
         logMessage('StorageVersionCheck: ローカルストレージのデータを消去しました');
     }
     
-    saveStorage(appVersionKey, currentVersion);
+    saveStorage(appVersion, currentVersion);
 })();
 
 /**

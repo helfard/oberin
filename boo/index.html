@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/water.css">
+    <style>
+        body { font-family: sans-serif; margin: 20px; }
+        h2 { margin-top: 0px; }
+        /* セクションごとにわずかな影と角丸をつける */
+        section {
+            margin: 20px;
+            padding: 5px 10px;
+            /* ぼかしの効いた、薄く自然なシャドウ */
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.8);
+            /* ほんの少し角を丸めると、シャドウと馴染んでさらにモダンになります（不要なら削除OK） */
+            border-radius: 6px; 
+            /* レスポンシブ対応（画面幅からはみ出さないようにする） */
+            max-width: 100%;
+            height: auto;
+        }
+        button { margin: 5px; }
+        #status { margin: 5px; }
+        #resultContainer { border: 1px solid #ccc; height: 400px; overflow-y: scroll; white-space: pre-wrap; font-family: monospace; }
+    </style>
+    <title id="pageTitle">観測者の書</title>
+</head>
+
+<body>
+    <div id="language">
+        <a href="#" onclick="setLanguage('ja')">日本語</a>
+        <a href="#" onclick="setLanguage('en')">English</a>
+    </div>
+
+    <header>
+        <h1 id="headerTitle">観測者の書</h1>
+    </header>
+
+    <nav>
+        <a href="../index.html" id="toIndexTop">トップページ</a>
+    </nav>
+
+    <section>
+        <h2 id="logsFolder">Logsフォルダ</h2>
+        <div id="status"></div>
+        <div>
+            <button id="btnSelectFolder" onclick="selectFolder()">フォルダを選択</button>
+        </div>
+    </section>
+
+    <section>
+        <h2 id="options">各種設定</h2>
+        <div id="from">
+            <label>
+                <span id="fromDateLabel">開始日：</span>
+                <input type="date" id="fromDate" onchange="saveOptions()">
+            </label>
+        </div>
+        <div id="to">
+            <label>
+                <span id="toDateLabel">終了日:</span>
+                <input type="date" id="toDate" onchange="saveOptions()">
+            </label>
+        </div>
+        <div>
+            <label>
+                <span id="characterNameLabel">キャラクター名：</span>
+                <input type="input" value="" id="characterName" onchange="saveOptions()">
+            </label>
+        </div>
+        <div>
+            <label>
+                <input type="checkbox" id="splitPerName" checked><span id="splitPerNameLabel" onchange="saveOptions()">Logs are splited per name</span>
+            </label>
+        </div>
+        <div>
+            <button id="btnStartResearch" onclick="startResearch()">集計開始</button>
+        </div>
+    </section>
+
+    <section>
+        <h2 id="result">集計結果</h2>
+        <textarea id="resultContainer"></textarea>
+
+    </section>
+
+
+    <nav>
+        <a href="../index.html" id="toIndexBottom">トップページ</a>
+    </nav>
+    <footer>
+        <address>
+            HAIKAI Turbo Ver. 0.1.20260806<br>
+            Created by Geld<br>
+            Last update: 2026/08/03
+        </address>
+    </footer>
+
+    <script src="js/common.js"></script>
+    <script src="js/lang.js"></script>
+    <script src="js/form.js"></script>
+    <script src="js/data.js"></script>
+    <script src="js/research.js"></script>
+
+    <script type="text/javascript">
+    </script>
+
+</body>
+</html>

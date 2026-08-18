@@ -9,6 +9,8 @@
 
 ## コンテンツ
 
+- [**超重要なバグについて**](?imebug)
+---
 - [Oberinとは？](?about)
 - [Oberinの歴史](?history)
 ---
