@@ -429,7 +429,7 @@ function researchLogs(fileData) {
                 }
                 // Alchemy
                 if (skillCode === 'Alchemy') {
-                    if (Object.keys(potionCount).length) {
+                    if (Object.keys(potionCount).length && optionPotion) {
                         resultLogs.push(`${SPACER}============================`);
                         const sortedPotionCount = Object.entries(potionCount).sort((a, b) => b[1] - a[1]);
                         const maxLength = Math.max(...Object.values(potionCount).map(v => String(v).length));
@@ -445,11 +445,9 @@ function researchLogs(fileData) {
                             }
                         }
                         potionCount = {};
-                        if (optionPotion && optionReagent) {
-                            resultLogs.push(`${SPACER}============================`);
-                        }
                         // 消費した試薬の表示
                         if (Object.keys(reagent).length && optionReagent) {
+                            resultLogs.push(`${SPACER}============================`);
                             const sortedReagent = Object.entries(reagent).sort((a, b) => b[1] - a[1]);
                             const maxLength = Math.max(...Object.values(reagent).map(v => String(v).length));
                             for (const [reagentName, count] of sortedReagent) {
@@ -493,7 +491,7 @@ function researchLogs(fileData) {
                 }
                 // Magery
                 if (skillCode === 'Magery') {
-                    if (Object.keys(spellCount).length) {
+                    if (Object.keys(spellCount).length && optionSpell) {
                         resultLogs.push(`${SPACER}============================`);
                         const sortedSpellCount = Object.entries(spellCount).sort((a, b) => b[1] - a[1]);
                         const maxLength = Math.max(...Object.values(spellCount).map(v => String(v).length));
@@ -512,11 +510,9 @@ function researchLogs(fileData) {
                         }
                         spellCount = {};
                         fizzleCount = {};
-                        if (optionSpell && optionReagent) {
-                            resultLogs.push(`${SPACER}============================`);
-                        }
                         // 消費した試薬の表示
                         if (Object.keys(reagent).length && optionReagent) {
+                            resultLogs.push(`${SPACER}============================`);
                             const sortedReagent = Object.entries(reagent).sort((a, b) => b[1] - a[1]);
                             const maxLength = Math.max(...Object.values(reagent).map(v => String(v).length));
                             for (const [reagentName, count] of sortedReagent) {
