@@ -71,7 +71,22 @@
         </div>
         <div>
             <label>
-                <input type="checkbox" id="splitPerName" checked><span id="splitPerNameLabel" onchange="saveOptions()">Logs are splited per name</span>
+                <input type="checkbox" id="splitPerName" onchange="saveOptions()"><span id="splitPerNameLabel">Logs are splited per name</span>
+            </label>
+        </div>
+        <hr>
+        <div>
+            <label>
+                <input type="checkbox" id="optionTakeCatch" onchange="saveOptions()"><span id="optionTakeCatchLabel">Take/Catch</span>
+            </label>
+            <label>
+                <input type="checkbox" id="optionPotion" onchange="saveOptions()"><span id="optionPotionLabel">Potion</span>
+            </label>
+            <label>
+                <input type="checkbox" id="optionSpell" onchange="saveOptions()"><span id="optionSpellLabel">Spell</span>
+            </label>
+            <label>
+                <input type="checkbox" id="optionReagent" onchange="saveOptions()"><span id="optionReagentLabel">Reagent</span>
             </label>
         </div>
         <div>
@@ -91,9 +106,9 @@
     </nav>
     <footer>
         <address>
-            HAIKAI Turbo Ver. 0.1.20260806<br>
+            HAIKAI Turbo Ver. 0.1.20260830<br>
             Created by Geld<br>
-            Last update: 2026/08/03
+            Last update: 2026/08/30
         </address>
     </footer>
 
@@ -101,6 +116,7 @@
     <script src="js/lang.js"></script>
     <script src="js/form.js"></script>
     <script src="js/data.js"></script>
+    <script src="js/scan.js"></script>
     <script src="js/research.js"></script>
 
     <script type="text/javascript">

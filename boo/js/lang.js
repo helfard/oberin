@@ -24,6 +24,10 @@ const MESSAGES = Object.freeze({
     toDateLabel: { 'ja': '終了日：', 'en': 'To: ' },
     splitPerNameLabel: { 'ja': 'Logs are splited per name', 'en': 'Logs are splited per name' },
     characterNameLabel: { 'ja': 'キャラクター名：', 'en': 'Character Name: ' },
+    optionTakeCatchLabel: { 'ja': 'Take/Catch', 'en': 'Take/Catch' },
+    optionPotionLabel: { 'ja': 'Potion', 'en': 'Potion' },
+    optionMageryLabel: { 'ja': 'Magery', 'en': 'Magery' },
+    optionReagentLabel: { 'ja': 'Reagent', 'en': 'Reagent' },
     btnStartResearch: { 'ja': '集計開始', 'en': 'Start Research' },
 
     result: { 'ja': '集計結果', 'en': 'Result' },

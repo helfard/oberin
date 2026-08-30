@@ -74,7 +74,7 @@ const storageVersionCheck = (() => {
     const storageCode = STORAGE.code;
     const appVersion = 'AppVersion';
     // このアプリで使用されているキー全てのリスト
-    const storageKeys = ['Lang', 'DateFrom', 'DateTo', appVersion];
+    const storageKeys = ['Lang', 'DateFrom', 'DateTo', 'SplitPerName', 'OptionTakeCatch', 'OptionMagery', 'OptionReagant', appVersion];
     const currentVersion = STORAGE.version;
     
     const savedVersion = loadStorage(appVersion);
