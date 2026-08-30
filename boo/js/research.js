@@ -596,8 +596,8 @@ function addTotalData(optionTakeCatch = false, optionPotion = false, optionSpell
         }
 
         // Lumberjacking, Mining
-        if (['Lumberjacking', 'Mining'].includes(skillName) && optionTakeCatch) {
-            if (totalGatherCount[skillName] && Object.keys(totalGatherCount[skillName]).length) {
+        if (['Lumberjacking', 'Mining'].includes(skillName)) {
+            if (totalGatherCount[skillName] && Object.keys(totalGatherCount[skillName]).length && optionTakeCatch) {
                 resultLogs.push(`${TOTAL_SPACER}============================`);
                 const sortedGatherCount = Object.entries(totalGatherCount[skillName]).sort((a, b) => b[1] - a[1]);
                 const maxLength = Math.max(...Object.values(totalGatherCount[skillName]).map(v => String(v).length));
@@ -607,8 +607,8 @@ function addTotalData(optionTakeCatch = false, optionPotion = false, optionSpell
             }
         }
         // Fishing
-        if (skillName === 'Fishing' && optionTakeCatch) {
-            if (Object.keys(totalCatchCount).length) {
+        if (skillName === 'Fishing') {
+            if (Object.keys(totalCatchCount).length && optionTakeCatch) {
                 resultLogs.push(`${TOTAL_SPACER}============================`);
                 const sortedCatchCount = Object.entries(totalCatchCount).sort((a, b) => b[1] - a[1]);
                 const maxLength = Math.max(...Object.values(totalCatchCount).map(v => String(v).length));
@@ -620,11 +620,11 @@ function addTotalData(optionTakeCatch = false, optionPotion = false, optionSpell
 
         // Alchemy
         if (skillName === 'Alchemy/Cleric' || skillName === 'Alchemy/Druid') {
-            if (Object.keys(totalPotionCount).length) {
+            if (Object.keys(totalPotionCount).length && optionPotion) {
+                resultLogs.push(`${TOTAL_SPACER}============================`);
                 const sortedPotionCount = Object.entries(totalPotionCount).sort((a, b) => b[1] - a[1]);
                 const maxLength = Math.max(...Object.values(totalPotionCount).map(v => String(v).length));
                 let reagent = {};
-
                 for (const [potionName, count] of sortedPotionCount) {
                     const potion = POTION[potionName];
                     if (optionPotion) {
@@ -635,11 +635,9 @@ function addTotalData(optionTakeCatch = false, optionPotion = false, optionSpell
                         reagent[key] = (reagent[key] || 0) + value * count;
                     }
                 }
-                if (optionPotion && optionReagent) {
-                    resultLogs.push(`${TOTAL_SPACER}============================`);
-                }
                 // 累計試薬の表示
                 if (Object.keys(reagent).length && optionReagent) {
+                    resultLogs.push(`${TOTAL_SPACER}============================`);
                     const sortedReagent = Object.entries(reagent).sort((a, b) => b[1] - a[1]);
                     const maxReagentLen = Math.max(...Object.values(reagent).map(v => String(v).length));
                     for (const [reagentName, count] of sortedReagent) {
@@ -682,7 +680,7 @@ function addTotalData(optionTakeCatch = false, optionPotion = false, optionSpell
         }
         // Magery
         if (skillName === 'Magery/Cleric' || skillName === 'Magery/Wizard' || skillName === 'Magery/Druid') {
-            if (Object.keys(totalSpellCount).length) {
+            if (Object.keys(totalSpellCount).length && optionSpell) {
                 resultLogs.push(`${TOTAL_SPACER}============================`);
                 const sortedSpellCount = Object.entries(totalSpellCount).sort((a, b) => b[1] - a[1]);
                 const maxLength = Math.max(...Object.values(totalSpellCount).map(v => String(v).length));
@@ -702,11 +700,9 @@ function addTotalData(optionTakeCatch = false, optionPotion = false, optionSpell
                         reagent[key] = (reagent[key] || 0) + value * count;
                     }
                 }
-                if (optionSpell && optionReagent) {
-                    resultLogs.push(`${TOTAL_SPACER}============================`);
-                }
                 // 累計試薬の表示
                 if (Object.keys(reagent).length && optionReagent) {
+                    resultLogs.push(`${TOTAL_SPACER}============================`);
                     const sortedReagent = Object.entries(reagent).sort((a, b) => b[1] - a[1]);
                     const maxReagentLen = Math.max(...Object.values(reagent).map(v => String(v).length));
                     for (const [reagentName, count] of sortedReagent) {
