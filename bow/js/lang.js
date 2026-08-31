@@ -56,31 +56,31 @@ const MESSAGES = Object.freeze({
 
     // AIへの指示
     aiInstruction: {
-        'ja': `ユーザーの入力内容に応じて、以下の条件に従って処理を実行してください。
-以降の処理は過去の会話履歴や前回の処理結果は一切引き継がず、毎回完全に独立した処理として行ってください。
+        'ja': `これ以降の処理は、過去の会話履歴を引き継がず、毎回完全に独立した処理として以下の条件に従って実行してください。
 
-1. **『終了』と入力された場合**
-   - この指示の処理を終了する。
+1. 処理の前提
+- 処理を実行する際は、必ず現在の画面上の '<textarea id="logContainer">' の内容を最新のログとして取得してください。
 
-2. **『。』などの意味のない入力の場合**
-   - 画面の '<textarea id="logContainer">' の値のログを取得し、それを『日本語』に翻訳する。
-   - ログのフォーマットはなるべく変更しないで下さい。
+2. 『終了』と入力された場合
+- この指示の処理を終了する。
 
-3. **意味のある文章の入力の場合**
-   - その入力された文章を『英語』に翻訳する。
-`,
-        'en': `Execute processing according to the following conditions based on the user's input.
-From now on, do not carry over any past conversation history or previous processing results; execute each process as completely independent every time.
+3. 『。』などの意味のない入力、または空の入力の場合
+- 取得した '<textarea id="logContainer">' のログデータを、『日本語』に翻訳して出力する。
+- ログのフォーマット（改行やインデント等）はなるべく変更しないこと。
 
-1. **When 'End' is input**
+4. 意味のある文章の入力の場合
+- 入力された文章を『英語』に翻訳して出力する。`,
+        'en': `From now on, please process each request completely independently without carrying over any past conversation history or previous processing results, following the conditions below:
+
+1. When 'End' is input:
    - Terminate the processing of this instruction.
 
-2. **For meaningless inputs such as '.'**
-   - Retrieve the string value from the screen '<textarea id="logContainer">', and translate the retrieved string from romanized Japanese into English.
-   - Please do not change the format of the log as much as possible.
+2. In the case of meaningless input such as '.' (period):
+   - Retrieve the log value of the '<textarea id="logContainer">' on the screen and translate it from romanized Japanese into English.
+   - Try not to change the format of the log as much as possible.
 
-3. **For meaningful text inputs**
-   - Translate the input text into romanized Japanese (Romaji).`
+3. In the case of meaningful text input:
+   - Translate the inputted text into 'romanized Japanese (Romaji)'.`
     },
     copied: {
         'ja': 'コピーしました！',
