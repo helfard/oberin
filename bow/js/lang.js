@@ -56,31 +56,8 @@ const MESSAGES = Object.freeze({
 
     // AIへの指示
     aiInstruction: {
-        'ja': `これ以降の処理は、過去の会話履歴を引き継がず、毎回完全に独立した処理として以下の条件に従って実行してください。
-
-1. 処理の前提
-- 処理を実行する際は、必ず現在の画面上の '<textarea id="logContainer">' の内容を最新のログとして取得してください。
-
-2. 『終了』と入力された場合
-- この指示の処理を終了する。
-
-3. 『。』などの意味のない入力、または空の入力の場合
-- 取得した '<textarea id="logContainer">' のログデータを、『日本語』に翻訳して出力する。
-- ログのフォーマット（改行やインデント等）はなるべく変更しないこと。
-
-4. 意味のある文章の入力の場合
-- 入力された文章を『英語』に翻訳して出力する。`,
-        'en': `From now on, please process each request completely independently without carrying over any past conversation history or previous processing results, following the conditions below:
-
-1. When 'End' is input:
-   - Terminate the processing of this instruction.
-
-2. In the case of meaningless input such as '.' (period):
-   - Retrieve the log value of the '<textarea id="logContainer">' on the screen and translate it from romanized Japanese into English.
-   - Try not to change the format of the log as much as possible.
-
-3. In the case of meaningful text input:
-   - Translate the inputted text into 'romanized Japanese (Romaji)'.`
+        'ja': `これ以降『。』などの意味のない入力があれば '<textarea id="logContainer">' の最新の内容を所得して和訳して下さい。何らかの意味のある日本語の文章を入力した場合はそれを英訳して下さい。`,
+        'en': `From now on, if I send any meaningless input such as '.', translate the current contents of '<textarea id="logContainer">' from romanized Japanese into English. If I enter a meaningful sentence, translate it into romanized Japanese (Romaji).`
     },
     copied: {
         'ja': 'コピーしました！',

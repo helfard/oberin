@@ -78,6 +78,9 @@ let totalCatchCount = {};
 // 総計Mana消費量（Magery＋Alchemyの分、Meditationのレベルアップでリセットする）
 let subtotalManaCost = 0;
 let totalManaCost = 0;
+// Anatomy（現在は経験値が入らないのだが）
+let anatomyCount = {};
+let totalAnatomyCount = {};
 
 // Lumberjacking, Miningの最後のstartのタイムスタンプ（Date形式）
 // 他のTaken: から区別するために使用
@@ -107,6 +110,8 @@ function initCountData() {
     totalFizzleCount = {};
     potionCount = {};
     totalPotionCount = {};
+    enchantCount = {};
+    totalEnchantCount = {};
     gatherCount = {};
     totalGatherCount = {};
     totalTakeCount = {};
@@ -358,6 +363,14 @@ function researchLogs(fileData) {
                         continue;
                     }
                 }
+                // Anatomy
+                if (skillCode === 'Anatomy') {
+                    if (skillAction === 'success') {
+                        const anatomyComment = matchedText;
+                        anatomyCount[anatomyComment] = (anatomyCount[anatomyComment] || 0) + 1;
+                        totalAnatomyCount[anatomyComment] = (totalAnatomyCount[anatomyComment] || 0) + 1;
+                    }
+                }
 
                 // カウントを加算
                 skillCount[skillCode] ||= {};
@@ -527,6 +540,20 @@ function researchLogs(fileData) {
                     if (subtotalManaCost) {
                         resultLogs.push(`${SPACER}${subtotalManaCost} MP`);
                         subtotalManaCost = 0;
+                    }
+                    continue;
+                }
+                // Anatomy
+                if (skillCode === 'Anatomy') {
+                    if (Object.keys(anatomyCount).length) {
+                        const anatomyComments = ['Extremely Weak', 'Somewhat Weak', 'Of Average Strength', 'Quite Strong', 'Very Strong', 'Unbelievably Strong'];
+                        resultLogs.push(`${SPACER}============================`);
+                        const maxLength = Math.max(...anatomyComments.map(v => String(v).length));
+                        for (const comment of anatomyComments) {
+                            const count = anatomyCount[comment] || 0;
+                            resultLogs.push(`${SPACER}${String(comment).padStart(maxLength, ' ')} ${count}`);
+                        }
+                        anatomyCount = {};
                     }
                     continue;
                 }
@@ -718,6 +745,19 @@ function addTotalData(optionTakeCatch = false, optionPotion = false, optionSpell
                 resultLogs.push(`${TOTAL_SPACER}${totalManaCost} MP`);
             }
         }
+        // Anatomy
+        if (skillName === 'Anatomy') {
+            if (Object.keys(totalAnatomyCount).length) {
+                const anatomyComments = ['Extremely Weak', 'Somewhat Weak', 'Of Average Strength', 'Quite Strong', 'Very Strong', 'Unbelievably Strong'];
+                resultLogs.push(`${TOTAL_SPACER}============================`);
+                const maxLength = Math.max(...anatomyComments.map(v => String(v).length));
+                for (const comment of anatomyComments) {
+                    const count = totalAnatomyCount[comment] || 0;
+                    resultLogs.push(`${TOTAL_SPACER}${String(comment).padStart(maxLength, ' ')} ${count}`);
+                }
+            }
+        }
+
     }
 
     // Gathering以外のTaken集計（もし必要があれば）

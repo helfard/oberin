@@ -152,6 +152,11 @@ function sextantCoordinates(n, e, name = 'You') {
 
 /**
  * Orb of Seeingの処理：相対座標からピンを立てる
+ * @param {string} name 
+ * @param {string} dist1 
+ * @param {string} dir1 
+ * @param {string} dist2 
+ * @param {string} dir2
  */
 function orbCoordinates(name, dist1, dir1, dist2, dir2) {
     const myN = currentCoordinates[0];
