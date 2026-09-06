@@ -293,7 +293,7 @@ function parseLogLine(line) {
     const posPattern = /^\[(.*?)\]: ((.*?) is roughly (\d+) ([NS]) and (\d+) ([EW]) of your position\.)$/;
     match = line.match(posPattern);
     if (match) {
-        orbCoordinates(match[3], match[4], match[5], match[6], match[7]);
+        orbCoordinates(match[4], match[5], match[6], match[7], match[3]);
         return [match[1], match[2], 'systemLog'];
     }
 
