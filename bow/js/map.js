@@ -158,7 +158,7 @@ function sextantCoordinates(n, e, name = 'You') {
  * @param {string} dist2 
  * @param {string} dir2
  */
-function orbCoordinates(name, dist1, dir1, dist2, dir2) {
+function orbCoordinates(dist1, dir1, dist2, dir2, name = 'Who?') {
     const myN = currentCoordinates[0];
     const myE = currentCoordinates[1];
 
