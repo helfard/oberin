@@ -6,6 +6,8 @@
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/water.css">
     <style>
+        :root { color-scheme: light dark; }
+
         body { font-family: sans-serif; margin: 20px; }
         h2 { margin-top: 0px; }
         section {
@@ -95,8 +97,53 @@
         .textInput {
             width: 70%;
         }
+
+        .modal-open-button {
+            font-weight: bold;
+        }
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 100;
+            display: none;
+            width: 100%;
+            height: 100%;
+            background-color: light-dark(rgb(0 0 0 / 40%), rgb(255 255 255 / 40%));
+            background-color: rgb(0 0 0 / 40%);
+        }
+        .modal:target {
+            display: flex;
+        }
+        .close {
+            position: absolute;
+            top: 20px;
+            right: 50px;
+            font-size: 24px;
+            text-decoration: none;
+            transform: translate(50%, -50%);
+        }
+        .close:hover {
+            text-decoration: none;
+        }
+        .modal-wrapper {
+            position: relative;
+            background-color: light-dark(rgb(255 255 255 / 80%), rgb(0 0 0 / 80%));
+            width: 90%;
+            max-width: 800px;
+            max-height: 100%;
+        }
+        .modal-content {
+            height: 100%;
+            overflow-y: auto;
+        }
+        .modal-content h1 {
+            margin-top: 10px;
+        }
     </style>
     <title id="pageTitle">放浪者の書</title>
+
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 </head>
 
 <body>
@@ -110,8 +157,18 @@
     </header>
 
     <nav>
-        <a href="../index.html" id="toIndexTop">トップページ</a>
+        <a href="../index.html" id="toIndexTop">トップページ</a> /
+        <a href="#modal" class="modal-open-button" id="readmeButton">説明書</a>
     </nav>
+
+    <div class="modal" id="modal">
+        <section class="modal-wrapper">
+            <a href="#" class="close" id="close-top">&times;</a>
+            <div class="modal-content">
+                <div id="readme-container"></div>
+            </div>
+        </section>
+    </div>
 
     <section>
         <h2 id="logsFolder">Logsフォルダ</h2>
@@ -182,9 +239,9 @@
 
     <footer>
         <address>
-            HAIKAI Turbo Ver. 0.1.20260830<br>
+            HAIKAI Turbo Ver. 1.0.20260907<br>
             Created by Geld<br>
-            Last update: 2026/08/30
+            Last update: 2026/09/07
         </address>
     </footer>
 
@@ -193,5 +250,6 @@
     <script src="js/translator.js"></script>
     <script src="js/log.js"></script>
     <script src="js/map.js"></script>
+    <script src="js/readme.js"></script>
 </body>
 </html>

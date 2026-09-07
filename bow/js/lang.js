@@ -16,6 +16,7 @@ const MESSAGES = Object.freeze({
     headerTitle: { 'ja': '放浪者の書', 'en': 'The Book of Wanderer' },
     toIndexTop: { 'ja': 'トップページ', 'en': 'Top Page' },
     toIndexBottom: { 'ja': 'トップページ', 'en': 'Top Page' },
+    readmeButton: { 'ja': '説明書', 'en': 'Readme' },
     logsFolder: { 'ja': 'Logsフォルダ', 'en': 'Logs Folder' },
     btnSelectFolder: { 'ja': 'フォルダを選択', 'en': 'Select the Folder' },
     sextantAndOrb: { 'ja': 'SextantとOrb of Seeing', 'en': 'Sextant and Orb of Seeing' },
@@ -113,6 +114,9 @@ const setLanguage = (lang) => {
 
     // 自動翻訳機を表示（あるいは非表示）
     showTranslator();
+
+    // 説明書の言語を切り替え
+    loadReadme();
 };
 
 /**
