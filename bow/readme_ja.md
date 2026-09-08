@@ -11,7 +11,7 @@
 
 　これはWindows版もしくはMac版のGoogle Chromeで動作し、FirefoxやSafariでは動かない。多分Microsoft Edgeでは動くかな？
 
-　また、**Logs フォルダがシステムフォルダ内にあると動かない**ので、先にOberinの Config.cfg をいじって Logs フォルダをシステムフォルダの外に置いておかないといけないので要注意。
+　また、**Logs フォルダがシステムフォルダ内にあると動かない**ので、先にOberinの Config.cfg をいじって Logs フォルダをシステムフォルダの外に置いておかないといけない。
 
 　エンジョイ！
 

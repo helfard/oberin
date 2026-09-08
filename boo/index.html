@@ -6,6 +6,8 @@
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/water.css">
     <style>
+        :root { color-scheme: light dark; }
+
         body { font-family: sans-serif; margin: 20px; }
         h2 { margin-top: 0px; }
         /* セクションごとにわずかな影と角丸をつける */
@@ -23,13 +25,58 @@
         button { margin: 5px; }
         #status { margin: 5px; }
         #resultContainer { border: 1px solid #ccc; height: 400px; overflow-y: scroll; white-space: pre-wrap; font-family: monospace; }
+                .modal-open-button {
+            font-weight: bold;
+        }
+
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 100;
+            display: none;
+            width: 100%;
+            height: 100%;
+            background-color: light-dark(rgb(0 0 0 / 40%), rgb(255 255 255 / 40%));
+            background-color: rgb(0 0 0 / 40%);
+        }
+        .modal:target {
+            display: flex;
+        }
+        .close {
+            position: absolute;
+            top: 20px;
+            right: 50px;
+            font-size: 24px;
+            text-decoration: none;
+            transform: translate(50%, -50%);
+        }
+        .close:hover {
+            text-decoration: none;
+        }
+        .modal-wrapper {
+            position: relative;
+            background-color: light-dark(rgb(255 255 255 / 80%), rgb(0 0 0 / 80%));
+            width: 90%;
+            max-width: 800px;
+            max-height: 100%;
+        }
+        .modal-content {
+            height: 100%;
+            overflow-y: auto;
+        }
+        .modal-content h1 {
+            margin-top: 10px;
+        }
     </style>
     <title id="pageTitle">観測者の書</title>
+
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 </head>
 
 <body>
     <div id="language">
-        <a href="#" onclick="setLanguage('ja')">日本語</a>
+        <a href="#" onclick="setLanguage('ja')">日本語</a> /
         <a href="#" onclick="setLanguage('en')">English</a>
     </div>
 
@@ -38,8 +85,18 @@
     </header>
 
     <nav>
-        <a href="../index.html" id="toIndexTop">トップページ</a>
+        <a href="../index.html" id="toIndexTop">トップページ</a> /
+        <a href="#modal" class="modal-open-button" id="readmeButton">説明書</a>
     </nav>
+
+    <div class="modal" id="modal">
+        <section class="modal-wrapper">
+            <a href="#" class="close" id="close-top">&times;</a>
+            <div class="modal-content">
+                <div id="readme-container"></div>
+            </div>
+        </section>
+    </div>
 
     <section>
         <h2 id="logsFolder">Logsフォルダ</h2>
@@ -118,6 +175,7 @@
     <script src="js/data.js"></script>
     <script src="js/scan.js"></script>
     <script src="js/research.js"></script>
+    <script src="js/readme.js"></script>
 
     <script type="text/javascript">
     </script>

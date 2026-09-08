@@ -1,4 +1,4 @@
-# The Book of Wanderer: User Manual
+# Instruction Manual for The Book of Wanderer
 
 ## Quick Overview
 
@@ -21,7 +21,7 @@ The Book of Wanderer is a tool that reads Oberin's log files and displays inform
 
 In addition to displaying Sextant and Orb of Seeing coordinates on a map, it cleanly organizes text logs. The idea is that you can have the browser's built-in AI translate the organized text logs for a smooth experience (though, as of right now, Google Chrome's built-in Gemini is completely unreliable and doesn't quite work the way I envisioned).
 
-1. **Preparation: Editing Config.cfg**
+1. **Preparation: Edit Config.cfg**
 
     To use The Book of Wanderer, you need to specify the Logs folder where log files are saved so the tool can open them.
     On both Windows and Mac, the **Logs folder is located inside a system folder by default and cannot be accessed from the browser due to security reasons**, so you first need to edit Oberin's `Config.cfg` file to change the location of the Logs folder.
@@ -58,7 +58,7 @@ In addition to displaying Sextant and Orb of Seeing coordinates on a map, it cle
 
     If things just won't work out, deleting the original `Config.cfg` file (i.e., the one inside the folder opened via `Open Default Config Directory`) and restarting the game will generate a fresh, default `Config.cfg` file, resetting everything.
 
-2. **Preparation: Checking Options Settings**
+2. **Preparation: Check Options Settings**
 
     Since this tool reads log files to do various things, it won't work unless the game is set to save log files in the first place.
 
@@ -68,7 +68,7 @@ In addition to displaying Sextant and Orb of Seeing coordinates on a map, it cle
 
     By the way, whether `Split per character` is on or off doesn't cause any issues. Probably.
 
-3. **Registering the Logs Folder**
+3. **Register the Logs Folder**
 
     Once you've done this, click the "Select Folder" button in this tool.
 
@@ -76,7 +76,7 @@ In addition to displaying Sextant and Orb of Seeing coordinates on a map, it cle
 
     In the current version of Oberin, log files are written out every 90 seconds, but this tool checks for log file updates every 10 seconds. In other words, log updates will be reflected in the tool anywhere from a minimum of 10 seconds to a maximum of 100 seconds after doing something in-game.
 
-4. **Displaying Sextant/Orb Coordinates and the World Map**
+4. **Display Sextant/Orb Coordinates and the World Map**
 
     If there are Sextant or Orb of Seeing coordinates in the loaded logs, those points will be displayed on the map. Additionally, the map surrounding the location where the Sextant was used will be revealed.
 
@@ -86,7 +86,7 @@ In addition to displaying Sextant and Orb of Seeing coordinates on a map, it cle
 
     By the way, the base map for this tool is a slightly older version of the world map released by GM Bobley around 2024–2025, so it probably lacks some (or all?) of the new areas added since 2024.
 
-5. **Organizing Logs**
+5. **Organize Logs**
 
     Under Text Logs section, you'll see logs that have been read and organized by this tool.
 

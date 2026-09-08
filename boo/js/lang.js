@@ -16,10 +16,11 @@ const MESSAGES = Object.freeze({
     headerTitle: { 'ja': '観測者の書', 'en': 'The Book of Observer' },
     toIndexTop: { 'ja': 'トップページ', 'en': 'Top Page' },
     toIndexBottom: { 'ja': 'トップページ', 'en': 'Top Page' },
+    readmeButton: { 'ja': '説明書', 'en': 'Readme' },
 
     logsFolder: { 'ja': 'Logsフォルダ', 'en': 'Logs Folder' },
     btnSelectFolder: { 'ja': 'フォルダを選択', 'en': 'Select the Folder' },
-    options: { 'ja': '各種設定', 'en': 'Set options' },
+    options: { 'ja': '各種設定', 'en': 'Settings' },
     fromDateLabel: { 'ja': '開始日：', 'en': 'From: ' },
     toDateLabel: { 'ja': '終了日：', 'en': 'To: ' },
     splitPerNameLabel: { 'ja': 'Logs are splited per name', 'en': 'Logs are splited per name' },
@@ -75,6 +76,9 @@ const setLanguage = (lang) => {
 
     // ローカルストレージに現在の言語設定を保存
     saveStorage('Lang', currentLang);
+
+    // 説明書の言語を切り替え
+    loadReadme();
 };
 
 /**
