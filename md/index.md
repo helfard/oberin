@@ -40,3 +40,12 @@
 ---
 - [Oberinの利用規約](?tos)
 - [キャラクターの命名ルール](?namingrule)
+
+## 自作ツール
+
+- [放浪者の書](bow)
+- [観測者の書](boo)
+
+## リンク
+
+- [Oberin公式](https://www.oberin.be/)

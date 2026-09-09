@@ -572,6 +572,7 @@ function researchLogs(fileData) {
  * 全集計結果の表示
  */
 function addTotalData(optionTakeCatch = false, optionPotion = false, optionSpell = false, optionReagent = false) {
+    resultLogs.push('');
     resultLogs.push('==== Total Summary ====');
 
     for (const skillName of SKILL_ORDER) {
