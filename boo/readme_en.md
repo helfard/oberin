@@ -91,9 +91,11 @@ It also outputs data on how much and in what ways you used those skills.
 
     Once you have completed all of these steps, click the "Start Research" button at the end. Data will then be displayed in a neat list in the results section below.
 
-## Side note
+## Caution
 
 Because Blacksmithing, Tailoring, Tinkering, Woodcrafting, and some Enchanting do not leave distinguishable logs during crafting, the tool identifies which skill was used by looking at the tool equipped immediately beforehand. This should work as long as tools are automatically equipped upon using a skill, but be careful: if you deliberately equip a tool manually, it won't show up in the logs and will cause calculation errors.
+
+(Ah, but I reckon I can improve it a bit more, so I’m working on it…)
 
 Anatomy, Meditation, and Taming aggregate and display data that is likely meaningless in terms of skill experience, but this is intentional.
 

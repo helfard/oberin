@@ -68,7 +68,7 @@ const LOG = {
     // Alchemy/Druid は Alchemy に統合
     'Anatomy': {
         // Anatomyはパッシブになっておりこのログは経験値に影響しない
-        success: /^That creature appears to be (extremely weak|somewhat weak|of average strength|quite strong|very strong|unbelievably strong)$/,
+        success: /^That creature appears to be (extremely weak|somewhat weak|of average strength|quite strong|very strong|unbelievably strong)\.$/,
         fail: 'You are unable to determine anything useful.'
     },
     // 'Archery': {},

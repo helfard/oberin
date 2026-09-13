@@ -29,6 +29,7 @@ const SKILL_ORDER = [
 
     'Hiding',
     'Detecting Hidden',
+    'Tracking',
 
     'Lockpicking',
     'Removing Traps',
