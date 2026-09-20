@@ -12,18 +12,20 @@ function saveOptions() {
     const characterName = document.getElementById('characterName').value.trim();
     const splitPerName = document.getElementById('splitPerName').checked;
     const optionTakeCatch = document.getElementById('optionTakeCatch').checked;
-    const optionPotion = document.getElementById('optionPotion').checked;
+    const optionCraft = document.getElementById('optionCraft').checked;
     const optionSpell = document.getElementById('optionSpell').checked;
-    const optionReagent = document.getElementById('optionReagent').checked;
+    const optionResource = document.getElementById('optionResource').checked;
+    const optionEtc = document.getElementById('optionEtc').checked;
 
     saveStorage('FromDate', fromDate);
     saveStorage('ToDate', toDate);
     saveStorage('CharacterName', characterName);
     saveStorage('SplitPerName', splitPerName);
     saveStorage('OptionTakeCatch', optionTakeCatch);
-    saveStorage('OptionPotion', optionPotion);
+    saveStorage('OptionCraft', optionCraft);
     saveStorage('OptionSpell', optionSpell);
-    saveStorage('OptionReagent', optionReagent);
+    saveStorage('OptionResource', optionResource);
+    saveStorage('OptionEtc', optionEtc);
 }
 
 /**
@@ -35,18 +37,20 @@ function loadOptions() {
     const characterName = loadStorage('CharacterName');
     const splitPerName = loadStorage('SplitPerName');
     const optionTakeCatch = loadStorage('OptionTakeCatch');
-    const optionPotion = loadStorage('OptionPotion');
+    const optionCraft = loadStorage('OptionCraft');
     const optionSpell = loadStorage('OptionSpell');
-    const optionReagent = loadStorage('OptionReagent');
+    const optionResource = loadStorage('OptionResource');
+    const optionEtc = loadStorage('OptionEtc');
 
     document.getElementById('fromDate').value = fromDate;
     document.getElementById('toDate').value = toDate;
     document.getElementById('characterName').value = characterName;
     document.getElementById('splitPerName').checked = splitPerName;
     document.getElementById('optionTakeCatch').checked = optionTakeCatch;
-    document.getElementById('optionPotion').checked = optionPotion;
+    document.getElementById('optionCraft').checked = optionCraft;
     document.getElementById('optionSpell').checked = optionSpell;
-    document.getElementById('optionReagent').checked = optionReagent;
+    document.getElementById('optionResource').checked = optionResource;
+    document.getElementById('optionEtc').checked = optionEtc;
 }
 
 document.addEventListener('DOMContentLoaded', loadOptions);

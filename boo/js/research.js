@@ -3,13 +3,13 @@
  * ログの走査と集計（日付と入力値からファイル名を直接生成して取得）
  */
 
-// スキルのstartからsuccessまでの猶予時間（秒）
-const GATHER_LIMIT = 6;
-// 整形用のスペーサー
-const SPACER = '                         ';
-// 最終集計の整形用のスペーサー
-const TOTAL_SPACER = '  ';
+// Lumberjacking, Mining の Taken であると見なす start から success までの猶予時間（秒）
+const GATHER_LIMIT = 8;
 
+// 整形用のインデント
+const INDENT = '  ';
+// 整形用の横線
+const BAR = '================================';
 // 最終集計の表示順
 const SKILL_ORDER = [
     'Lumberjacking',
@@ -20,12 +20,20 @@ const SKILL_ORDER = [
     'Tailoring',
     'Tinkering',
     'Woodcrafting',
-
     'Cooking',
+    'Poisoning',
+
+    'Enchanting',
+    'Alchemy/Cleric',
+    'Alchemy/Druid',
+
+    'Magery/Cleric',
+    'Magery/Wizard',
+    'Magery/Druid',
+    'Meditation',
 
     'Anatomy',
     'Healing',
-    'Poisoning',
 
     'Hiding',
     'Detecting Hidden',
@@ -34,16 +42,9 @@ const SKILL_ORDER = [
     'Lockpicking',
     'Removing Traps',
 
-    'Magery/Cleric',
-    'Magery/Wizard',
-    'Magery/Druid',
-    'Alchemy/Cleric',
-    'Alchemy/Druid',
-    'Enchanting',
-    'Meditation',
-
     'Taming',
 
+// 以下のスキルは集計が不可能なため除外
 //    'Melee',
 //    'Parring',
 //    'Resisting Magic',
@@ -52,80 +53,257 @@ const SKILL_ORDER = [
 //    'Special/Rogue',
 ];
 
+// Anatomy での強さ
+const STRENGTH = ['Extremely Weak', 'Somewhat Weak', 'Of Average Strength', 'Quite Strong', 'Very Strong', 'Unbelievably Strong'];
+
 // 集計用データ
-// スキルごとの使用・成功・失敗回数（skillCount['スキル名'] = { start: 使用回数, success: 成功回数, fail: 失敗回数 }）
+// スキルごとの総計（skillCount['スキル名'] = { start: 使用回数, success: 成功回数, fail: 失敗回数 }）
 let skillCount = {};
 let totalSkillCount = {};
-// 使用した魔法の呪文と回数（spellCount['呪文'] = 回数）
-let spellCount = {};
-let totalSpellCount = {};
-// Fizzleした魔法の呪文と回数（fizzleCount['呪文'] = 回数）
-let fizzleCount = {};
-let totalFizzleCount = {};
-// 作成したポーションの名前と個数（potionCount['ポーション名'] = 個数）
-let potionCount = {};
-let totalPotionCount = {};
-// EnchantingのEtherite抽出・Crystal精製・アイテム加工の回数（enchantCount = { Etherite: 抽出回数, Crystal: 精製回数, Craft: 加工回数 }）
-let enchantCount = {};
-let totalEnchantCount = {};
-// 採取スキルによると思われる入手アイテムと個数（gatherCount['スキル名']['アイテム名'] = 個数）
+
+// 採集品（Lumberjacking）の名前と個数（lumberjackCount['アイテム名'] = { start: 開始回数, success: 成功回数, fail: 失敗回数 }）
+let lumberjackCount = {};
+let totalLumberjackCount = {};
+// 採集品（Mining）の名前と個数（mineCount['アイテム名'] = { start: 開始回数, success: 成功回数, fail: 失敗回数 }）
+let mineCount = {};
+let totalMineCount = {};
+// スキル不明の採取品との名前と個数（gatherCount['アイテム名'] = { start: 開始回数, success: 成功回数, fail: 失敗回数 }）
 let gatherCount = {};
 let totalGatherCount = {};
-// Gatharing以外の入手と思われるTaken: の名前と個数（TotalTakeCount['アイテム名'] = 個数）
-let totalTakeCount = {};
-// 釣った魚と個数（catchCount['魚名'] = 個数）
-let catchCount = {};
-let totalCatchCount = {};
-// 総計Mana消費量（Magery＋Alchemyの分、Meditationのレベルアップでリセットする）
+// 採集品（Fishing）の名前と個数（fishCount['魚名'] = { start: 開始回数, success: 成功回数, fail: 失敗回数 }）
+let fishCount = {};
+let totalFishCount = {};
+
+// 制作物（Blacksmithing）の名前と個数（blacksmithCount['アイテム名'] = { start: 開始回数, success: 成功回数, fail: 失敗回数 }）
+let blacksmithCount = {};
+let totalBlacksmithCount = {};
+// 制作物（Tailoring）の名前と個数（tailrtCount['アイテム名'] = { start: 開始回数, success: 成功回数, fail: 失敗回数 }）
+let tailorCount = {};
+let totalTailorCount = {};
+// 制作物（Tinkering）の名前と個数（tinkerCount['アイテム名'] = { start: 開始回数, success: 成功回数, fail: 失敗回数 }）
+let tinkerCount = {};
+let totalTinkerCount = {};
+// 制作物（Woodcrafting）の名前と個数（woodcraftCount['アイテム名'] = { start: 開始回数, success: 成功回数, fail: 失敗回数 }）
+let woodcraftCount = {};
+let totalWoodcraftCount = {};
+// 制作物（Enchanging）の名前（Etherite/Crystal/その他）と個数（enchantCount['アイテム名'] = { start: 開始回数, success: 成功回数, fail: 失敗回数 }）
+// その他は本当にカウントできるか分からない
+let enchantCount = {};
+let totalEnchantCount = {};
+// スキル不明の制作物の名前と個数（craftCount['アイテム名'] = { start: 開始回数, success: 成功回数, fail: 失敗回数 }）
+let craftCount = {};
+let totalCraftCount = {};
+
+// 作成したポーションの名前と個数（***PotionCount['ポーション名'] = { start: 開始回数, success: 成功回数, fail: 失敗回数 }）
+let clericPotionCount = {};
+let totalClericPotionCount = {};
+let druidPotionCount = {};
+let totalDruidPotionCount = {};
+// スキル不明のポーションの名前と個数（potionCount['ポーション名'] = { start: 開始回数, success: 成功回数, fail: 失敗回数 }*/)
+let potionCount = {};
+let totalPotionCount = {};
+
+// 使用した魔法の回数（***SpellCount['魔法名'] = { success: 成功回数, fail: 失敗（Fizzle）回数 }）
+let wizardSpellCount = {};
+let totalWizardSpellCount = {};
+let clericSpellCount = {};
+let totalClericSpellCount = {};
+let druidSpellCount = {};
+let totalDruidSpellCount = {};
+// スキル不明の魔法の回数（spellCount['魔法名'] = { success: 成功回数, fail: 失敗（Fizzle）回数 }）
+let spellCount = {};
+let totalSpellCount = {};
+
+// 総計Mana消費量（Magery＋Alchemy＋Enchantingの分、Meditationのレベルアップでリセットする）
+// これは意味があるか分からない
 let subtotalManaCost = 0;
 let totalManaCost = 0;
-// Anatomy（現在は経験値が入らないのだが）
+
+// Anatomyの結果（anatomyCount['結果'] = { : 開始回数, success: 成功回数, fail: 失敗回数 }）
 let anatomyCount = {};
 let totalAnatomyCount = {};
 
-// Lumberjacking, Miningの最後のstartのタイムスタンプ（Date形式）
-// 他のTaken: から区別するために使用
+// Lumberjacking, Mining の最後のstartのタイムスタンプ（Date形式）
+// lastGatherDate['スキル名'] = Date
+// Taken:  *** のログのスキルの判別に使用する
 let lastGatherDate = {};
-// Blacksmithing, Tailoring, Tinkering, Woodcrafting, Enchanting/Craftの内で最後に準備したスキル
-// 手動でツールを装備した場合を検知できないという問題点があるが…
-let lastCraftSkill = null;
-// 最後に使用した魔法（Fizzle分をカウントから除去するのに使う）
+// 最後に使用した魔法の詠唱文（Fizzle分をカウントから除去するのに使う）
 let lastSpellCode = null;
-// 自動検出したAlchemyスキル
-let alchemySkillName = null;
-// 自動検出したMageryスキル
-let magerySkillName = null;
+// Blacksmithing, Tailoring, Tinkering, Woodcrafting, Enchanting/Craftの内で最後に準備したスキル
+// これは手動でツールを装備した場合を検知できないという問題点があるが…
+let lastCraftSkill = null;
 
 // 集計結果
 let resultLogs = [];
+
+// 副産物を集計するスキルの設定
+const counterMap = {
+    'Gathering'     : { counter: gatherCount,       totalCounter: totalGatherCount,       optionId: 'optionTakeCatch' },
+    'Lumberjacking' : { counter: lumberjackCount,   totalCounter: totalLumberjackCount,   optionId: 'optionTakeCatch', lastGatherDate: lastGatherDate },
+    'Mining'        : { counter: mineCount,         totalCounter: totalMineCount,         optionId: 'optionTakeCatch', lastGatherDate: lastGatherDate },
+    'Fishing'       : { counter: fishCount,         totalCounter: totalFishCount,         optionId: 'optionTakeCatch', lastGatherDate: lastGatherDate },
+    'Crafting'      : { counter: craftCount,        totalCounter: totalCraftCount,        optionId: 'optionCraft', subOptionId: 'optionResource', resourceData: CRAFT },
+    'Blacksmithing' : { counter: blacksmithCount,   totalCounter: totalBlacksmithCount,   optionId: 'optionCraft', subOptionId: 'optionResource', resourceData: CRAFT },
+    'Tailoring'     : { counter: tailorCount,       totalCounter: totalTailorCount,       optionId: 'optionCraft', subOptionId: 'optionResource', resourceData: CRAFT },
+    'Tinkering'     : { counter: tinkerCount,       totalCounter: totalTinkerCount,       optionId: 'optionCraft', subOptionId: 'optionResource', resourceData: CRAFT },
+    'Woodcrafting'  : { counter: woodcraftCount,    totalCounter: totalWoodcraftCount,    optionId: 'optionCraft', subOptionId: 'optionResource', resourceData: CRAFT },
+    'Enchanting'    : { counter: enchantCount,      totalCounter: totalEnchantCount,      optionId: 'optionCraft', subOptionId: 'optionResource', resourceData: CRAFT },
+    'Alchemy'       : { counter: potionCount,       totalCounter: totalPotionCount,       optionId: 'optionCraft', subOptionId: 'optionResource', resourceData: POTION },
+    'Alchemy/Cleric': { counter: clericPotionCount, totalCounter: totalClericPotionCount, optionId: 'optionCraft', subOptionId: 'optionResource', resourceData: POTION },
+    'Alchemy/Druid' : { counter: druidPotionCount,  totalCounter: totalDruidPotionCount,  optionId: 'optionCraft', subOptionId: 'optionResource', resourceData: POTION },
+    'Magery'        : { counter: spellCount,        totalCounter: totalSpellCount,        optionId: 'optionSpell', subOptionId: 'optionResource', resourceData: SPELL },
+    'Magery/Wizard' : { counter: wizardSpellCount,  totalCounter: totalWizardSpellCount,  optionId: 'optionSpell', subOptionId: 'optionResource', resourceData: SPELL },
+    'Magery/Cleric' : { counter: clericSpellCount,  totalCounter: totalClericSpellCount,  optionId: 'optionSpell', subOptionId: 'optionResource', resourceData: SPELL },
+    'Magery/Druid'  : { counter: druidSpellCount,   totalCounter: totalDruidSpellCount,   optionId: 'optionSpell', subOptionId: 'optionResource', resourceData: SPELL },
+    'Anatomy'       : { counter: anatomyCount,      totalCounter: totalAnatomyCount,      optionId: 'optionEtc' },
+}
 
 /**
  * 集計データの初期化
  */
 function initCountData() {
-    skillCount = {};
-    totalSkillCount = {};
-    spellCount = {};
-    totalSpellCount = {};
-    fizzleCount = {};
-    totalFizzleCount = {};
-    potionCount = {};
-    totalPotionCount = {};
-    enchantCount = {};
-    totalEnchantCount = {};
-    gatherCount = {};
-    totalGatherCount = {};
-    totalTakeCount = {};
-    catchCount = {};
-    totalCatchCount = {};
+    clearObject(skillCount);
+    clearObject(totalSkillCount);
+
+    clearObject(lumberjackCount);
+    clearObject(totalLumberjackCount);
+    clearObject(mineCount);
+    clearObject(totalMineCount);
+    clearObject(gatherCount);
+    clearObject(totalGatherCount);
+    clearObject(fishCount);
+    clearObject(totalFishCount);
+
+    clearObject(blacksmithCount);
+    clearObject(totalBlacksmithCount);
+    clearObject(tailorCount);
+    clearObject(totalTailorCount);
+    clearObject(tinkerCount);
+    clearObject(totalTinkerCount);
+    clearObject(woodcraftCount);
+    clearObject(totalWoodcraftCount);
+    clearObject(enchantCount);
+    clearObject(totalEnchantCount);
+    clearObject(craftCount);
+    clearObject(totalCraftCount);
+
+    clearObject(clericPotionCount);
+    clearObject(totalClericPotionCount);
+    clearObject(druidPotionCount);
+    clearObject(totalDruidPotionCount);
+    clearObject(potionCount);
+    clearObject(totalPotionCount);
+
+    clearObject(wizardSpellCount);
+    clearObject(totalWizardSpellCount);
+    clearObject(clericSpellCount);
+    clearObject(totalClericSpellCount);
+    clearObject(druidSpellCount);
+    clearObject(totalDruidSpellCount);
+    clearObject(spellCount);
+    clearObject(totalSpellCount);
+
     subtotalManaCost = 0;
     totalManaCost = 0;
-    lastGatherDate = {};
+
+    clearObject(lastGatherDate);
     lastCraftSkill = null;
     lastSpellCode = null;
-    alchemySkillName = null;
-    magerySkillName = null;
+
     resultLogs = [];
+}
+/**
+ * オブジェクトを初期化
+ * @param {Object} obj 
+ */
+function clearObject(obj) {
+    for (const key in obj) {
+        delete obj[key];
+    }
+}
+
+/**
+ * カウント情報を表示（ラベルありなし、start/success/fail/successRate もしくは success のみを切り替えて表示）
+ * @param {{key: string, counter?: object, maxKeyLength?: number, maxSuccessLength?: number}}
+ * @returns 
+ */
+function showCountData ({key, counter = totalSkillCount, maxKeyLength = null, maxSuccessLength = null}) {
+    if (!counter[key] || Object.keys(counter[key]).length === 0) return;
+    const start   = counter[key]?.start   || null;
+    const success = counter[key]?.success || null;
+    const fail    = counter[key]?.fail    || null;
+    // Magery の場合 key が詠唱文なので spellName を使う
+    const keyName = SPELL[key]?.spellName || key;
+    const padLabel   = maxKeyLength     ? (keyName.padStart(maxKeyLength,     ' ') + '  ') : '';
+    const padSuccess = maxSuccessLength ? String(success).padStart(maxSuccessLength, ' ') : '';
+    // 成功率の算出
+    // start が信用できないスキルと fail が信用できないスキルがあるので
+    // start と success + fail の小さい方を採用する
+    const total = start && (start < success + fail) ? start : fail ? (success + fail) : null;
+    const countData = total ? [
+        start && `Start ${start}`,
+        success && `Success ${success}`,
+        fail && `Fail ${fail}`,
+    ].filter(Boolean) : [padSuccess];
+    const successRate   = total &&(success / total * 100).toFixed(1) || null;
+    const successRateStr = successRate ? ` (${successRate}%)` : '';
+    if (`${padLabel}${countData.join(', ')}${successRateStr}` === '') {
+        logMessage(key, counter[key], start, success, fail, keyName);
+    }
+    resultLogs.push(`${INDENT}${INDENT}${padLabel}${countData.join(', ')}${successRateStr}`);
+}
+/**
+ * ラベル付きカウント情報を表示
+ * @param {Object} counter 
+ */
+function showLabeledCountData (counter = {}) {
+    const maxKeyLength = Math.max(...Object.keys(counter).map(k => {
+        // Magery の場合 counter の key が詠唱文なので spellName を使う
+        if (SPELL[k]?.spellName) {
+            return SPELL[k].spellName.length;
+        }
+        return k.length;
+    }));
+    const maxSuccessLength = Math.max(...Object.values(counter).map(k => String(k.success).length));
+    const sortedCounter = Object.fromEntries(Object.entries(counter).sort(([, a], [, b]) => (b.success || 0) - (a.success || 0)));
+    for (const [key, data] of Object.entries(sortedCounter)) {
+        showCountData({key: key, counter: sortedCounter, maxKeyLength: maxKeyLength, maxSuccessLength: maxSuccessLength});
+    }
+}
+/**
+ * 素材をカウントして表示
+ * @param {Object} counter 
+ */
+function showResourceCount (counter = {}, itemData = {}) {
+    let resorceCount = {};
+    for (const [key, action] of Object.entries(counter)) {
+        const resource = itemData[key]?.resource || {};
+        for (const [stuff, num] of Object.entries(resource)) {
+            const add = (action.success * num) || 0;
+            resorceCount[stuff] ||= {};
+            resorceCount[stuff].success = (resorceCount[stuff].success || 0) + add;
+        }
+    }
+    showLabeledCountData(resorceCount);
+}
+/**
+ * 消費MPを表示
+ * @param {number} manacost 
+ */
+function showManaCost (manacost = totalManaCost) {
+    resultLogs.push(`${INDENT}${INDENT}ManaPoint: ${subtotalManaCost}`);
+}
+/**
+ * Anatomy のカウントを表示
+ * @param {Object} counter 
+ */
+function showAnatomyCount (counter = totalAnaatomyCount) {
+    const maxKeyLength = Math.max(...STRENGTH.map(v => String(v).length));
+    const maxCountLength = Math.max(...Object.values(anatomyCount).map(v => String(v).length));
+    for (const key of STRENGTH) {
+        const count = anatomyCount[key] || 0;
+        resultLogs.push(`${INDENT}${INDENT}${String(key).padStart(maxLength, ' ')} ${String(count).padStart(maxCountLength, ' ')}`);
+    }
 }
 
 /**
@@ -133,55 +311,18 @@ function initCountData() {
  * @param {Object} fileData
  * （fileData.fileName, fileData.date,
  *   fileData.character, fileData.lines, fileData.text,
- *   fileData.optionTakeCatch, fileData.optionSpell, fileData.optionReagent が利用可能）
+ *   fileData.optionTakeCatch, fileData.optionCraft, fileData.optionSpell, fileData.optionResource, fileData.optionEtc が利用可能）
  */
 function researchLogs(fileData) {
 
     // キャラクターの名前
     const characterName = fileData.character;
 
-    // 集計オプション
-    const optionTakeCatch = fileData.optionTakeCatch;
-    const optionPotion = fileData.optionPotion;
-    const optionSpell = fileData.optionSpell;
-    const optionReagent = fileData.optionReagent;
-
     // 解析対象のログの書式
     const logPattern = /^(?:\[(.*?)\]: )?(?:\((.*?)\): )?(.*)$/;
 
     /**
-     * ログをチェックして条件に合致するか判定する
-     * @param {string} text
-     * @param {string | RegExp} search
-     * @param {string | RegExp} skill
-     * @returns {boolean | string} true/false or matchText
-     */
-    function checkMatch(text, search, skill = null) {
-        if (typeof search === 'string') {
-            if (text === search) {
-                return true;
-            }
-        } else if (search instanceof RegExp) {
-            const match = text.match(search);
-            if (match) {
-                // Enchanting/Crystal の場合は match[1] が undefined になるので match[2] を使う
-                let matchText = match[1] || match[2];
-                // 一部スキルでは単語の頭を大文字にする
-                if (matchText) {
-                    if (['Alchemy', 'Anatomy', 'Fishing', 'Enchanting', 'SkillLevelUp'].includes(skill)) {
-                        matchText = matchText.replace(/(?:^|\/|\s)([a-z])/g, (match) => match.toUpperCase());
-                    }
-                    return matchText;
-                } else {
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
-
-    /**
-     * スキルアクションをチェックする
+     * ログの本文を解析して使用スキル・アクション・マッチした単語を返す
      * @param {string} body
      * @returns {[string, string, string]} [skill, action, match]
      */
@@ -195,6 +336,59 @@ function researchLogs(fileData) {
             }
         }
         return [null, null, null];
+    }
+    /**
+     * ログをチェックして条件に合致するか判定する
+     * @param {string} text
+     * @param {string | RegExp} search
+     * @param {string | RegExp} skill
+     * @returns {boolean | string} true/false or matchText
+     */
+    function checkMatch(text, search, skill = null) {
+        if (typeof search === 'string') {
+            if (text === search) {
+                return true;
+            }
+        }
+        if (search instanceof RegExp) {
+            const match = text.match(search);
+            if (match) {
+                // Enchanting/Crystal の場合は match[1] が undefined になるので match[2] を使う
+                let matchText = match[1] || match[2] || null;
+                // 一部スキルではマッチした単語の頭を大文字にする
+                if (matchText) {
+                    const skillSet = new Set(['Alchemy', 'Anatomy', 'Fishing', 'Crafting', 'Enchanting', 'SkillLevelUp']);
+                    if (skillSet.has(skill)) {
+                        matchText = matchText.replace(/(?:^|\/|\s)([a-z]+)/g, (match, word) => {
+                            // of は大文字にしない
+                            if (word === 'of') return match; 
+                            return match.replace(word, word.charAt(0).toUpperCase() + word.slice(1));
+                        });
+                    }
+                    return matchText;
+                }
+                return true;
+            }
+        }
+        return false;
+    }
+    /**
+     * skillCount, totalSkillCount にカウントを加算
+     * @param {Object} {key: string, action: string, counter: object, totalCounter: object, add: number}
+     */
+    function countUp ({key, action, counter = skillCount, totalCounter = totalSkillCount, add = 1}) {
+        counter[key] ||= {};
+        counter[key][action] = (counter[key][action] || 0) + add;
+        totalCounter[key] ||= {};
+        totalCounter[key][action] = (totalCounter[key][action] || 0) + add;
+    }
+    /**
+     * ManaCostの加算
+     * @param {number} add 
+     */
+    function addManaCost (add = 3) {
+        subtotalManaCost += add;
+        totalManaCost += add;
     }
 
     for (const line of fileData.lines) {
@@ -210,175 +404,93 @@ function researchLogs(fileData) {
             // スキル使用時
             if (matchedText) {
 
-                // Lumberjacking, Mining の start の場合はタイムスタンプを更新
-                if (['Lumberjacking', 'Mining'].includes(skillCode) && skillAction === 'start') {
+                // 個別処理
+                // Lumberjacking, Mining の start の場合は lastGatherDate のタイムスタンプを更新
+                if ((skillCode === 'Lumberjacking' || skillCode === 'Mining') && skillAction === 'start') {
                     lastGatherDate[skillCode] = new Date(timeStamp.replace(' ', 'T'));
-                }
-                // Gathering の success の場合
-                if (skillCode === 'Gathering') {
-                    const itemName = matchedText;
-                    let skillName = null;
-                    if (GATHER_STUFF['Lumberjacking'].includes(itemName)) {
-                        skillName = 'Lumberjacking';
-                    } else if (GATHER_STUFF['Mining'].includes(itemName)) {
-                        skillName = 'Mining';
-                    }
-                    if (skillName && lastGatherDate[skillName]) {
-                        const startDate = lastGatherDate[skillName];
-                        const successDate = new Date(timeStamp.replace(' ', 'T'));
-                        const diffSec = (successDate - startDate) / 1000;
-                        // スキルのstartからsuccessまでの猶予時間内ならGatheringスキルとみなす
-                        if (diffSec < GATHER_LIMIT) {
-                            // Lumberjacking, Miningの成功数を加算
-                            skillCount[skillName] ||= {};
-                            skillCount[skillName][skillAction] = (skillCount[skillName][skillAction] || 0) + 1;
-                            totalSkillCount[skillName] ||= {};
-                            totalSkillCount[skillName][skillAction] = (totalSkillCount[skillName][skillAction] || 0) + 1;
-                            // 収集したアイテムを加算
-                            gatherCount[skillName] ||= {};
-                            gatherCount[skillName][itemName] = (gatherCount[skillName][itemName] || 0) + 1;
-                            totalGatherCount[skillName] ||= {};
-                            totalGatherCount[skillName][itemName] = (totalGatherCount[skillName][itemName] || 0) + 1;
-                        } else {
-                            // Lumberjacking, Mining以外のTaken: と思われるものを加算
-                            totalTakeCount[itemName] = (totalTakeCount[itemName] || 0) + 1;
-                        }
-                    }
                     continue;
                 }
-                // Fishing
-                if (skillCode === 'Fishing' && skillAction === 'success') {
-                    const catchName = matchedText;
-                    catchCount[catchName] = (catchCount[catchName] || 0) + 1;
-                    totalCatchCount[catchName] = (totalCatchCount[catchName] || 0) + 1;
-                }
-                // Alchemy
-                if (skillCode === 'Alchemy') {
-                    const potionName = matchedText;
-                    const alchemySkillName = POTION[potionName].skillName;
-                    if (skillAction === 'success') {
-                        potionCount[potionName] = (potionCount[potionName] || 0) + 1;
-                        totalPotionCount[potionName] = (totalPotionCount[potionName] || 0) + 1;
-                        const manaCost = POTION[potionName].manaCost;
-                        subtotalManaCost += manaCost;
-                        totalManaCost += manaCost;
-                    }
-                    // カウントを加算
-                    skillCount[alchemySkillName] ||= {};
-                    skillCount[alchemySkillName][skillAction] = (skillCount[alchemySkillName][skillAction] || 0) + 1;
-                    totalSkillCount[alchemySkillName] ||= {};
-                    totalSkillCount[alchemySkillName][skillAction] = (totalSkillCount[alchemySkillName][skillAction] || 0) + 1;
-                    continue;
-                }
-                // Magery
-                if (skillCode === 'Magery') {
-                    if (skillAction === 'success') {
-                        if (name === characterName) {
-                            const spellCode = matchedText;
-                            spellCount[spellCode] = (spellCount[spellCode] || 0) + 1;
-                            totalSpellCount[spellCode] = (totalSpellCount[spellCode] || 0) + 1;
-                            const manaCost = SPELL[spellCode].manaCost;
-                            subtotalManaCost += manaCost;
-                            totalManaCost += manaCost;
-                            lastSpellCode = spellCode;
-                            // カウントを加算
-                            magerySkillName ||= SPELL[spellCode].skillName;
-                            skillCount[magerySkillName] ||= {};
-                            skillCount[magerySkillName][skillAction] = (skillCount[magerySkillName][skillAction] || 0) + 1;
-                            totalSkillCount[magerySkillName] ||= {};
-                            totalSkillCount[magerySkillName][skillAction] = (totalSkillCount[magerySkillName][skillAction] || 0) + 1;
-                            // Magery/Wizardの場合は今後装備変更なしで使用されるCraftingスキルがEnchantingである可能性が高い
-                            if (magerySkillName === 'Magery/Wizard') {
-                                lastCraftSkill = 'Enchanting';
-                            }
-                        }
-                        continue;
-                    }
-                    // Fizzle
-                    if (skillAction === 'fail' && lastSpellCode) {
-                        const spellCode = lastSpellCode;
-                        spellCount[spellCode] = spellCount[spellCode] - 1 || 0;
-                        totalSpellCount[spellCode] = totalSpellCount[spellCode] - 1 || 0;
-                        const manaCost = SPELL[spellCode].manaCost;
-                        subtotalManaCost -= manaCost;
-                        totalManaCost -= manaCost;
-                        fizzleCount[spellCode] = (fizzleCount[spellCode] || 0) + 1;
-                        totalFizzleCount[spellCode] = (totalFizzleCount[spellCode] || 0) + 1;
-                        magerySkillName ||= SPELL[spellCode].skillName;
-                        // カウントを減算
-                        skillCount[magerySkillName] ||= {};
-                        skillCount[magerySkillName][skillAction] = (skillCount[magerySkillName][skillAction] || 0) + 1;
-                        totalSkillCount[magerySkillName] ||= {};
-                        totalSkillCount[magerySkillName][skillAction] = (totalSkillCount[magerySkillName][skillAction] || 0) + 1;
-                        continue;
-                    }
-                }
-                // Enchanting/EtheriteとEnchanting/Crystal
-                if (skillCode === 'Enchanting') {
-                    // 両手がフリーになったらEnchanting/Craftを疑う
-                    if (skillAction === 'ready') {
-                        lastCraftSkill = 'Enchanting';
-                        continue;
-                    }
-                    const enchantStuff = matchedText;
-                    enchantCount[enchantStuff] ||= {};
-                    enchantCount[enchantStuff][skillAction] = (enchantCount[enchantStuff][skillAction] || 0) + 1;
-                    totalEnchantCount[enchantStuff] ||= {};
-                    totalEnchantCount[enchantStuff][skillAction] = (totalEnchantCount[enchantStuff][skillAction] || 0) + 1;
-                    const manaCost = 3;
-                    subtotalManaCost += manaCost;
-                    totalManaCost += manaCost;
-                    // カウントを加算
-                    skillCount[lastCraftSkill] ||= {};
-                    skillCount[lastCraftSkill][skillAction] = (skillCount[lastCraftSkill][skillAction] || 0) + 1;
-                    totalSkillCount[lastCraftSkill] ||= {};
-                    totalSkillCount[lastCraftSkill][skillAction] = (totalSkillCount[lastCraftSkill][skillAction] || 0) + 1;
-                    continue;
-                }
-                // Crafting（Enchanting/Craftを含む）
+                // Crafting（Blacksmithing, Tailoring, Tinkering, Woodcrafting および Enchanting/Craft）
                 if (skillCode === 'Crafting') {
+                    // ready の場合は lastCraftSkill を更新
                     if (skillAction === 'ready') {
-                        const craftSkill = {
-                            'blacksmithing hammer': 'Blacksmithing',
-                            'shears': 'Tailoring',
-                            'tinkering tools': 'Tinkering',
-                            'woodworking tools': 'Woodcrafting',
+                        // 道具の装備ログからスキルを判別
+                        const craftMap = {
+                            'Blacksmithing Hammer': 'Blacksmithing',
+                            'Shears': 'Tailoring',
+                            'Tinkering Tools': 'Tinkering',
+                            'Woodworking Tools': 'Woodcrafting',
                         };
-                        lastCraftSkill = craftSkill[matchedText] || null;
+                        // 現状 ready になるのはこれらと Enchanting しか無いため skillCode は確認せずに決め打ちしている
+                        lastCraftSkill = craftMap[matchedText] || skillCode;
+                        // これだと Cooking の ready も Enchanting に判定されるが、Cooking は start/fail/success のログで判別できるので気にしない
                         continue;
                     }
-                    if (lastCraftSkill) {
-                        skillCount[lastCraftSkill] ||= {};
-                        skillCount[lastCraftSkill][skillAction] = (skillCount[lastCraftSkill][skillAction] || 0) + 1;
-                        totalSkillCount[lastCraftSkill] ||= {};
-                        totalSkillCount[lastCraftSkill][skillAction] = (totalSkillCount[lastCraftSkill][skillAction] || 0) + 1;
-                        if (lastCraftSkill === 'Enchanting') {
-                            enchantCount['Craft'] ||= {};
-                            enchantCount['Craft'][skillAction] = (enchantCount['Craft'][skillAction] || 0) + 1;
-                            totalEnchantCount['Craft'] ||= {};
-                            totalEnchantCount['Craft'][skillAction] = (totalEnchantCount['Craft'][skillAction] || 0) + 1;
-                            const manaCost = 3;
-                            subtotalManaCost += manaCost;
-                            totalManaCost += manaCost;
+                }
+                // Magery（Wizard/Cleric/Druid）の success の場合は name が characterName と一致するかチェック
+                if (skillCode === 'Magery' && skillAction === 'success') {
+                    if (name === characterName) {
+                        // 自分の魔法であった場合は lastSpellCode を更新（Fizzle分をカウントから除去するのに使う）
+                        lastSpellCode = matchedText;
+                        // Magery/Wizard を使って素手のまま何かを Craft した場合は Enchanting とみなす
+                        if (SPELL[matchedText]?.skillName === 'Magery/Wizard') {
+                            lastCraftSkill = 'Enchanting';
                         }
+                    } else {
+                        // 自分の魔法でなかった場合は飛ばす
                         continue;
                     }
                 }
-                // Anatomy
-                if (skillCode === 'Anatomy') {
-                    if (skillAction === 'success') {
-                        const anatomyComment = matchedText;
-                        anatomyCount[anatomyComment] = (anatomyCount[anatomyComment] || 0) + 1;
-                        totalAnatomyCount[anatomyComment] = (totalAnatomyCount[anatomyComment] || 0) + 1;
+
+                // 全体処理
+                // Gathering（Lumberjacking, Mining）かつ success の場合 start からの猶予時間外なら Gathering とみなす
+                // これでは猶予時間内に何か紛らわしいものを拾うと誤認識してしまうが…
+                const gatherName = GATHER[matchedText]?.skillName || null;
+                const startDate = counterMap[gatherName]?.lastGatherDate?.[gatherName] || null;
+                const successDate = startDate ? new Date(timeStamp.replace(' ', 'T')) : null;
+                const diffSec = startDate ? ((successDate - startDate) / 1000) : null;
+                const useGather = startDate ? (diffSec <= GATHER_LIMIT) : null;
+                // Gathering（Lumberjacking, Mining）
+                // Alchemy（Cleric/Druid）
+                // Crafting（Blacksmithing, Tailoring, Tinkering, Woodcrafting および Enchanting/Craft）
+                // Magery（Wizard/Cleric/Druid）
+                // これらの場合はスキル名の正式名称を skillName に入れる
+                const skillName = useGather && gatherName
+                    || skillCode === 'Alchemy' && POTION[matchedText]?.skillName
+                    || skillCode === 'Crafting' && (CRAFT[matchedText]?.skillName || lastCraftSkill)
+                    || skillCode === 'Magery' && (SPELL[matchedText]?.skillName || SPELL[lastSpellCode]?.skillName)
+                    || skillCode;
+                // counterMap からスキルごとの設定値を取得
+                const counter = counterMap[skillName]?.counter || {};
+                const totalCounter = counterMap[skillName]?.totalCounter || {};
+
+                // スキルのカウントを加算
+                countUp({key: skillName, action: skillAction});
+                // 副産物を加算
+                if (typeof matchedText === 'string') {
+                    countUp({key: matchedText, action: skillAction, counter: counter, totalCounter: totalCounter});
+                }
+                // MP消費をする場合（Alchemy/Enchanting/Magery）
+                const resourceData = counterMap[skillName]?.resourceData || {};
+                const manaCost = (skillName === 'Enchanting') ? 3 : resourceData[matchedText]?.manaCost || null;
+                if (skillAction === 'success' && manaCost) {
+                    addManaCost(manaCost);
+                }
+                // Magery の fail（つまりFizzle）の場合は success と消費MPを減算する
+                if (skillCode === 'Magery' && skillAction === 'fail' && lastSpellCode) {
+                    const lastSkillName = resourceData[lastSpellCode]?.skillName || null;
+                    const lastSpellName = resourceData[lastSpellCode]?.spellName || null;
+                    const lastManaCost = resourceData[lastSpellCode]?.manaCost || 0;
+                    const lastCounter = counterMap[lastSkillName]?.counter || {};
+                    const lastTotalCounter = counterMap[lastSkillName]?.totalCounter || {};
+                    if (lastSpellName && lastManaCost) {
+                        countUp({key: lastSpellCode, action: 'success', add: -1});
+                        countUp({key: lastSpellCode, action: 'success', counter: lastCounter, totalCounter: lastTotalCounter, add: -1});
+                        countUp({key: lastSpellCode, action: 'fail'});
+                        countUp({key: lastSpellCode, action: 'fail', counter: lastCounter, totalCounter: lastTotalCounter});
+                        addManaCost(lastManaCost * -1);
                     }
                 }
-
-                // カウントを加算
-                skillCount[skillCode] ||= {};
-                skillCount[skillCode][skillAction] = (skillCount[skillCode][skillAction] || 0) + 1;
-                totalSkillCount[skillCode] ||= {};
-                totalSkillCount[skillCode][skillAction] = (totalSkillCount[skillCode][skillAction] || 0) + 1;
-
                 continue;
             }
 
@@ -386,184 +498,54 @@ function researchLogs(fileData) {
             const skillName = checkMatch(body, SKILL_LEVEL_UP_REGEXP, 'SkillLevelUp');
             if (SKILLS.includes(skillName)) {
 
-                let skillCode = skillName;
-                if (['Alchemy/Cleric', 'Alchemy/Druid'].includes(skillName)) skillCode = 'Alchemy';
-                // if (['Blacksmithing', 'Tailoring', 'Tinkering', 'Woodworking'].includes(skillName)) skillCode = 'Crafting';
-                // if (['Lumberjacking', 'Mining'].includes(skillName)) skillCode = 'Gathering';
-                if (['Magery/Cleric', 'Magery/Druid', 'Magery/Wizard'].includes(skillName)) skillCode = 'Magery';
+                resultLogs.push(``);
+                resultLogs.push(`[${timeStamp}]:`);
+                resultLogs.push(`${INDENT}${skillName} skill level has increased.`);
+                // 集計結果の表示
+                showCountData({key: skillName, counter: skillCount});
+                // カウントデータを初期化
+                clearObject(skillCount[skillName]);
 
-                resultLogs.push(`[${timeStamp}]: ${skillName} skill level has increased.`);
-                let startCount = skillCount[skillName]?.start || null;
-                let successCount = skillCount[skillName]?.success || null;
-                let failCount = skillCount[skillName]?.fail || null;
-                let successRate = null;
-                // 成功率の算出
-                let total = (successCount !== null && failCount !== null) ? (successCount + failCount) : startCount;
-                let success = successCount ?? (total !== null && failCount !== null ? total - failCount : null);
-                if (total > 0 && success !== null) {
-                    successRate = ((success / total) * 100).toFixed(1);
+                // counterMap からスキルごとの設定値を取得
+                let counter = counterMap[skillName]?.counter || {};
+                const showDetail = fileData[counterMap[skillName]?.optionId] || false;
+                const showSubDetail = fileData[counterMap[skillName]?.subOptionId] || false;
+                const resourceData = counterMap[skillName]?.resourceData || {};
+                if (showDetail) {
+                    resultLogs.push(`${INDENT}${INDENT}${BAR}`);
+                    showLabeledCountData(counter);
                 }
-                // スキルの使用・成功・失敗回数・成功率を表示
-                const countData = [
-                    startCount && `Start ${startCount}`,
-                    successCount && `Success ${successCount}`,
-                    failCount && `Fail ${failCount}`,
-                ].filter(Boolean);
-                if (countData.length) {
-                    resultLogs.push(`${SPACER}${countData.join(', ')}${successRate ? ` (${successRate}%)` : ''}`);
+                if (showSubDetail) {
+                    resultLogs.push(`${INDENT}${INDENT}${BAR}`);
+                    showResourceCount(counter, resourceData);
                 }
-                // スキルの使用・成功・失敗回数を初期化
-                skillCount[skillName] = {};
-
-                // Gathering
-                if (['Lumberjacking', 'Mining'].includes(skillCode) && optionTakeCatch) {
-                    if (gatherCount[skillCode] && Object.keys(gatherCount[skillCode]).length) {
-                        resultLogs.push(`${SPACER}============================`);
-                        const sortedGatherCount = Object.entries(gatherCount[skillCode]).sort((a, b) => b[1] - a[1]);
-                        const maxLength = Math.max(...Object.values(gatherCount[skillCode]).map(v => String(v).length));
-                        for (const [itemName, count] of sortedGatherCount) {
-                            resultLogs.push(`${SPACER}${String(count).padStart(maxLength, ' ')} ${itemName}`);
-                        }
-                        gatherCount[skillCode] = {};
-                    }
-                    continue;
-                }
-                // Fishing
-                if (skillCode === 'Fishing' && optionTakeCatch) {
-                    if (Object.keys(catchCount).length) {
-                        resultLogs.push(`${SPACER}============================`);
-                        const sortedCatchCount = Object.entries(catchCount).sort((a, b) => b[1] - a[1]);
-                        const maxLength = Math.max(...Object.values(catchCount).map(v => String(v).length));
-                        for (const [fishName, count] of sortedCatchCount) {
-                            resultLogs.push(`${SPACER}${String(count).padStart(maxLength, ' ')} ${fishName}`);
-                        }
-                        catchCount = {};
-                    }
-                    continue;
-                }
-                // Alchemy
-                if (skillCode === 'Alchemy') {
-                    if (Object.keys(potionCount).length && optionPotion) {
-                        resultLogs.push(`${SPACER}============================`);
-                        const sortedPotionCount = Object.entries(potionCount).sort((a, b) => b[1] - a[1]);
-                        const maxLength = Math.max(...Object.values(potionCount).map(v => String(v).length));
-                        let reagent = {};
-                        for (const [potionName, count] of sortedPotionCount) {
-                            const potion = POTION[potionName];
-                            if (optionPotion) {
-                                resultLogs.push(`${SPACER}${String(count).padStart(maxLength, ' ')} ${potionName}`);
-                            }
-                            // 消費した試薬の計算
-                            for (const [key, value] of Object.entries(potion.reagent)) {
-                                reagent[key] = (reagent[key] || 0) + value * count;
-                            }
-                        }
-                        potionCount = {};
-                        // 消費した試薬の表示
-                        if (Object.keys(reagent).length && optionReagent) {
-                            resultLogs.push(`${SPACER}============================`);
-                            const sortedReagent = Object.entries(reagent).sort((a, b) => b[1] - a[1]);
-                            const maxLength = Math.max(...Object.values(reagent).map(v => String(v).length));
-                            for (const [reagentName, count] of sortedReagent) {
-                                resultLogs.push(`${SPACER}${String(count).padStart(maxLength, ' ')} ${reagentName}`);
-                            }
-                        }
-                    }
-                    continue;
-                }
-                // Enchanting
-                if (skillCode === 'Enchanting') {
-                    if (Object.keys(enchantCount).length) {
-                        resultLogs.push(`${SPACER}============================`);
-                        const enchantStuffs = ['Etherite', 'Crystal', 'Craft'];
-                        const maxLength = Math.max(...enchantStuffs.map(v => String(v).length));
-                        for (const enchantStuff of enchantStuffs) {
-                            let startCount = enchantCount[enchantStuff]?.start || null;
-                            let successCount = enchantCount[enchantStuff]?.success || null;
-                            let failCount = enchantCount[enchantStuff]?.fail || null;
-                            let successRate = null;
-                            // 成功率の算出
-                            let total = (successCount !== null && failCount !== null) ? (successCount + failCount) : startCount;
-                            let success = successCount ?? (total !== null && failCount !== null ? total - failCount : null);
-                            if (total > 0 && success !== null) {
-                                successRate = ((success / total) * 100).toFixed(1);
-                            }
-                            // スキルの使用・成功・失敗回数・成功率を表示
-                            const countData = [
-                                startCount && `Start ${startCount}`,
-                                successCount && `Success ${successCount}`,
-                                failCount && `Fail ${failCount}`,
-                            ].filter(Boolean);
-                            if (countData.length) {
-                                resultLogs.push(`${SPACER}${enchantStuff.padStart(maxLength, ' ')}: ${countData.join(', ')}${successRate ? ` (${successRate}%)` : ''}`);
-                            }
-                            // スキルの使用・成功・失敗回数を初期化
-                            enchantCount[enchantStuff] = {};
-                        }
-                    }
-                    continue;
-                }
-                // Magery
-                if (skillCode === 'Magery') {
-                    if (Object.keys(spellCount).length && optionSpell) {
-                        resultLogs.push(`${SPACER}============================`);
-                        const sortedSpellCount = Object.entries(spellCount).sort((a, b) => b[1] - a[1]);
-                        const maxLength = Math.max(...Object.values(spellCount).map(v => String(v).length));
-                        const maxSpell = Math.max(...Object.keys(spellCount).map(v => SPELL[v].name.length));
-                        let reagent = {};
-                        for (const [spellCode, count] of sortedSpellCount) {
-                            const spell = SPELL[spellCode];
-                            const fizzle = fizzleCount[spellCode];
-                            if (optionSpell) {
-                                resultLogs.push(`${SPACER}${String(count).padStart(maxLength, ' ')} ${spell.name.padEnd(maxSpell, ' ')}${fizzle ? ` (${fizzle} fizzle)` : ''}`);
-                            }
-                            // 消費した試薬の計算
-                            for (const [key, value] of Object.entries(spell.reagent)) {
-                                reagent[key] = (reagent[key] || 0) + value * count;
-                            }
-                        }
-                        spellCount = {};
-                        fizzleCount = {};
-                        // 消費した試薬の表示
-                        if (Object.keys(reagent).length && optionReagent) {
-                            resultLogs.push(`${SPACER}============================`);
-                            const sortedReagent = Object.entries(reagent).sort((a, b) => b[1] - a[1]);
-                            const maxLength = Math.max(...Object.values(reagent).map(v => String(v).length));
-                            for (const [reagentName, count] of sortedReagent) {
-                                resultLogs.push(`${SPACER}${String(count).padStart(maxLength, ' ')} ${reagentName}`);
-                            }
-                        }
-                    }
-                    continue;
-                }
+                clearObject(counter);
                 // Meditation
-                if (skillCode === 'Meditation') {
+                if (skillName === 'Meditation') {
                     if (subtotalManaCost) {
-                        resultLogs.push(`${SPACER}${subtotalManaCost} MP`);
+                        showManaCost(subtotalManaCost);
                         subtotalManaCost = 0;
                     }
-                    continue;
                 }
                 // Anatomy
-                if (skillCode === 'Anatomy') {
+                if (skillName === 'Anatomy') {
                     if (Object.keys(anatomyCount).length) {
-                        const anatomyComments = ['Extremely Weak', 'Somewhat Weak', 'Of Average Strength', 'Quite Strong', 'Very Strong', 'Unbelievably Strong'];
-                        resultLogs.push(`${SPACER}============================`);
-                        const maxLength = Math.max(...anatomyComments.map(v => String(v).length));
-                        for (const comment of anatomyComments) {
-                            const count = anatomyCount[comment] || 0;
-                            resultLogs.push(`${SPACER}${String(comment).padStart(maxLength, ' ')} ${count}`);
-                        }
-                        anatomyCount = {};
+                        resultLogs.push(`${INDENT}${BAR}`);
+                        showAnatomyCount(anatomyCount);
+                        clearObject(anatomyCount);
                     }
-                    continue;
                 }
+                continue;
             }
 
             // クラスレベルアップ
             const classLevel = checkMatch(body, CLASS_LEVEL_UP_REGEXP);
             if (classLevel) {
-                resultLogs.push(`[${timeStamp}]: Class level ${classLevel}.`);
+                resultLogs.push(``);
+                resultLogs.push(`${BAR}`);
+                resultLogs.push(`[${timeStamp}]:`);
+                resultLogs.push(`${INDENT}Class level ${classLevel}.`);
+                resultLogs.push(`${BAR}`);
             }
         }
     }
@@ -571,204 +553,56 @@ function researchLogs(fileData) {
 
 /**
  * 全集計結果の表示
+ * @param {Object} setting
+ * （setting.optionTakeCatch, setting.optionCraft, setting.optionSpell, setting.optionResource, setting.optionEtc）
  */
-function addTotalData(optionTakeCatch = false, optionPotion = false, optionSpell = false, optionReagent = false) {
+function showTotalData(setting) {
+
     resultLogs.push('');
-    resultLogs.push('==== Total Summary ====');
+    resultLogs.push('');
+    resultLogs.push('======== Total Summary ========');
 
     for (const skillName of SKILL_ORDER) {
 
         if (!totalSkillCount[skillName]) continue;
 
-        let startCount = totalSkillCount[skillName]?.start || null;
-        let successCount = totalSkillCount[skillName]?.success || null;
-        let failCount = totalSkillCount[skillName]?.fail || null;
-        let successRate = null;
+        resultLogs.push(``);
+        resultLogs.push(`${skillName} skill:`);
 
-        // データが存在するかどうか確認（使用回数、成功・失敗、または各固有のカウント）
-        let hasData = startCount !== null || successCount !== null || failCount !== null;
+        // 集計結果の表示
+        showCountData({key: skillName});
 
-        if (skillName === 'Lumberjacking' || skillName === 'Mining') {
-            if (totalGatherCount[skillName] && Object.keys(totalGatherCount[skillName]).length) {
-                hasData = true;
-            }
-        } else if (skillName === 'Alchemy/Cleric' || skillName === 'Alchemy/Druid') {
-            if (Object.keys(totalPotionCount).length) hasData = true;
-        } else if (skillName === 'Fishing') {
-            if (Object.keys(totalCatchCount).length) hasData = true;
-        } else if (skillName === 'Magery') {
-            if (Object.keys(totalSpellCount).length) hasData = true;
-        } else if (skillName === 'Meditation') {
-            if (totalManaCost > 0) hasData = true;
+        // counterMap からスキルごとの設定値を取得
+        const counter = counterMap[skillName]?.totalCounter || {};
+        const showDetail = setting[counterMap[skillName]?.optionId] || false;
+        const showSubDetail = setting[counterMap[skillName]?.subOptionId] || false;
+        const resourceData = counterMap[skillName]?.resourceData || {};
+        if (showDetail) {
+            resultLogs.push(`${INDENT}${INDENT}${BAR}`);
+            showLabeledCountData(counter);
         }
-
-        if (!hasData) continue;
-
-        resultLogs.push(`${skillName}:`);
-
-        // 成功率の算出
-        let total = (successCount !== null && failCount !== null) ? (successCount + failCount) : startCount;
-        let success = successCount ?? (total !== null && failCount !== null ? total - failCount : null);
-        if (total > 0 && success !== null) {
-            successRate = ((success / total) * 100).toFixed(1);
+        if (showSubDetail) {
+            resultLogs.push(`${INDENT}${INDENT}${BAR}`);
+            showResourceCount(counter, resourceData);
         }
-
-        // スキルの使用・成功・失敗回数・成功率を表示
-        const countData = [
-            startCount && `Start ${startCount}`,
-            successCount && `Success ${successCount}`,
-            failCount && `Fail ${failCount}`,
-        ].filter(Boolean);
-
-        if (countData.length) {
-            resultLogs.push(`${TOTAL_SPACER}${countData.join(', ')}${successRate ? ` (${successRate}%)` : ''}`);
-        }
-
-        // Lumberjacking, Mining
-        if (['Lumberjacking', 'Mining'].includes(skillName)) {
-            if (totalGatherCount[skillName] && Object.keys(totalGatherCount[skillName]).length && optionTakeCatch) {
-                resultLogs.push(`${TOTAL_SPACER}============================`);
-                const sortedGatherCount = Object.entries(totalGatherCount[skillName]).sort((a, b) => b[1] - a[1]);
-                const maxLength = Math.max(...Object.values(totalGatherCount[skillName]).map(v => String(v).length));
-                for (const [itemName, count] of sortedGatherCount) {
-                    resultLogs.push(`${TOTAL_SPACER}${String(count).padStart(maxLength, ' ')} ${itemName}`);
-                }
-            }
-        }
-        // Fishing
-        if (skillName === 'Fishing') {
-            if (Object.keys(totalCatchCount).length && optionTakeCatch) {
-                resultLogs.push(`${TOTAL_SPACER}============================`);
-                const sortedCatchCount = Object.entries(totalCatchCount).sort((a, b) => b[1] - a[1]);
-                const maxLength = Math.max(...Object.values(totalCatchCount).map(v => String(v).length));
-                for (const [fishName, count] of sortedCatchCount) {
-                    resultLogs.push(`${TOTAL_SPACER}${String(count).padStart(maxLength, ' ')} ${fishName}`);
-                }
-            }
-        }
-
-        // Alchemy
-        if (skillName === 'Alchemy/Cleric' || skillName === 'Alchemy/Druid') {
-            if (Object.keys(totalPotionCount).length && optionPotion) {
-                resultLogs.push(`${TOTAL_SPACER}============================`);
-                const sortedPotionCount = Object.entries(totalPotionCount).sort((a, b) => b[1] - a[1]);
-                const maxLength = Math.max(...Object.values(totalPotionCount).map(v => String(v).length));
-                let reagent = {};
-                for (const [potionName, count] of sortedPotionCount) {
-                    const potion = POTION[potionName];
-                    if (optionPotion) {
-                        resultLogs.push(`${TOTAL_SPACER}${String(count).padStart(maxLength, ' ')} ${potionName}`);
-                    }
-                    // 累計試薬の計算
-                    for (const [key, value] of Object.entries(potion.reagent)) {
-                        reagent[key] = (reagent[key] || 0) + value * count;
-                    }
-                }
-                // 累計試薬の表示
-                if (Object.keys(reagent).length && optionReagent) {
-                    resultLogs.push(`${TOTAL_SPACER}============================`);
-                    const sortedReagent = Object.entries(reagent).sort((a, b) => b[1] - a[1]);
-                    const maxReagentLen = Math.max(...Object.values(reagent).map(v => String(v).length));
-                    for (const [reagentName, count] of sortedReagent) {
-                        resultLogs.push(`${TOTAL_SPACER}${String(count).padStart(maxReagentLen, ' ')} ${reagentName}`);
-                    }
-                }
-
-            }
-        }
-        // Enchanting
-        if (skillName === 'Enchanting') {
-            if (Object.keys(totalEnchantCount).length) {
-                resultLogs.push(`${TOTAL_SPACER}============================`);
-                const enchantStuffs = ['Etherite', 'Crystal', 'Craft'];
-                const maxLength = Math.max(...enchantStuffs.map(v => String(v).length));
-                for (const enchantStuff of enchantStuffs) {
-                    let startCount = totalEnchantCount[enchantStuff]?.start || null;
-                    let successCount = totalEnchantCount[enchantStuff]?.success || null;
-                    let failCount = totalEnchantCount[enchantStuff]?.fail || null;
-                    let successRate = null;
-                    // 成功率の算出
-                    let total = (successCount !== null && failCount !== null) ? (successCount + failCount) : startCount;
-                    let success = successCount ?? (total !== null && failCount !== null ? total - failCount : null);
-                    if (total > 0 && success !== null) {
-                        successRate = ((success / total) * 100).toFixed(1);
-                    }
-                    // スキルの使用・成功・失敗回数・成功率を表示
-                    const countData = [
-                        startCount && `Start ${startCount}`,
-                        successCount && `Success ${successCount}`,
-                        failCount && `Fail ${failCount}`,
-                    ].filter(Boolean);
-                    if (countData.length) {
-                        resultLogs.push(`${TOTAL_SPACER}${enchantStuff.padStart(maxLength, ' ')}: ${countData.join(', ')}${successRate ? ` (${successRate}%)` : ''}`);
-                    }
-                    // スキルの使用・成功・失敗回数を初期化
-                    enchantCount[enchantStuff] = {};
-                }
-            }
-        }
-        // Magery
-        if (skillName === 'Magery/Cleric' || skillName === 'Magery/Wizard' || skillName === 'Magery/Druid') {
-            if (Object.keys(totalSpellCount).length && optionSpell) {
-                resultLogs.push(`${TOTAL_SPACER}============================`);
-                const sortedSpellCount = Object.entries(totalSpellCount).sort((a, b) => b[1] - a[1]);
-                const maxLength = Math.max(...Object.values(totalSpellCount).map(v => String(v).length));
-                const maxSpell = Math.max(...Object.keys(totalSpellCount).map(v => SPELL[v].name.length));
-                let reagent = {};
-                
-                for (const [spellCode, count] of sortedSpellCount) {
-                    if (count <= 0) continue;
-                    const spell = SPELL[spellCode];
-                    const fizzle = totalFizzleCount[spellCode];
-                    if (optionSpell) {
-                        resultLogs.push(`${TOTAL_SPACER}${String(count).padStart(maxLength, ' ')} ${spell.name.padEnd(maxSpell, ' ')}${fizzle ? ` (${fizzle} fizzle)` : ''}`);
-                    }
-                    
-                    // 累計試薬の計算
-                    for (const [key, value] of Object.entries(spell.reagent)) {
-                        reagent[key] = (reagent[key] || 0) + value * count;
-                    }
-                }
-                // 累計試薬の表示
-                if (Object.keys(reagent).length && optionReagent) {
-                    resultLogs.push(`${TOTAL_SPACER}============================`);
-                    const sortedReagent = Object.entries(reagent).sort((a, b) => b[1] - a[1]);
-                    const maxReagentLen = Math.max(...Object.values(reagent).map(v => String(v).length));
-                    for (const [reagentName, count] of sortedReagent) {
-                        resultLogs.push(`${TOTAL_SPACER}${String(count).padStart(maxReagentLen, ' ')} ${reagentName}`);
-                    }
-                }
-            }
-        }
-
+        clearObject(counter);
         // Meditation
         if (skillName === 'Meditation') {
             if (totalManaCost) {
-                resultLogs.push(`${TOTAL_SPACER}${totalManaCost} MP`);
+                showManaCost(totalManaCost);
             }
         }
         // Anatomy
         if (skillName === 'Anatomy') {
             if (Object.keys(totalAnatomyCount).length) {
-                const anatomyComments = ['Extremely Weak', 'Somewhat Weak', 'Of Average Strength', 'Quite Strong', 'Very Strong', 'Unbelievably Strong'];
-                resultLogs.push(`${TOTAL_SPACER}============================`);
-                const maxLength = Math.max(...anatomyComments.map(v => String(v).length));
-                for (const comment of anatomyComments) {
-                    const count = totalAnatomyCount[comment] || 0;
-                    resultLogs.push(`${TOTAL_SPACER}${String(comment).padStart(maxLength, ' ')} ${count}`);
-                }
+                resultLogs.push(`${INDENT}${BAR}`);
+                showAnatomyCount(totalAnatomyCount);
             }
         }
-
+        continue;
     }
 
     // Gathering以外のTaken集計（もし必要があれば）
-    if (Object.keys(totalTakeCount).length && optionTakeCatch) {
-        resultLogs.push('Other Taken Items');
-        const sortedTakeCount = Object.entries(totalTakeCount).sort((a, b) => b[1] - a[1]);
-        const maxLength = Math.max(...Object.values(totalTakeCount).map(v => String(v).length));
-        for (const [itemName, count] of sortedTakeCount) {
-            resultLogs.push(`${TOTAL_SPACER}${String(count).padStart(maxLength, ' ')} ${itemName}`);
-        }
-    }
+    // showLabeledCountData(totalGatherCount);
+
 }

@@ -6,7 +6,7 @@
 // 監視の間隔（ms）
 const MONITOR_INTERVAL = 10000;
 // 最大読込み行数
-const INITIAL_LINES = 100;
+const INITIAL_LINES = 500;
 // 最大保持行数
 const MAX_LINES = 1000;
 

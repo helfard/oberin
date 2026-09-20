@@ -169,9 +169,10 @@ async function startResearch() {
     const characterNameVal = document.getElementById('characterName').value.trim();
     const splitPerNameChecked = document.getElementById('splitPerName').checked;
     const optionTakeCatch = document.getElementById('optionTakeCatch').checked;
-    const optionPotion = document.getElementById('optionPotion').checked;
+    const optionCraft = document.getElementById('optionCraft').checked;
     const optionSpell = document.getElementById('optionSpell').checked;
-    const optionReagent = document.getElementById('optionReagent').checked;
+    const optionResource = document.getElementById('optionResource').checked;
+    const optionEtc = document.getElementById('optionEtc').checked;
 
     // 集計データを初期化
     initCountData();
@@ -183,9 +184,10 @@ async function startResearch() {
         splitPerName: splitPerNameChecked,
         characterName: characterNameVal,
         optionTakeCatch: optionTakeCatch,
-        optionPotion: optionPotion,
+        optionCraft: optionCraft,
         optionSpell: optionSpell,
-        optionReagent: optionReagent
+        optionResource: optionResource,
+        optionEtc: optionEtc,
     };
 
     try {
@@ -211,7 +213,7 @@ async function scanLogFiles(conditions = {}) {
         }
     }
 
-    const { startDateStr, endDateStr, splitPerName, characterName, optionTakeCatch, optionPotion, optionSpell, optionReagent } = conditions;
+    const { startDateStr, endDateStr, splitPerName, characterName, optionTakeCatch, optionCraft, optionSpell, optionResource, optionEtc } = conditions;
 
     if (!startDateStr || !endDateStr) {
         throw new Error('開始日と終了日が指定されていません。');
@@ -236,7 +238,7 @@ async function scanLogFiles(conditions = {}) {
             const fileHandle = await folderHandle.getFileHandle(fileName, { create: false });
             
             // 3. processLogFile() に処理を委譲
-            await processLogFile(fileHandle, fileName, dateStr, splitPerName ? characterName : null, optionTakeCatch, optionPotion, optionSpell, optionReagent);
+            await processLogFile(fileHandle, fileName, dateStr,  characterName, optionTakeCatch, optionCraft, optionSpell, optionResource, optionEtc);
 
         } catch (err) {
             if (err.name !== 'NotFoundError') {
@@ -248,7 +250,14 @@ async function scanLogFiles(conditions = {}) {
     }
 
     // 集計結果を追記
-    addTotalData(optionTakeCatch, optionPotion, optionSpell, optionReagent);
+    const setting = {
+        optionTakeCatch: optionTakeCatch,
+        optionCraft: optionCraft,
+        optionSpell: optionSpell,
+        optionResource: optionResource,
+        optionEtc: optionEtc,
+    }
+    showTotalData(setting);
 
     // 集計結果を表示
     document.getElementById('resultContainer').value = resultLogs.join('\n');
@@ -273,7 +282,7 @@ function formatDateString(date) {
  * @param {string} dateStr 
  * @param {string} characterName 
  */
-async function processLogFile(fileHandle, fileName, dateStr, characterName, optionTakeCatch, optionPotion, optionSpell, optionReagent) {
+async function processLogFile(fileHandle, fileName, dateStr, characterName, optionTakeCatch, optionCraft, optionSpell, optionResource, optionEtc) {
     const file = await fileHandle.getFile();
     const text = await file.text();
     
@@ -287,9 +296,10 @@ async function processLogFile(fileHandle, fileName, dateStr, characterName, opti
         lines: logLines,
         text: text,
         optionTakeCatch: optionTakeCatch,
-        optionPotion: optionPotion,
+        optionCraft: optionCraft,
         optionSpell: optionSpell,
-        optionReagent: optionReagent
+        optionResource: optionResource,
+        optionEtc: optionEtc
     };
 
     // 4. researchLogs() へ配列（またはファイルデータ）を渡す
