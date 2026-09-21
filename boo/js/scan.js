@@ -251,6 +251,8 @@ async function scanLogFiles(conditions = {}) {
 
     // 集計結果を追記
     const setting = {
+        startDate: startDateStr,
+        endDate: endDateStr,
         optionTakeCatch: optionTakeCatch,
         optionCraft: optionCraft,
         optionSpell: optionSpell,
