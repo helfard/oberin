@@ -206,6 +206,9 @@ function initCountData() {
     subtotalManaCost = 0;
     totalManaCost = 0;
 
+    clearObject(anatomyCount);
+    clearObject(totalAnatomyCount);
+
     clearObject(lastGatherDate);
     lastCraftSkill = null;
     lastSpellCode = null;
@@ -229,9 +232,9 @@ function clearObject(obj) {
  */
 function showCountData ({key, counter = totalSkillCount, maxKeyLength = null, maxSuccessLength = null}) {
     if (!counter[key] || Object.keys(counter[key]).length === 0) return;
-    const start   = counter[key]?.start   || null;
-    const success = counter[key]?.success || null;
-    const fail    = counter[key]?.fail    || null;
+    const start   = counter[key]?.start   ?? null;
+    const success = counter[key]?.success ?? null;
+    const fail    = counter[key]?.fail    ?? null;
     // Magery の場合 key が詠唱文なので spellName を使う
     const keyName = SPELL[key]?.spellName || key;
     const padLabel   = maxKeyLength     ? (keyName.padStart(maxKeyLength,     ' ') + '  ') : '';
@@ -239,18 +242,15 @@ function showCountData ({key, counter = totalSkillCount, maxKeyLength = null, ma
     // 成功率の算出
     // start が信用できないスキルと fail が信用できないスキルがあるので
     // start と success + fail の小さい方を採用する
-    const total = start && (start < success + fail) ? start : fail ? (success + fail) : null;
-    const countData = total ? [
+    const total = start && (start < success + fail) ? start : (success && fail && (success + fail)) || null;
+    const successRate   = total && (success / total * 100).toFixed(1) || null;
+    const countData = (start || fail) ? [
         start && `Start ${start}`,
         success && `Success ${success}`,
         fail && `Fail ${fail}`,
     ].filter(Boolean) : [padSuccess];
-    const successRate   = total &&(success / total * 100).toFixed(1) || null;
     const successRateStr = successRate ? ` (${successRate}%)` : '';
-    if (`${padLabel}${countData.join(', ')}${successRateStr}` === '') {
-        logMessage(key, counter[key], start, success, fail, keyName);
-    }
-    resultLogs.push(`${INDENT}${INDENT}${padLabel}${countData.join(', ')}${successRateStr}`);
+    resultLogs.push(`${INDENT}${padLabel}${countData.join(', ')}${successRateStr}`);
 }
 /**
  * ラベル付きカウント情報を表示
@@ -269,6 +269,19 @@ function showLabeledCountData (counter = {}) {
     for (const [key, data] of Object.entries(sortedCounter)) {
         showCountData({key: key, counter: sortedCounter, maxKeyLength: maxKeyLength, maxSuccessLength: maxSuccessLength});
     }
+}
+/**
+ * Anatomy のカウントを表示
+ * @param {Object} counter 
+ */
+function showAnatomyCount (counter = totalAnatomyCount) {
+    let obj = {};
+    for (const key of STRENGTH) {
+        const count = counter[key]?.success || 0;
+        obj[key] ||= {};
+        obj[key].success = count;
+    }
+    showLabeledCountData(obj);
 }
 /**
  * 素材をカウントして表示
@@ -291,19 +304,7 @@ function showResourceCount (counter = {}, itemData = {}) {
  * @param {number} manacost 
  */
 function showManaCost (manacost = totalManaCost) {
-    resultLogs.push(`${INDENT}${INDENT}ManaPoint: ${subtotalManaCost}`);
-}
-/**
- * Anatomy のカウントを表示
- * @param {Object} counter 
- */
-function showAnatomyCount (counter = totalAnaatomyCount) {
-    const maxKeyLength = Math.max(...STRENGTH.map(v => String(v).length));
-    const maxCountLength = Math.max(...Object.values(anatomyCount).map(v => String(v).length));
-    for (const key of STRENGTH) {
-        const count = anatomyCount[key] || 0;
-        resultLogs.push(`${INDENT}${INDENT}${String(key).padStart(maxLength, ' ')} ${String(count).padStart(maxCountLength, ' ')}`);
-    }
+    resultLogs.push(`${INDENT}ManaPoint: ${subtotalManaCost}`);
 }
 
 /**
@@ -500,7 +501,7 @@ function researchLogs(fileData) {
 
                 resultLogs.push(``);
                 resultLogs.push(`[${timeStamp}]:`);
-                resultLogs.push(`${INDENT}${skillName} skill level has increased.`);
+                resultLogs.push(`${skillName} skill level has increased.`);
                 // 集計結果の表示
                 showCountData({key: skillName, counter: skillCount});
                 // カウントデータを初期化
@@ -511,28 +512,27 @@ function researchLogs(fileData) {
                 const showDetail = fileData[counterMap[skillName]?.optionId] || false;
                 const showSubDetail = fileData[counterMap[skillName]?.subOptionId] || false;
                 const resourceData = counterMap[skillName]?.resourceData || {};
-                if (showDetail) {
-                    resultLogs.push(`${INDENT}${INDENT}${BAR}`);
-                    showLabeledCountData(counter);
+                if (Object.keys(counter).length) {
+                    if (showDetail) {
+                        resultLogs.push(`${INDENT}${BAR}`);
+                        // Anatomy
+                        if (skillName === 'Anatomy') {
+                            showAnatomyCount(counter);
+                        } else {
+                            showLabeledCountData(counter);
+                        }
+                    }
+                    if (showSubDetail) {
+                        resultLogs.push(`${INDENT}${BAR}`);
+                        showResourceCount(counter, resourceData);
+                    }
+                    clearObject(counter);
                 }
-                if (showSubDetail) {
-                    resultLogs.push(`${INDENT}${INDENT}${BAR}`);
-                    showResourceCount(counter, resourceData);
-                }
-                clearObject(counter);
                 // Meditation
                 if (skillName === 'Meditation') {
                     if (subtotalManaCost) {
                         showManaCost(subtotalManaCost);
                         subtotalManaCost = 0;
-                    }
-                }
-                // Anatomy
-                if (skillName === 'Anatomy') {
-                    if (Object.keys(anatomyCount).length) {
-                        resultLogs.push(`${INDENT}${BAR}`);
-                        showAnatomyCount(anatomyCount);
-                        clearObject(anatomyCount);
                     }
                 }
                 continue;
@@ -544,7 +544,7 @@ function researchLogs(fileData) {
                 resultLogs.push(``);
                 resultLogs.push(`${BAR}`);
                 resultLogs.push(`[${timeStamp}]:`);
-                resultLogs.push(`${INDENT}Class level ${classLevel}.`);
+                resultLogs.push(`Class level ${classLevel}.`);
                 resultLogs.push(`${BAR}`);
             }
         }
@@ -558,13 +558,22 @@ function researchLogs(fileData) {
  */
 function showTotalData(setting) {
 
+    const start = setting.startDate;
+    const end = setting.endDate;
+
     resultLogs.push('');
     resultLogs.push('');
-    resultLogs.push('======== Total Summary ========');
+    resultLogs.push('======================================');
+    resultLogs.push('=            Total Summary           =');
+    resultLogs.push('=                                    =');
+    resultLogs.push(`=   ${ start }   --->   ${  end  }   =`);
+    resultLogs.push('======================================');
 
     for (const skillName of SKILL_ORDER) {
 
-        if (!totalSkillCount[skillName]) continue;
+        if (!totalSkillCount[skillName]?.start
+            && !totalSkillCount[skillName]?.success
+            && !totalSkillCount[skillName]?.fail) continue;
 
         resultLogs.push(``);
         resultLogs.push(`${skillName} skill:`);
@@ -577,26 +586,25 @@ function showTotalData(setting) {
         const showDetail = setting[counterMap[skillName]?.optionId] || false;
         const showSubDetail = setting[counterMap[skillName]?.subOptionId] || false;
         const resourceData = counterMap[skillName]?.resourceData || {};
-        if (showDetail) {
-            resultLogs.push(`${INDENT}${INDENT}${BAR}`);
-            showLabeledCountData(counter);
+        if (Object.keys(counter).length) {
+            if (showDetail) {
+                resultLogs.push(`${INDENT}${BAR}`);
+                // Anatomy
+                if (skillName === 'Anatomy') {
+                    showAnatomyCount(counter);
+                } else {
+                    showLabeledCountData(counter);
+                }
+            }
+            if (showSubDetail) {
+                resultLogs.push(`${INDENT}${BAR}`);
+                showResourceCount(counter, resourceData);
+            }
         }
-        if (showSubDetail) {
-            resultLogs.push(`${INDENT}${INDENT}${BAR}`);
-            showResourceCount(counter, resourceData);
-        }
-        clearObject(counter);
         // Meditation
         if (skillName === 'Meditation') {
             if (totalManaCost) {
                 showManaCost(totalManaCost);
-            }
-        }
-        // Anatomy
-        if (skillName === 'Anatomy') {
-            if (Object.keys(totalAnatomyCount).length) {
-                resultLogs.push(`${INDENT}${BAR}`);
-                showAnatomyCount(totalAnatomyCount);
             }
         }
         continue;
