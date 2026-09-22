@@ -235,8 +235,8 @@ function showCountData ({key, counter = totalSkillCount, maxKeyLength = null, ma
     const start   = counter[key]?.start   ?? null;
     const success = counter[key]?.success ?? null;
     const fail    = counter[key]?.fail    ?? null;
-    // Magery の場合 key が詠唱文なので spellName を、Shaft と Arrow の場合も正式名称を使う
-    const keyName = SPELL[key]?.spellName || CRAFT[key]?.stuffName || key;
+    // Magery の場合 key が詠唱文なので spellName を、Shaft と Arrow の場合も正式名称を、また Item は Etc. とする
+    const keyName = SPELL[key]?.spellName || CRAFT[key]?.stuffName || (key === 'Item' ? 'Etc.' : key);
     const padLabel   = maxKeyLength     ? (keyName.padStart(maxKeyLength,     ' ') + '  ') : '';
     const padSuccess = maxSuccessLength ? String(success).padStart(maxSuccessLength, ' ') : '';
     // 成功率の算出

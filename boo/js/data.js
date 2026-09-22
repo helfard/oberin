@@ -51,7 +51,7 @@ const LOG = {
     // Blacksmithing, Tailoring, Tinkering, Woodcrafting/Craft（Arrow を含む）, Enchanting/Craft
     'Crafting': {
         ready: /^You remove your (.*) from your bag\.$/,
-        start: /^You begin to make (?:a|the) (.*)\.\.\.$/,
+        start: /^You begin to (?:make|craft) (?:a|the) (.*)\.\.\.$/,
         success: /^You successfully craft (?:a|the) (.*)\.$/,
         fail: /You fail to craft (?:a|the) (.*)\./
     },
