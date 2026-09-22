@@ -34,7 +34,7 @@ const SKILLS = [
     'Stealth',
     'Tailoring',
     'Taming',
-    'Thinkering',
+    'Tinkering',
     'Tracking',
     'Woodcrafting',
     'Wrestling',
