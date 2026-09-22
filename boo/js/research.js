@@ -235,8 +235,8 @@ function showCountData ({key, counter = totalSkillCount, maxKeyLength = null, ma
     const start   = counter[key]?.start   ?? null;
     const success = counter[key]?.success ?? null;
     const fail    = counter[key]?.fail    ?? null;
-    // Magery の場合 key が詠唱文なので spellName を使う
-    const keyName = SPELL[key]?.spellName || key;
+    // Magery の場合 key が詠唱文なので spellName を、Shaft と Arrow の場合も正式名称を使う
+    const keyName = SPELL[key]?.spellName || CRAFT[key]?.stuffName || key;
     const padLabel   = maxKeyLength     ? (keyName.padStart(maxKeyLength,     ' ') + '  ') : '';
     const padSuccess = maxSuccessLength ? String(success).padStart(maxSuccessLength, ' ') : '';
     // 成功率の算出
@@ -261,6 +261,10 @@ function showLabeledCountData (counter = {}) {
         // Magery の場合 counter の key が詠唱文なので spellName を使う
         if (SPELL[k]?.spellName) {
             return SPELL[k].spellName.length;
+        }
+        // Shaft と Arrow の場合は正式名称が 20 XXXs なので
+        if (CRAFT[k]?.name) {
+            return CRAFT[k].stuffName.length;
         }
         return k.length;
     }));
@@ -358,7 +362,7 @@ function researchLogs(fileData) {
                 let matchText = match[1] || match[2] || null;
                 // 一部スキルではマッチした単語の頭を大文字にする
                 if (matchText) {
-                    const skillSet = new Set(['Alchemy', 'Anatomy', 'Fishing', 'Crafting', 'Enchanting', 'SkillLevelUp']);
+                    const skillSet = new Set(['Alchemy', 'Anatomy', 'Fishing', 'Crafting', 'Enchanting', 'Woodcrafting', 'SkillLevelUp']);
                     if (skillSet.has(skill)) {
                         matchText = matchText.replace(/(?:^|\/|\s)([a-z]+)/g, (match, word) => {
                             // of は大文字にしない

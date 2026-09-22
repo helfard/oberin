@@ -48,7 +48,7 @@ const LOG = {
         success: /^You successfully mix the (.*)\.$/,
         fail: /^You fail to mix the (.*)\.$/
     },
-    // Blacksmithing, Tailoring, Tinkering, Woodcrafting, Enchanting/Craft
+    // Blacksmithing, Tailoring, Tinkering, Woodcrafting/Craft（Arrow を含む）, Enchanting/Craft
     'Crafting': {
         ready: /^You remove your (.*) from your bag\.$/,
         start: /^You begin to make (?:a|the) (.*)\.\.\.$/,
@@ -150,7 +150,12 @@ const LOG = {
     'Tracking': {
         fail: 'You fail to track any creature.'
     },
-    // Woodcrafting は Crafting に統合
+    'Woodcrafting': {
+        // Arrow を含む Woodcrafting/Craft は Crafting に統合
+        start: /^You begin to carve the (shafts)\.\.\.$/,
+        success: /^You successfully carve the (shafts)\.$/,
+        fail: /^You fail to carve the (shafts)\.$/
+    },
     // 'Wrestling': {},
 };
 
@@ -1484,18 +1489,20 @@ const CRAFT = {
         },
         skillName: 'Woodcrafting',
     },
-    '20 Shafts': {
+    'Shafts': {
+        stuffName: '20 Shafts',
         level: 5,
         resource: {
             'Board': 1,
         },
         skillName: 'Woodcrafting',
     },
-    '20 Arrows': {
+    'Arrows': {
+        stuffName: '20 Arrows',
         level: 5,
         resource: {
-            'Shaft': 1,
-            'Feather': 1,
+            'Shaft': 20,
+            'Feather': 20,
         },
         skillName: 'Woodcrafting',
     },
@@ -1621,7 +1628,7 @@ const CRAFT = {
         },
         skillName: 'Tinkering',
     },
-    'Shears': {
+    'Pair of Shears': {
         level: 3,
         resource: {
             'Ingot': 1,
@@ -2037,12 +2044,21 @@ const CRAFT = {
         },
         skillName: 'Tailoring',
     },
-    'Black / Yellow Leather Arms': {
+    'Black Leather Arms': {
         level: 6,
         resource: {
             'Leather Hides': 3,
             'Rolls of Cloth': 2,
-            'Black or Yellow Dye': 3,
+            'Black Dye': 3,
+        },
+        skillName: 'Tailoring',
+    },
+    'Yellow Leather Arms': {
+        level: 6,
+        resource: {
+            'Leather Hides': 3,
+            'Rolls of Cloth': 2,
+            'Yellow Dye': 3,
         },
         skillName: 'Tailoring',
     },
@@ -2068,21 +2084,39 @@ const CRAFT = {
         },
         skillName: 'Tailoring',
     },
-    'Black / Yellow Leather Legs': {
+    'Black Leather Legs': {
         level: 7,
         resource: {
             'Leather Hides': 3,
             'Rolls of Cloth': 4,
-            'Black or Yellow Dye': 4,
+            'Black Dye': 4,
         },
         skillName: 'Tailoring',
     },
-    'Black / Yellow Leather Breast': {
+    'Yellow Leather Legs': {
+        level: 7,
+        resource: {
+            'Leather Hides': 3,
+            'Rolls of Cloth': 4,
+            'Yellow Dye': 4,
+        },
+        skillName: 'Tailoring',
+    },
+    'Black Leather Breast': {
         level: 8,
         resource: {
             'Leather Hides': 3,
             'Rolls of Cloth': 6,
-            'Black or Yellow Dye': 5,
+            'Black Dye': 5,
+        },
+        skillName: 'Tailoring',
+    },
+    'Yellow Leather Breast': {
+        level: 8,
+        resource: {
+            'Leather Hides': 3,
+            'Rolls of Cloth': 6,
+            'Yellow Dye': 5,
         },
         skillName: 'Tailoring',
     },
