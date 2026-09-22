@@ -828,7 +828,6 @@ const CRAFT = {
             'Board': 1,
             'Ingot': 1,
         },
-        price: 10,
         skillName: 'Blacksmithing',
     },
     'Broadsword': {
@@ -837,7 +836,6 @@ const CRAFT = {
             'Board': 1,
             'Ingot': 2,
         },
-        price: 50,
         skillName: 'Blacksmithing',
     },
     'Spear': {
@@ -846,7 +844,6 @@ const CRAFT = {
             'Board': 2,
             'Ingot': 1,
         },
-        price: 50,
         skillName: 'Blacksmithing',
     },
     'Flail': {
@@ -855,7 +852,6 @@ const CRAFT = {
             'Board': 1,
             'Ingot': 2,
         },
-        price: 66,
         skillName: 'Blacksmithing',
     },
     'Mace': {
@@ -864,7 +860,6 @@ const CRAFT = {
             'Board': 1,
             'Ingot': 1,
         },
-        price: 66,
         skillName: 'Blacksmithing',
     },
     'Katana': {
@@ -873,7 +868,6 @@ const CRAFT = {
             'Board': 1,
             'Ingot': 2,
         },
-        price: 83,
         skillName: 'Blacksmithing',
     },
     'Scimitar': {
@@ -882,7 +876,6 @@ const CRAFT = {
             'Board': 1,
             'Ingot': 3,
         },
-        price: 83,
         skillName: 'Blacksmithing',
     },
     'War Hammer': {
@@ -891,7 +884,6 @@ const CRAFT = {
             'Board': 1,
             'Ingot': 1,
         },
-        price: 66,
         skillName: 'Blacksmithing',
     },
     'Sickle': {
@@ -900,7 +892,6 @@ const CRAFT = {
             'Board': 2,
             'Ingot': 2,
         },
-        price: 100,
         skillName: 'Blacksmithing',
     },
     'Long Sword': {
@@ -909,7 +900,6 @@ const CRAFT = {
             'Board': 1,
             'Ingot': 4,
         },
-        price: 133,
         skillName: 'Blacksmithing',
     },
     'Battle Axe': {
@@ -918,7 +908,6 @@ const CRAFT = {
             'Board': 1,
             'Ingot': 3,
         },
-        price: 158,
         skillName: 'Blacksmithing',
     },
     'Glaive': {
@@ -927,7 +916,330 @@ const CRAFT = {
             'Board': 2,
             'Ingot': 2,
         },
-        price: 183,
+        skillName: 'Blacksmithing',
+    },
+    'Dagger of Durability': {
+        level: 10,
+        resource: {
+            'Dagger': 1,
+            'Essence of Durability': 1,
+            'Ingot': 10,
+        },
+        skillName: 'Blacksmithing',
+    },
+    'Broadsword of Durability': {
+        level: 10,
+        resource: {
+            'Broadsword': 1,
+            'Essence of Durability': 1,
+            'Ingot': 10,
+        },
+        skillName: 'Blacksmithing',
+    },
+    'Spear of Durability': {
+        level: 10,
+        resource: {
+            'Spear': 1,
+            'Essence of Durability': 1,
+            'Ingot': 10,
+        },
+        skillName: 'Blacksmithing',
+    },
+    'Flail of Durability': {
+        level: 10,
+        resource: {
+            'Flail': 1,
+            'Essence of Durability': 1,
+            'Ingot': 10,
+        },
+        skillName: 'Blacksmithing',
+    },
+    'Mace of Durability': {
+        level: 10,
+        resource: {
+            'Mace': 1,
+            'Essence of Durability': 1,
+            'Ingot': 10,
+        },
+        skillName: 'Blacksmithing',
+    },
+    'Katana of Durability': {
+        level: 10,
+        resource: {
+            'Katana': 1,
+            'Essence of Durability': 1,
+            'Ingot': 10,
+        },
+        skillName: 'Blacksmithing',
+    },
+    'Scimitar of Durability': {
+        level: 10,
+        resource: {
+            'Scimitar': 1,
+            'Essence of Durability': 1,
+            'Ingot': 10,
+        },
+        skillName: 'Blacksmithing',
+    },
+    'War Hammer of Durability': {
+        level: 10,
+        resource: {
+            'War Hammer': 1,
+            'Essence of Durability': 1,
+            'Ingot': 10,
+        },
+        skillName: 'Blacksmithing',
+    },
+    'Sickle of Durability': {
+        level: 10,
+        resource: {
+            'Sickle': 1,
+            'Essence of Durability': 1,
+            'Ingot': 10,
+        },
+        skillName: 'Blacksmithing',
+    },
+    'Long Sword of Durability': {
+        level: 10,
+        resource: {
+            'Long Sword': 1,
+            'Essence of Durability': 1,
+            'Ingot': 10,
+        },
+        skillName: 'Blacksmithing',
+    },
+    'Battle Axe of Durability': {
+        level: 10,
+        resource: {
+            'Battle Axe': 1,
+            'Essence of Durability': 1,
+            'Ingot': 10,
+        },
+        skillName: 'Blacksmithing',
+    },
+    'Glaive of Durability': {
+        level: 10,
+        resource: {
+            'Glaive': 1,
+            'Essence of Durability': 1,
+            'Ingot': 10,
+        },
+        skillName: 'Blacksmithing',
+    },
+    'Dagger of Power': {
+        level: 11,
+        resource: {
+            'Dagger': 1,
+            'Essence of Power': 1,
+            'Ingot': 10,
+        },
+        skillName: 'Blacksmithing',
+    },
+    'Broadsword of Power': {
+        level: 11,
+        resource: {
+            'Broadsword': 1,
+            'Essence of Power': 1,
+            'Ingot': 10,
+        },
+        skillName: 'Blacksmithing',
+    },
+    'Spear of Power': {
+        level: 11,
+        resource: {
+            'Spear': 1,
+            'Essence of Power': 1,
+            'Ingot': 10,
+        },
+        skillName: 'Blacksmithing',
+    },
+    'Flail of Power': {
+        level: 11,
+        resource: {
+            'Flail': 1,
+            'Essence of Power': 1,
+            'Ingot': 10,
+        },
+        skillName: 'Blacksmithing',
+    },
+    'Mace of Power': {
+        level: 11,
+        resource: {
+            'Mace': 1,
+            'Essence of Power': 1,
+            'Ingot': 10,
+        },
+        skillName: 'Blacksmithing',
+    },
+    'Katana of Power': {
+        level: 11,
+        resource: {
+            'Katana': 1,
+            'Essence of Power': 1,
+            'Ingot': 10,
+        },
+        skillName: 'Blacksmithing',
+    },
+    'Scimitar of Power': {
+        level: 11,
+        resource: {
+            'Scimitar': 1,
+            'Essence of Power': 1,
+            'Ingot': 10,
+        },
+        skillName: 'Blacksmithing',
+    },
+    'War Hammer of Power': {
+        level: 11,
+        resource: {
+            'War Hammer': 1,
+            'Essence of Power': 1,
+            'Ingot': 10,
+        },
+        skillName: 'Blacksmithing',
+    },
+    'Sickle of Power': {
+        level: 11,
+        resource: {
+            'Sickle': 1,
+            'Essence of Power': 1,
+            'Ingot': 10,
+        },
+        skillName: 'Blacksmithing',
+    },
+    'Long Sword of Power': {
+        level: 11,
+        resource: {
+            'Long Sword': 1,
+            'Essence of Power': 1,
+            'Ingot': 10,
+        },
+        skillName: 'Blacksmithing',
+    },
+    'Battle Axe of Power': {
+        level: 11,
+        resource: {
+            'Battle Axe': 1,
+            'Essence of Power': 1,
+            'Ingot': 10,
+        },
+        skillName: 'Blacksmithing',
+    },
+    'Glaive of Power': {
+        level: 11,
+        resource: {
+            'Glaive': 1,
+            'Essence of Power': 1,
+            'Ingot': 10,
+        },
+        skillName: 'Blacksmithing',
+    },
+    'Dagger of Speed': {
+        level: 12,
+        resource: {
+            'Dagger': 1,
+            'Essence of Speed': 1,
+            'Ingot': 10,
+        },
+        skillName: 'Blacksmithing',
+    },
+    'Broadsword of Speed': {
+        level: 12,
+        resource: {
+            'Broadsword': 1,
+            'Essence of Speed': 1,
+            'Ingot': 10,
+        },
+        skillName: 'Blacksmithing',
+    },
+    'Spear of Speed': {
+        level: 12,
+        resource: {
+            'Spear': 1,
+            'Essence of Speed': 1,
+            'Ingot': 10,
+        },
+        skillName: 'Blacksmithing',
+    },
+    'Flail of Speed': {
+        level: 12,
+        resource: {
+            'Flail': 1,
+            'Essence of Speed': 1,
+            'Ingot': 10,
+        },
+        skillName: 'Blacksmithing',
+    },
+    'Mace of Speed': {
+        level: 12,
+        resource: {
+            'Mace': 1,
+            'Essence of Speed': 1,
+            'Ingot': 10,
+        },
+        skillName: 'Blacksmithing',
+    },
+    'Katana of Speed': {
+        level: 12,
+        resource: {
+            'Katana': 1,
+            'Essence of Speed': 1,
+            'Ingot': 10,
+        },
+        skillName: 'Blacksmithing',
+    },
+    'Scimitar of Speed': {
+        level: 12,
+        resource: {
+            'Scimitar': 1,
+            'Essence of Speed': 1,
+            'Ingot': 10,
+        },
+        skillName: 'Blacksmithing',
+    },
+    'War Hammer of Speed': {
+        level: 12,
+        resource: {
+            'War Hammer': 1,
+            'Essence of Speed': 1,
+            'Ingot': 10,
+        },
+        skillName: 'Blacksmithing',
+    },
+    'Sickle of Speed': {
+        level: 12,
+        resource: {
+            'Sickle': 1,
+            'Essence of Speed': 1,
+            'Ingot': 10,
+        },
+        skillName: 'Blacksmithing',
+    },
+    'Long Sword of Speed': {
+        level: 12,
+        resource: {
+            'Long Sword': 1,
+            'Essence of Speed': 1,
+            'Ingot': 10,
+        },
+        skillName: 'Blacksmithing',
+    },
+    'Battle Axe of Speed': {
+        level: 12,
+        resource: {
+            'Battle Axe': 1,
+            'Essence of Speed': 1,
+            'Ingot': 10,
+        },
+        skillName: 'Blacksmithing',
+    },
+    'Glaive of Speed': {
+        level: 12,
+        resource: {
+            'Glaive': 1,
+            'Essence of Speed': 1,
+            'Ingot': 10,
+        },
         skillName: 'Blacksmithing',
     },
     // Blacksmithing/Armer
@@ -936,7 +1248,6 @@ const CRAFT = {
         resource: {
             'Ingot': 4,
         },
-        price: 50,
         skillName: 'Blacksmithing',
     },
     'Chain Mail Arms': {
@@ -944,7 +1255,6 @@ const CRAFT = {
         resource: {
             'Ingot': 6,
         },
-        price: 66,
         skillName: 'Blacksmithing',
     },
     'Chain Mail Legs': {
@@ -952,7 +1262,6 @@ const CRAFT = {
         resource: {
             'Ingot': 6,
         },
-        price: 91,
         skillName: 'Blacksmithing',
     },
     'Chain Mail Gloves': {
@@ -960,7 +1269,6 @@ const CRAFT = {
         resource: {
             'Ingot': 3,
         },
-        price: 50,
         skillName: 'Blacksmithing',
     },
     'Metal Shield': {
@@ -968,7 +1276,6 @@ const CRAFT = {
         resource: {
             'Ingot': 5,
         },
-        price: 83,
         skillName: 'Blacksmithing',
     },
     'Open Plate Helmet': {
@@ -976,7 +1283,6 @@ const CRAFT = {
         resource: {
             'Ingot': 6,
         },
-        price: 66,
         skillName: 'Blacksmithing',
     },
     'Slotted Plate Helmet': {
@@ -984,7 +1290,6 @@ const CRAFT = {
         resource: {
             'Ingot': 8,
         },
-        price: 91,
         skillName: 'Blacksmithing',
     },
     'Viking Helmet': {
@@ -992,7 +1297,6 @@ const CRAFT = {
         resource: {
             'Ingot': 7,
         },
-        price: 83,
         skillName: 'Blacksmithing',
     },
     'Chain Breast': {
@@ -1000,7 +1304,6 @@ const CRAFT = {
         resource: {
             'Ingot': 9,
         },
-        price: 166,
         skillName: 'Blacksmithing',
     },
     'Closed Plate Helmet': {
@@ -1008,7 +1311,6 @@ const CRAFT = {
         resource: {
             'Ingot': 10,
         },
-        price: 100,
         skillName: 'Blacksmithing',
     },
     'Plate Arms': {
@@ -1016,7 +1318,6 @@ const CRAFT = {
         resource: {
             'Ingot': 8,
         },
-        price: 133,
         skillName: 'Blacksmithing',
     },
     'Plate Gauntlets': {
@@ -1024,7 +1325,6 @@ const CRAFT = {
         resource: {
             'Ingot': 4,
         },
-        price: 66,
         skillName: 'Blacksmithing',
     },
     'Plate Legs': {
@@ -1032,7 +1332,6 @@ const CRAFT = {
         resource: {
             'Ingot': 8,
         },
-        price: 200,
         skillName: 'Blacksmithing',
     },
     'Plate Breast': {
@@ -1040,7 +1339,6 @@ const CRAFT = {
         resource: {
             'Ingot': 12,
         },
-        price: 333,
         skillName: 'Blacksmithing',
     },
     'Black Open Plate Helmet': {
@@ -1106,14 +1404,856 @@ const CRAFT = {
         },
         skillName: 'Blacksmithing',
     },
-    // Enchanting Etherite
+    // Blacksmithing/Miscellaneous
+    '3 Ingots': {
+        level: 1,
+        resource: {
+            'Ferrite': 1,
+        },
+        skillName: 'Blacksmithing',
+    },
+    '3 Black Ingots': {
+        level: 1,
+        resource: {
+            'Black Ferrite': 1,
+        },
+        skillName: 'Blacksmithing',
+    },
+    // Blacksmithing/Tool
+    'Blacksmigh Hammer': {
+        level: 1,
+        resource: {
+            'Board': 1,
+            'Ingot': 2,
+            'Pach of Nails': 1,
+        },
+        skillName: 'Blacksmithing',
+    },
+    'Hand Axe': {
+        level: 1,
+        resource: {
+            'Board': 1,
+            'Ingot': 2,
+        },
+        skillName: 'Blacksmithing',
+    },
+    'Mining Axe': {
+        level: 1,
+        resource: {
+            'Board': 1,
+            'Ingot': 2,
+            'Pach of Nails': 1,
+        },
+        skillName: 'Blacksmithing',
+    },
+    // Woodcrafting
+    '3 Boards': {
+        level: 1,
+        resource: {
+            'Log': 1,
+        },
+        skillName: 'Woodcrafting',
+    },
+    'Bundle of Kindling': {
+        level: 1,
+        resource: {
+            'Log': 1,
+        },
+        skillName: 'Woodcrafting',
+    },
+    'Fishing Pole': {
+        level: 2,
+        resource: {
+            'Boards': 2,
+            'Pack of Nails': 1,
+            'Ingot': 1,
+        },
+        skillName: 'Woodcrafting',
+    },
+    'Club': {
+        level: 3,
+        resource: {
+            'Boards': 2,
+        },
+        skillName: 'Woodcrafting',
+    },
+    'Stave': {
+        level: 4,
+        resource: {
+            'Boards': 2,
+        },
+        skillName: 'Woodcrafting',
+    },
+    '20 Shafts': {
+        level: 5,
+        resource: {
+            'Board': 1,
+        },
+        skillName: 'Woodcrafting',
+    },
+    '20 Arrows': {
+        level: 5,
+        resource: {
+            'Shaft': 1,
+            'Feather': 1,
+        },
+        skillName: 'Woodcrafting',
+    },
+    'Wooden Shield': {
+        level: 5,
+        resource: {
+            'Board': 5,
+            'Ingot': 1,
+            'Pack of Nails': 1,
+        },
+        skillName: 'Woodcrafting',
+    },
+    'Short Bow': {
+        level: 5,
+        resource: {
+            'Boards': 2,
+        },
+        skillName: 'Woodcrafting',
+    },
+    'Long Bow': {
+        level: 6,
+        resource: {
+            'Boards': 4,
+        },
+        skillName: 'Woodcrafting',
+    },
+    'Raft': {
+        level: 8,
+        resource: {
+            'Logs': 8,
+            'Packs of Nails': 3,
+        },
+        skillName: 'Woodcrafting',
+    },
+    'Club of Durability': {
+        level: 9,
+        resource: {
+            'Club or Stave': 1,
+            'Essence of Durability': 1,
+            'Boards': 5,
+        },
+        skillName: 'Woodcrafting',
+    },
+    'Stave of Durability': {
+        level: 9,
+        resource: {
+            'Club or Stave': 1,
+            'Essence of Durability': 1,
+            'Boards': 5,
+        },
+        skillName: 'Woodcrafting',
+    },
+    'Short Bow of Durability': {
+        level: 10,
+        resource: {
+            'Short Bow or Long Bow': 1,
+            'Essence of Durability': 1,
+            'Boards': 5,
+        },
+        skillName: 'Woodcrafting',
+    },
+     'Long Bow of Durability': {
+        level: 10,
+        resource: {
+            'Short Bow or Long Bow': 1,
+            'Essence of Durability': 1,
+            'Boards': 5,
+        },
+        skillName: 'Woodcrafting',
+    },
+    'Short Bow of Power': {
+        level: 11,
+        resource: {
+            'Short Bow or Long Bow': 1,
+            'Essence of Power': 1,
+            'Boards': 5,
+        },
+        skillName: 'Woodcrafting',
+    },
+    'Long Bow of Power': {
+        level: 11,
+        resource: {
+            'Short Bow or Long Bow': 1,
+            'Essence of Power': 1,
+            'Boards': 5,
+        },
+        skillName: 'Woodcrafting',
+    },
+    'Short Bow of Speed': {
+        level: 12,
+        resource: {
+            'Short Bow or Long Bow': 1,
+            'Essence of Speed': 1,
+            'Boards': 5,
+        },
+        skillName: 'Woodcrafting',
+    },
+    'Long Bow of Speed': {
+        level: 12,
+        resource: {
+            'Short Bow or Long Bow': 1,
+            'Essence of Speed': 1,
+            'Boards': 5,
+        },
+        skillName: 'Woodcrafting',
+    },
+    // Tinkering
+    'Set of Woodworking Tools': {
+        level: 1,
+        resource: {
+            'Pach of Nails': 1,
+            'Boards': 1,
+            'Ingot': 1,
+        },
+        skillName: 'Tinkering',
+    },
+    'Set of Tinkering Tools': {
+        level: 2,
+        resource: {
+            'Pach of Nails': 1,
+            'Boards': 1,
+            'Ingot': 1,
+        },
+        skillName: 'Tinkering',
+    },
+    'Shears': {
+        level: 3,
+        resource: {
+            'Ingot': 1,
+        },
+        skillName: 'Tinkering',
+    },
+    'Sextant': {
+        level: 3,
+        resource: {
+            'Pach of Nails': 1,
+            'Ingot': 1,
+        },
+        skillName: 'Tinkering',
+    },
+    'Trap': {
+        level: 5,
+        resource: {
+            'Pach of Nails': 1,
+            'Ingot': 1,
+            'Volcanic Ash': 2,
+        },
+        manaCost: 3,
+        skillName: 'Tinkering',
+    },
+    // Tailoring
+    '10 Bandages': {
+        level: 1,
+        resource: {
+            'Roll of Cloth': 1,
+        },
+        skillName: 'Tailoring',
+    },
+    'Roll of Cloth': {
+        level: 1,
+        resource: {
+            'Bundles of Wool': 3,
+        },
+        skillName: 'Tailoring',
+    },
+    'Leather Belt': {
+        level: 1,
+        resource: {
+            'Leather Hide': 1,
+        },
+        skillName: 'Tailoring',
+    },
+    'Gray Shirt': {
+        level: 1,
+        resource: {
+            'Roll of Cloth': 1,
+        },
+        skillName: 'Tailoring',
+    },
+    'Light Blue Shirt': {
+        level: 1,
+        resource: {
+            'Roll of Cloth': 1,
+            'Bottle of Light Blue Dye': 1,
+        },
+        skillName: 'Tailoring',
+    },
+    'Red Shirt': {
+        level: 1,
+        resource: {
+            'Roll of Cloth': 1,
+            'Bottle of Red Dye': 1,
+        },
+        skillName: 'Tailoring',
+    },
+    'Blue Shirt': {
+        level: 1,
+        resource: {
+            'Roll of Cloth': 1,
+            'Bottle of Blue Dye': 1,
+        },
+        skillName: 'Tailoring',
+    },
+    'Brown Shirt': {
+        level: 1,
+        resource: {
+            'Roll of Cloth': 1,
+            'Bottle of Brown Dye': 1,
+        },
+        skillName: 'Tailoring',
+    },
+    'Black Shirt': {
+        level: 1,
+        resource: {
+            'Roll of Cloth': 1,
+            'Bottle of Black Dye': 1,
+        },
+        skillName: 'Tailoring',
+    },
+    'Green Shirt': {
+        level: 1,
+        resource: {
+            'Roll of Cloth': 1,
+            'Bottle of Purple Dye': 1,
+        },
+        skillName: 'Tailoring',
+    },
+    'Purple Shirt': {
+        level: 1,
+        resource: {
+            'Roll of Cloth': 1,
+            'Bottle of Purple Dye': 1,
+        },
+        skillName: 'Tailoring',
+    },
+    'Yellow Shirt': {
+        level: 1,
+        resource: {
+            'Roll of Cloth': 1,
+            'Bottle of Yellow Dye': 1,
+        },
+        skillName: 'Tailoring',
+    },
+    'Gray Pair of Pants': {
+        level: 2,
+        resource: {
+            'Roll of Cloth': 1,
+        },
+        skillName: 'Tailoring',
+    },
+    'Light Blue Pair of Pants': {
+        level: 2,
+        resource: {
+            'Roll of Cloth': 1,
+            'Bottle of Light Blue Dye': 1,
+        },
+        skillName: 'Tailoring',
+    },
+    'Red Pair of Pants': {
+        level: 2,
+        resource: {
+            'Roll of Cloth': 1,
+            'Bottle of Red Dye': 1,
+        },
+        skillName: 'Tailoring',
+    },
+    'Blue Pair of Pants': {
+        level: 2,
+        resource: {
+            'Roll of Cloth': 1,
+            'Bottle of Blue Dye': 1,
+        },
+        skillName: 'Tailoring',
+    },
+    'Brown Pair of Pants': {
+        level: 2,
+        resource: {
+            'Roll of Cloth': 1,
+            'Bottle of Brown Dye': 1,
+        },
+        skillName: 'Tailoring',
+    },
+    'Black Pair of Pants': {
+        level: 2,
+        resource: {
+            'Roll of Cloth': 1,
+            'Bottle of Black Dye': 1,
+        },
+        skillName: 'Tailoring',
+    },
+    'Green Pair of Pants': {
+        level: 2,
+        resource: {
+            'Roll of Cloth': 1,
+            'Bottle of Purple Dye': 1,
+        },
+        skillName: 'Tailoring',
+    },
+    'Purple Pair of Pants': {
+        level: 2,
+        resource: {
+            'Roll of Cloth': 1,
+            'Bottle of Purple Dye': 1,
+        },
+        skillName: 'Tailoring',
+    },
+    'Yellow Pair of Pants': {
+        level: 2,
+        resource: {
+            'Roll of Cloth': 1,
+            'Bottle of Yellow Dye': 1,
+        },
+        skillName: 'Tailoring',
+    },
+    'Gray Robe': {
+        level: 3,
+        resource: {
+            'Rolls of Cloth': 2,
+        },
+        skillName: 'Tailoring',
+    },
+    'Light Blue Robe': {
+        level: 3,
+        resource: {
+            'Rolls of Cloth': 2,
+            'Bottle of Light Blue Dye': 1,
+        },
+        skillName: 'Tailoring',
+    },
+    'Red Robe': {
+        level: 3,
+        resource: {
+            'Rolls of Cloth': 2,
+            'Bottle of Red Dye': 1,
+        },
+        skillName: 'Tailoring',
+    },
+    'Blue Robe': {
+        level: 3,
+        resource: {
+            'Rolls of Cloth': 2,
+            'Bottle of Blue Dye': 1,
+        },
+        skillName: 'Tailoring',
+    },
+    'Brown Robe': {
+        level: 3,
+        resource: {
+            'Rolls of Cloth': 2,
+            'Bottle of Brown Dye': 1,
+        },
+        skillName: 'Tailoring',
+    },
+    'Black Robe': {
+        level: 3,
+        resource: {
+            'Rolls of Cloth': 2,
+            'Bottle of Black Dye': 1,
+        },
+        skillName: 'Tailoring',
+    },
+    'Green Robe': {
+        level: 3,
+        resource: {
+            'Rolls of Cloth': 2,
+            'Bottle of Purple Dye': 1,
+        },
+        skillName: 'Tailoring',
+    },
+    'Purple Robe': {
+        level: 3,
+        resource: {
+            'Rolls of Cloth': 2,
+            'Bottle of Purple Dye': 1,
+        },
+        skillName: 'Tailoring',
+    },
+    'Yellow Robe': {
+        level: 3,
+        resource: {
+            'Rolls of Cloth': 2,
+            'Bottle of Yellow Dye': 1,
+        },
+        skillName: 'Tailoring',
+    },
+    'Gray Wizard Hat': {
+        level: 3,
+        resource: {
+            'Enchanted Cloth': 2,
+        },
+        skillName: 'Tailoring',
+    },
+    'Light Blue Wizard Hat': {
+        level: 3,
+        resource: {
+            'Enchanted Cloth': 2,
+            'Bottle of Light Blue Dye': 1,
+        },
+        skillName: 'Tailoring',
+    },
+    'Red Wizard Hat': {
+        level: 3,
+        resource: {
+            'Enchanted Cloth': 2,
+            'Bottle of Red Dye': 1,
+        },
+        skillName: 'Tailoring',
+    },
+    'Blue Wizard Hat': {
+        level: 3,
+        resource: {
+            'Enchanted Cloth': 2,
+            'Bottle of Blue Dye': 1,
+        },
+        skillName: 'Tailoring',
+    },
+    'Brown Wizard Hat': {
+        level: 3,
+        resource: {
+            'Enchanted Cloth': 2,
+            'Bottle of Brown Dye': 1,
+        },
+        skillName: 'Tailoring',
+    },
+    'Black Wizard Hat': {
+        level: 3,
+        resource: {
+            'Enchanted Cloth': 2,
+            'Bottle of Black Dye': 1,
+        },
+        skillName: 'Tailoring',
+    },
+    'Green Wizard Hat': {
+        level: 3,
+        resource: {
+            'Enchanted Cloth': 2,
+            'Bottle of Purple Dye': 1,
+        },
+        skillName: 'Tailoring',
+    },
+    'Purple Wizard Hat': {
+        level: 3,
+        resource: {
+            'Enchanted Cloth': 2,
+            'Bottle of Purple Dye': 1,
+        },
+        skillName: 'Tailoring',
+    },
+    'Yellow Wizard Hat': {
+        level: 3,
+        resource: {
+            'Enchanted Cloth': 2,
+            'Bottle of Yellow Dye': 1,
+        },
+        skillName: 'Tailoring',
+    },
+    'Pair of Gray Boots': {
+        level: 4,
+        resource: {
+            'Leather Hide': 1,
+        },
+        skillName: 'Tailoring',
+    },
+    'Pair of Light Blue Boots': {
+        level: 4,
+        resource: {
+            'Leather Hide': 1,
+            'Bottle of Light Blue Dye': 1,
+        },
+        skillName: 'Tailoring',
+    },
+    'Pair of Red Boots': {
+        level: 4,
+        resource: {
+            'Leather Hide': 1,
+            'Bottle of Red Dye': 1,
+        },
+        skillName: 'Tailoring',
+    },
+    'Pair of Blue Boots': {
+        level: 4,
+        resource: {
+            'Leather Hide': 1,
+            'Bottle of Blue Dye': 1,
+        },
+        skillName: 'Tailoring',
+    },
+    'Pair of Brown Boots': {
+        level: 4,
+        resource: {
+            'Leather Hide': 1,
+            'Bottle of Brown Dye': 1,
+        },
+        skillName: 'Tailoring',
+    },
+    'Pair of Black Boots': {
+        level: 4,
+        resource: {
+            'Leather Hide': 1,
+            'Bottle of Black Dye': 1,
+        },
+        skillName: 'Tailoring',
+    },
+    'Pair of Green Boots': {
+        level: 4,
+        resource: {
+            'Leather Hide': 1,
+            'Bottle of Purple Dye': 1,
+        },
+        skillName: 'Tailoring',
+    },
+    'Pair of Purple Boots': {
+        level: 4,
+        resource: {
+            'Leather Hide': 1,
+            'Bottle of Purple Dye': 1,
+        },
+        skillName: 'Tailoring',
+    },
+    'Pair of Yellow Boots': {
+        level: 4,
+        resource: {
+            'Leather Hide': 1,
+            'Bottle of Yellow Dye': 1,
+        },
+        skillName: 'Tailoring',
+    },
+    'Leather Arms': {
+        level: 4,
+        resource: {
+            'Leather Hides': 3,
+        },
+        skillName: 'Tailoring',
+    },
+    'Leather Legs': {
+        level: 5,
+        resource: {
+            'Leather Hides': 3,
+        },
+        skillName: 'Tailoring',
+    },
+    'Black / Yellow Leather Arms': {
+        level: 6,
+        resource: {
+            'Leather Hides': 3,
+            'Rolls of Cloth': 2,
+            'Black or Yellow Dye': 3,
+        },
+        skillName: 'Tailoring',
+    },
+    'Jester Hat': {
+        level: 6,
+        resource: {
+            'Rolls of cloth': 1,
+            'dye': 1,
+        },
+        skillName: 'Tailoring',
+    },
+    '2 Leather Hides': {
+        level: 6,
+        resource: {
+            'Bear Skin': 1,
+        },
+        skillName: 'Tailoring',
+    },
+    'Leather Breast': {
+        level: 6,
+        resource: {
+            'Leather Hides': 3,
+        },
+        skillName: 'Tailoring',
+    },
+    'Black / Yellow Leather Legs': {
+        level: 7,
+        resource: {
+            'Leather Hides': 3,
+            'Rolls of Cloth': 4,
+            'Black or Yellow Dye': 4,
+        },
+        skillName: 'Tailoring',
+    },
+    'Black / Yellow Leather Breast': {
+        level: 8,
+        resource: {
+            'Leather Hides': 3,
+            'Rolls of Cloth': 6,
+            'Black or Yellow Dye': 5,
+        },
+        skillName: 'Tailoring',
+    },
+    'Gray Robe of Resistance': {
+        level: 11,
+        resource: {
+            'Enchanted Cloth': 3,
+            'Nevia Flower': 1,
+        },
+        skillName: 'Tailoring',
+    },
+    'Light Blue Robe of Resistance': {
+        level: 11,
+        resource: {
+            'Enchanted Cloth': 3,
+            'Nevia Flower': 1,
+            'Bottle of Light Blue Dye': 1,
+        },
+        skillName: 'Tailoring',
+    },
+    'Red Robe of Resistance': {
+        level: 11,
+        resource: {
+            'Enchanted Cloth': 3,
+            'Nevia Flower': 1,
+            'Bottle of Red Dye': 1,
+        },
+        skillName: 'Tailoring',
+    },
+    'Blue Robe of Resistance': {
+        level: 11,
+        resource: {
+            'Enchanted Cloth': 3,
+            'Nevia Flower': 1,
+            'Bottle of Blue Dye': 1,
+        },
+        skillName: 'Tailoring',
+    },
+    'Brown Robe of Resistance': {
+        level: 11,
+        resource: {
+            'Enchanted Cloth': 3,
+            'Nevia Flower': 1,
+            'Bottle of Brown Dye': 1,
+        },
+        skillName: 'Tailoring',
+    },
+    'Black Robe of Resistance': {
+        level: 11,
+        resource: {
+            'Enchanted Cloth': 3,
+            'Nevia Flower': 1,
+            'Bottle of Black Dye': 1,
+        },
+        skillName: 'Tailoring',
+    },
+    'Green Robe of Resistance': {
+        level: 11,
+        resource: {
+            'Enchanted Cloth': 3,
+            'Nevia Flower': 1,
+            'Bottle of Purple Dye': 1,
+        },
+        skillName: 'Tailoring',
+    },
+    'Purple Robe of Resistance': {
+        level: 11,
+        resource: {
+            'Enchanted Cloth': 3,
+            'Nevia Flower': 1,
+            'Bottle of Purple Dye': 1,
+        },
+        skillName: 'Tailoring',
+    },
+    'Yellow Robe of Resistance': {
+        level: 11,
+        resource: {
+            'Enchanted Cloth': 3,
+            'Nevia Flower': 1,
+            'Bottle of Yellow Dye': 1,
+        },
+        skillName: 'Tailoring',
+    },
+    'Gray Robe of Protection': {
+        level: 12,
+        resource: {
+            'Enchanted Cloth': 3,
+            'Merfolk Hair': 1,
+        },
+        skillName: 'Tailoring',
+    },
+    'Light Blue Robe of Protection': {
+        level: 12,
+        resource: {
+            'Enchanted Cloth': 3,
+            'Merfolk Hair': 1,
+            'Bottle of Light Blue Dye': 1,
+        },
+        skillName: 'Tailoring',
+    },
+    'Red Robe of Protection': {
+        level: 12,
+        resource: {
+            'Enchanted Cloth': 3,
+            'Merfolk Hair': 1,
+            'Bottle of Red Dye': 1,
+        },
+        skillName: 'Tailoring',
+    },
+    'Blue Robe of Protection': {
+        level: 12,
+        resource: {
+            'Enchanted Cloth': 3,
+            'Merfolk Hair': 1,
+            'Bottle of Blue Dye': 1,
+        },
+        skillName: 'Tailoring',
+    },
+    'Brown Robe of Protection': {
+        level: 12,
+        resource: {
+            'Enchanted Cloth': 3,
+            'Merfolk Hair': 1,
+            'Bottle of Brown Dye': 1,
+        },
+        skillName: 'Tailoring',
+    },
+    'Black Robe of Protection': {
+        level: 12,
+        resource: {
+            'Enchanted Cloth': 3,
+            'Merfolk Hair': 1,
+            'Bottle of Black Dye': 1,
+        },
+        skillName: 'Tailoring',
+    },
+    'Green Robe of Protection': {
+        level: 12,
+        resource: {
+            'Enchanted Cloth': 3,
+            'Merfolk Hair': 1,
+            'Bottle of Purple Dye': 1,
+        },
+        skillName: 'Tailoring',
+    },
+    'Purple Robe of Protection': {
+        level: 12,
+        resource: {
+            'Enchanted Cloth': 3,
+            'Merfolk Hair': 1,
+            'Bottle of Purple Dye': 1,
+        },
+        skillName: 'Tailoring',
+    },
+    'Yellow Robe of Protection': {
+        level: 12,
+        resource: {
+            'Enchanted Cloth': 3,
+            'Merfolk Hair': 1,
+            'Bottle of Yellow Dye': 1,
+        },
+        skillName: 'Tailoring',
+    },
+    // Enchanting/Etherite
     // Etheriteは色々あるけどログでは判別できないようだ
     'Etherite': {
         level: 1,
         manaCost: 3,
         skillName: 'Enchanting',
     },
-    // Enchanting Crystal
+    // Enchanting/Crystal
     // Crystalは色々あるけどログでは判別できないようだ
     'Crystal': {
         level: 1,
@@ -1273,7 +2413,7 @@ const CRAFT = {
         manaCost: 30,
         skillName: 'Enchanting',
     },
-    // Enchanting Ring
+    // Enchanting/Ring
     'Ring of Lightning Bolt': {
         level: 11,
         resource: {
@@ -1706,7 +2846,7 @@ const CRAFT = {
         manaCost: 39,
         skillName: 'Enchanting',
     },
-    // Enchanting Charm
+    // Enchanting/Charm
     'Charm of Undead Cleansing': {
         level: 5,
         resource: {
@@ -1755,7 +2895,7 @@ const CRAFT = {
         manaCost: 21,
         skillName: 'Enchanting',
     },
-    // Enchanting Miscellaneous
+    // Enchanting/Miscellaneous
     'Enchanted Cloth': {
         level: 1,
         resource: {
@@ -1818,7 +2958,7 @@ const CRAFT = {
         manaCost: 36,
         skillName: 'Enchanting',
     },
-    // Enchanting Orb
+    // Enchanting/Orb
     'Orb of Seeing': {
         level: 3,
         resource: {
@@ -1830,6 +2970,9 @@ const CRAFT = {
         manaCost: 15,
         skillName: 'Enchanting',
     },
+
+    
+
 }
 
 // スキルレベルアップ時のメッセージ

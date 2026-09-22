@@ -93,15 +93,10 @@ It also outputs data on how much and in what ways you used those skills.
 
 ## Caution
 
-Because Blacksmithing, Tailoring, Tinkering, Woodcrafting, and some Enchanting do not leave distinguishable logs during crafting, the tool identifies which skill was used by looking at the tool equipped immediately beforehand. This should work as long as tools are automatically equipped upon using a skill, but be careful: if you deliberately equip a tool manually, it won't show up in the logs and will cause calculation errors.
-
-(Ah, but I reckon I can improve it a bit more, so I’m working on it…)
-
-Anatomy, Meditation, and Taming aggregate and display data that is likely meaningless in terms of skill experience, but this is intentional.
-
-At present, Special/etc., Poisoning, Stealth, and Tracking are not supported. This is because I only own a Druid character, so I don't know what the logs for other classes' unique skills look like. I'll figure something out eventually.
-
-This tool was created to investigate "how long did it take to level up?", and due to the author's personal policy, **it does not support "how much longer until the next level?"** (Though you can technically calculate that kind of thing from the displayed data, please do it manually). Skill levels are something that naturally go up on their own if you just casually play.
+* Because Blacksmithing, Tailoring, Tinkering, Woodcrafting, and Enchanting do not leave distinguishable logs during crafting, the tool identifies which skill was used by looking at the tool equipped immediately beforehand. This should work as long as tools are automatically equipped upon using a skill, but be careful: if you deliberately equip a tool manually, it won't show up in the logs and will cause calculation errors.
+* Anatomy, Meditation, and Taming aggregate and display data that is likely meaningless in terms of skill experience, but this is intentional.
+* At present, Special/etc., Poisoning, and Stealth are not supported. This is because I only own a Druid or Ranger character, so I don't know what the logs for other classes' unique skills look like. I'll figure something out eventually.
+* This tool was created to investigate "how long did it take to level up?", and due to the author's personal policy, **it does not support "how much longer until the next level?"** (Though you can technically calculate that kind of thing from the displayed data, please do it manually). Skill levels are something that naturally go up on their own if you just casually play.
 
 ## Side note
 

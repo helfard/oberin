@@ -9,7 +9,7 @@ const GATHER_LIMIT = 8;
 // 整形用のインデント
 const INDENT = '  ';
 // 整形用の横線
-const BAR = '================================';
+const BAR = '================================================';
 // 最終集計の表示順
 const SKILL_ORDER = [
     'Lumberjacking',
@@ -563,11 +563,11 @@ function showTotalData(setting) {
 
     resultLogs.push('');
     resultLogs.push('');
-    resultLogs.push('======================================');
-    resultLogs.push('=            Total Summary           =');
-    resultLogs.push('=                                    =');
-    resultLogs.push(`=   ${ start }   --->   ${  end  }   =`);
-    resultLogs.push('======================================');
+    resultLogs.push('================================================');
+    resultLogs.push('=                 Total Summary                =');
+    resultLogs.push('=                                              =');
+    resultLogs.push(`=      ${ start }     --->     ${  end  }      =`);
+    resultLogs.push('================================================');
 
     for (const skillName of SKILL_ORDER) {
 
