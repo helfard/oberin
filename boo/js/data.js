@@ -121,7 +121,10 @@ const LOG = {
     //    success は Gathering に統合,
         fail: 'You fail to mine any ore.'
     },
-    // 'Parring': {},
+    'Parring': {
+        success: 'You avoid taking direct damage.',
+        fail: ''
+    },
     'Poisoning': {
         start: '',
         success: '',

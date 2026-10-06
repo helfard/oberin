@@ -33,6 +33,7 @@ const SKILL_ORDER = [
     'Meditation',
 
     'Anatomy',
+    'Parring',
     'Healing',
 
     'Hiding',
@@ -46,7 +47,6 @@ const SKILL_ORDER = [
 
 // 以下のスキルは集計が不可能なため除外
 //    'Melee',
-//    'Parring',
 //    'Resisting Magic',
 //    'Special/Fighter',
 //    'Special/Ranger',
@@ -244,11 +244,11 @@ function showCountData ({key, counter = totalSkillCount, maxKeyLength = null, ma
     // start と success + fail の小さい方を採用する
     const total = start && (start < success + fail) ? start : (success && fail && (success + fail)) || null;
     const successRate   = total && (success / total * 100).toFixed(1) || null;
-    const countData = (start || fail) ? [
+    const countData = padSuccess ? [padSuccess] : [
         start && `Start ${start}`,
         success && `Success ${success}`,
         fail && `Fail ${fail}`,
-    ].filter(Boolean) : [padSuccess];
+    ].filter(Boolean);
     const successRateStr = successRate ? ` (${successRate}%)` : '';
     resultLogs.push(`${INDENT}${padLabel}${countData.join(', ')}${successRateStr}`);
 }
