@@ -23,59 +23,103 @@
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <script type="text/javascript">
         <!--
-        // 画像のカスタムレンダラー
-        // 1. 画像（image）用のカスタムレンダラーを定義
-        const renderer = {
-        image({ href, title, text }) {
-            // alt（引数のtext）の内容をtitleに代入（既存のtitleがあればそれを優先）
-            const imageTitle = title || text; 
-            return `<img src="${href}" alt="${text}" title="${imageTitle}">`;
-        }
-        };
-        // 2. markedにカスタムレンダラーを登録
-        marked.use({ renderer });
-
-        // MarkdownをHTMLに変換する
-        let queryString = 'index';
-        // 1. 先頭の '?' を除いたクエリ文字列を取得して '&' で分割
-        const urlParams = window.location.search.substring(1).split('&');
-        // 2. 表示するコンテンツのクエリを所得
-        for (const param of urlParams) {
-            if(param && !param.includes('=')) {
-                queryString = param;
-                break;
-            }
-        }
-        // 3. MDファイルを読み込み、HTMLに変換
-        async function loadMarkdown(queryString) {
-            const contentArea = document.getElementById('content');
-            const filePath = 'md/' + queryString + '.md';
-            try {
-                // 4. fetchでindex.mdを取得
-                const response = await fetch(filePath);
-                // ファイルが存在しない、またはエラーの場合のハンドリング
-                if (!response.ok) {
-                    throw new Error(`HTTPエラー! ステータス: ${response.status}`);
+        document.addEventListener('DOMContentLoaded', () => {
+            // 1. 画像とリンクのカスタムレンダラー（marked.js 最新仕様に対応）
+            marked.use({
+                renderer: {
+                    // 画像のレンダラー
+                    image(token) {
+                        const href = token.href;
+                        const title = token.title;
+                        const text = token.text;
+                        const imageTitle = title || text;
+                        return `<img src="${href}" alt="${text}" title="${imageTitle}">`;
+                    },
+                    // リンクのレンダラー（マウスオーバー時のツールチップ表示）
+                    link(token) {
+                        const href = token.href;
+                        const title = token.title;
+                        const text = token.tokens ? this.parser.parseInline(token.tokens) : token.text;
+                        
+                        // タイトル（指定コメント）があればそれを優先、なければhref（URL）をツールチップに設定
+                        const linkTitle = title || href;
+                        return `<a href="${href}" title="${linkTitle}" target="_blank" rel="noopener noreferrer">${text}</a>`;
+                    }
                 }
-                // 5. レスポンスをテキスト（文字列）として抽出
-                const markdownText = await response.text();
-                // 6. marked.parse() でMarkdownをHTMLに変換
-                const htmlContent = marked.parse(markdownText);
-                // 7. 画面に表示
-                contentArea.innerHTML = htmlContent;
-            } catch (error) {
-                console.error('読み込みエラー:', error);
-                contentArea.innerHTML = `<p class="error">　内容が(ヾﾉ･∀･\`)ﾅｲﾖｰ</p>`;
+            });
+            // "?? タイトル" のアコーディオン用カスタム拡張
+            // でもこれ使いにくいから結局使わんかも？
+            marked.use({
+                extensions: [{
+                    name: 'ultraSimpleDetails',
+                    level: 'block',
+                    start(src) { return src.match(/^\?\?\s+/)?.index; },
+                    tokenizer(src, tokens) {
+                        const rule = /^\?\?\s+([^\n]+)\n([\s\S]*?)(?=\n\n|\n*$)/;
+                        const match = rule.exec(src);
+                        if (match) {
+                            const rawText = match[2];
+                            return {
+                                type: 'ultraSimpleDetails',
+                                raw: match[0],
+                                summary: match[1].trim(),
+                                tokens: this.lexer.blockTokens(rawText.trim(), [])
+                            };
+                        }
+                    },
+                    renderer(token) {
+                        const parsedContent = this.parser.parse(token.tokens);
+                        return `
+                            <details>
+                                <summary>${token.summary}</summary>
+                                <div class="details-body">
+                                    ${parsedContent}
+                                </div>
+                            </details>
+                        `;
+                    }
+                }]
+            });
+            // クエリ取得とMarkdown読み込み
+            let queryString = 'index';
+            const urlParams = window.location.search.substring(1).split('&');
+            for (const param of urlParams) {
+                if (param && !param.includes('=')) {
+                    queryString = param;
+                    break;
+                }
             }
-        }
-        //-->
+            async function loadMarkdown(query) {
+                const contentArea = document.getElementById('content');
+                if (!contentArea) {
+                    console.error('ID "content" の要素が見つかりません');
+                    return;
+                }
+
+                const filePath = 'md/' + query + '.md';
+                try {
+                    const response = await fetch(filePath);
+                    if (!response.ok) {
+                        throw new Error(`HTTPエラー! ステータス: ${response.status}`);
+                    }
+                    const markdownText = await response.text();
+                    contentArea.innerHTML = marked.parse(markdownText);
+                } catch (error) {
+                    console.error('読み込みエラー:', error);
+                    contentArea.innerHTML = `<p class="error"> 内容が(ヾﾉ･∀･\`)ﾅｲﾖｰ</p>`;
+                }
+            }
+            loadMarkdown(queryString);
+        });
+        // -->
     </script>
+
     <title>Oberinのメモ</title>
     <meta name="description" content="マルチプラットフォームMMORPG『Oberin』の日本人向け解説など。
         外部の.mdファイルをHTMLに変換して表示しているので検索BOTやAIにはページの中身が読めないのさ！">
 </head>
 
-<body onload="loadMarkdown(queryString)">
+<body>
     <header>
         <h1>Oberinのメモ</h1>
     </header>
@@ -94,7 +138,7 @@
     <footer>
         <address>
             Author: Geld<br>
-            Last update: 2026/09/03
+            Last update: 2026/11/03
         </address>
     </footer>
 
