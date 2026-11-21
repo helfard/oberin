@@ -35,6 +35,10 @@
     
     　この人の手元には20年以上前のログファイルが今でも残っていて、その頃の話や最近のプレイ日記などを書く予定なんだそうだ。
 
+- [Applications for Oberin](https://s-ohno.sakura.ne.jp/oberin/)
+
+    　古参プレイヤーのnanasisanがAIで作ったMac用ツール類の置き場。
+
 ### プレイヤーのサイト（英語）
 
 - [Oberin Overlays](https://oberin-overlays.pages.dev/)
